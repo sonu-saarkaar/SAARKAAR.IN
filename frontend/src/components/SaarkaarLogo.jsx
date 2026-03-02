@@ -1,169 +1,97 @@
 import * as THREE from 'three'
+import { Text, Float } from '@react-three/drei'
 
 export default function SaarkaarLogo({ position = [0, 0, 0], size = 1, style = 'wall' }) {
-  // Premium brand colors - Powerful, calm, intelligent
-  const primaryColor = '#1a252f' // Deep charcoal - powerful
-  const accentColor = '#4a90e2' // Professional blue - intelligent
-  const textColor = '#ffffff' // Clean white - calm
-  
-  // Logo base material
-  const logoBaseMaterial = new THREE.MeshStandardMaterial({
-    color: primaryColor,
-    roughness: 0.3,
-    metalness: 0.2,
-  })
-  
-  const accentMaterial = new THREE.MeshStandardMaterial({
-    color: accentColor,
-    roughness: 0.2,
-    metalness: 0.4,
-    emissive: accentColor,
-    emissiveIntensity: 0.1,
-  })
-  
-  const textMaterial = new THREE.MeshStandardMaterial({
-    color: textColor,
-    roughness: 0.4,
-    metalness: 0.1,
-  })
+  const accentColor = '#d4af37' // Premium Luxury Gold
+  const textColor = '#ffffff'   // Clean White
 
   if (style === 'wall') {
-    // Large wall-mounted logo
+    // Large premium wall-mounted logo for Lobby Background
     return (
       <group position={position}>
-        {/* Logo background panel */}
-        <mesh position={[0, 0, 0]} receiveShadow>
-          <boxGeometry args={[6 * size, 3 * size, 0.1]} />
-          <primitive object={logoBaseMaterial} attach="material" />
+        {/* Dark Premium Wall Backing Paneling */}
+        <mesh position={[0, 0, 0]} receiveShadow castShadow>
+          <boxGeometry args={[9 * size, 3.8 * size, 0.1]} />
+          <meshStandardMaterial color="#050505" roughness={0.2} metalness={0.9} />
         </mesh>
-        
-        {/* SAARKAAR Text - Modern, bold typography */}
-        <group position={[0, 0.3 * size, 0.06]}>
-          {/* Letter S */}
-          <mesh position={[-2.2 * size, 0, 0]} receiveShadow>
-            <boxGeometry args={[0.4 * size, 0.8 * size, 0.05]} />
-            <primitive object={textMaterial} attach="material" />
-          </mesh>
-          <mesh position={[-2.2 * size, 0.3 * size, 0]} receiveShadow>
-            <boxGeometry args={[0.4 * size, 0.15 * size, 0.05]} />
-            <primitive object={textMaterial} attach="material" />
-          </mesh>
-          <mesh position={[-2.2 * size, -0.3 * size, 0]} receiveShadow>
-            <boxGeometry args={[0.4 * size, 0.15 * size, 0.05]} />
-            <primitive object={textMaterial} attach="material" />
-          </mesh>
-          
-          {/* Letter A (first) */}
-          <mesh position={[-1.3 * size, 0, 0]} receiveShadow>
-            <boxGeometry args={[0.4 * size, 0.8 * size, 0.05]} />
-            <primitive object={textMaterial} attach="material" />
-          </mesh>
-          <mesh position={[-1.3 * size, 0.25 * size, 0]} receiveShadow>
-            <boxGeometry args={[0.4 * size, 0.15 * size, 0.05]} />
-            <primitive object={textMaterial} attach="material" />
-          </mesh>
-          
-          {/* Letter A (second) */}
-          <mesh position={[-0.4 * size, 0, 0]} receiveShadow>
-            <boxGeometry args={[0.4 * size, 0.8 * size, 0.05]} />
-            <primitive object={textMaterial} attach="material" />
-          </mesh>
-          <mesh position={[-0.4 * size, 0.25 * size, 0]} receiveShadow>
-            <boxGeometry args={[0.4 * size, 0.15 * size, 0.05]} />
-            <primitive object={textMaterial} attach="material" />
-          </mesh>
-          
-          {/* Letter R (first) */}
-          <mesh position={[0.5 * size, 0, 0]} receiveShadow>
-            <boxGeometry args={[0.4 * size, 0.8 * size, 0.05]} />
-            <primitive object={textMaterial} attach="material" />
-          </mesh>
-          <mesh position={[0.5 * size, 0.25 * size, 0]} receiveShadow>
-            <boxGeometry args={[0.4 * size, 0.15 * size, 0.05]} />
-            <primitive object={textMaterial} attach="material" />
-          </mesh>
-          
-          {/* Letter K */}
-          <mesh position={[1.4 * size, 0, 0]} receiveShadow>
-            <boxGeometry args={[0.4 * size, 0.8 * size, 0.05]} />
-            <primitive object={textMaterial} attach="material" />
-          </mesh>
-          <mesh position={[1.4 * size, 0, 0]} rotation={[0, 0, -0.5]} receiveShadow>
-            <boxGeometry args={[0.3 * size, 0.4 * size, 0.05]} />
-            <primitive object={textMaterial} attach="material" />
-          </mesh>
-          <mesh position={[1.4 * size, 0, 0]} rotation={[0, 0, 0.5]} receiveShadow>
-            <boxGeometry args={[0.3 * size, 0.4 * size, 0.05]} />
-            <primitive object={textMaterial} attach="material" />
-          </mesh>
-          
-          {/* Letter A (third) */}
-          <mesh position={[2.3 * size, 0, 0]} receiveShadow>
-            <boxGeometry args={[0.4 * size, 0.8 * size, 0.05]} />
-            <primitive object={textMaterial} attach="material" />
-          </mesh>
-          <mesh position={[2.3 * size, 0.25 * size, 0]} receiveShadow>
-            <boxGeometry args={[0.4 * size, 0.15 * size, 0.05]} />
-            <primitive object={textMaterial} attach="material" />
-          </mesh>
-          
-          {/* Letter R (second) */}
-          <mesh position={[3.2 * size, 0, 0]} receiveShadow>
-            <boxGeometry args={[0.4 * size, 0.8 * size, 0.05]} />
-            <primitive object={textMaterial} attach="material" />
-          </mesh>
-          <mesh position={[3.2 * size, 0.25 * size, 0]} receiveShadow>
-            <boxGeometry args={[0.4 * size, 0.15 * size, 0.05]} />
-            <primitive object={textMaterial} attach="material" />
-          </mesh>
-        </group>
-        
-        {/* Accent line - Tech-driven element */}
-        <mesh position={[0, -0.8 * size, 0.06]} receiveShadow>
-          <boxGeometry args={[4 * size, 0.08 * size, 0.05]} />
-          <primitive object={accentMaterial} attach="material" />
+
+        {/* Floating Inner Gold Frame for Depth/Architecture */}
+        <mesh position={[0, 0, 0.05]}>
+          <boxGeometry args={[8.6 * size, 3.4 * size, 0.02]} />
+          <meshStandardMaterial color={accentColor} metalness={1} roughness={0.1} transparent opacity={0.15} />
         </mesh>
-        
-        {/* Tagline - Professional */}
-        <group position={[0, -1.2 * size, 0.06]}>
-          <mesh position={[-0.8 * size, 0, 0]} receiveShadow>
-            <boxGeometry args={[0.15 * size, 0.3 * size, 0.03]} />
-            <primitive object={textMaterial} attach="material" />
+
+        {/* Hover/Float effect for Holographic/Premium feel */}
+        <Float speed={1.5} rotationIntensity={0.02} floatIntensity={0.08}>
+
+          {/* MAIN "SAARKAAR" TEXT */}
+          <Text
+            position={[0, 0.5 * size, 0.15]}
+            fontSize={1.2 * size}
+            color={textColor}
+            anchorX="center"
+            anchorY="middle"
+            letterSpacing={0.25}
+            fontWeight="bold"
+          >
+            SAARKAAR
+            {/* Real 3D Lighting & Reflections on Font */}
+            <meshStandardMaterial color="#ffffff" metalness={0.8} roughness={0.1} />
+          </Text>
+
+          {/* GLOWING GOLD ACCENT DIVIDER (Sexy Cyber-Corporate style) */}
+          <mesh position={[0, -0.35 * size, 0.12]} castShadow>
+            <boxGeometry args={[6 * size, 0.03 * size, 0.05]} />
+            <meshStandardMaterial color={accentColor} emissive={accentColor} emissiveIntensity={2.0} metalness={1} roughness={0.1} toneMapped={false} />
           </mesh>
-          <mesh position={[-0.4 * size, 0, 0]} receiveShadow>
-            <boxGeometry args={[0.15 * size, 0.3 * size, 0.03]} />
-            <primitive object={textMaterial} attach="material" />
-          </mesh>
-          <mesh position={[0, 0, 0]} receiveShadow>
-            <boxGeometry args={[0.15 * size, 0.3 * size, 0.03]} />
-            <primitive object={textMaterial} attach="material" />
-          </mesh>
-          <mesh position={[0.4 * size, 0, 0]} receiveShadow>
-            <boxGeometry args={[0.15 * size, 0.3 * size, 0.03]} />
-            <primitive object={textMaterial} attach="material" />
-          </mesh>
-          <mesh position={[0.8 * size, 0, 0]} receiveShadow>
-            <boxGeometry args={[0.15 * size, 0.3 * size, 0.03]} />
-            <primitive object={textMaterial} attach="material" />
-          </mesh>
-        </group>
+
+          {/* "VIRTUAL OFFICE" LUXURY SUBTITLE */}
+          <Text
+            position={[0, -0.85 * size, 0.15]}
+            fontSize={0.4 * size}
+            color={accentColor}
+            anchorX="center"
+            anchorY="middle"
+            letterSpacing={0.6}
+          >
+            VIRTUAL OFFICE
+            <meshStandardMaterial color={accentColor} emissive={accentColor} emissiveIntensity={0.8} metalness={1} roughness={0.2} />
+          </Text>
+
+        </Float>
       </group>
     )
   } else if (style === 'desk') {
-    // Small desk nameplate
+    // Small elegant desk nameplate
     return (
       <group position={position}>
-        <mesh position={[0, 0, 0]} receiveShadow>
-          <boxGeometry args={[1.2 * size, 0.3 * size, 0.02]} />
-          <primitive object={logoBaseMaterial} attach="material" />
+        <mesh position={[0, 0, 0]} receiveShadow castShadow>
+          <boxGeometry args={[1.6 * size, 0.55 * size, 0.02]} />
+          <meshStandardMaterial color="#0a0a0a" roughness={0.1} metalness={0.9} />
         </mesh>
-        <mesh position={[0, 0, 0.015]} receiveShadow>
-          <boxGeometry args={[0.8 * size, 0.15 * size, 0.01]} />
-          <primitive object={textMaterial} attach="material" />
-        </mesh>
+        <Text
+          position={[0, 0.1 * size, 0.015]}
+          fontSize={0.2 * size}
+          color="#ffffff"
+          anchorX="center"
+          anchorY="middle"
+          letterSpacing={0.15}
+        >
+          SAARKAAR
+        </Text>
+        <Text
+          position={[0, -0.15 * size, 0.015]}
+          fontSize={0.08 * size}
+          color={accentColor}
+          anchorX="center"
+          anchorY="middle"
+          letterSpacing={0.3}
+        >
+          VIRTUAL OFFICE
+        </Text>
       </group>
     )
   }
-  
+
   return null
 }

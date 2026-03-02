@@ -1,0 +1,579 @@
+/* ============================================================
+   AI ARCHITECTURE SECTION — RESPONSIVE CINEMATIC DESIGN
+   ============================================================ */
+
+.aia-section {
+    padding: 8rem 2rem 6rem;
+    background: #050505;
+    color: #fff;
+    font-family: 'Inter', sans-serif;
+    position: relative;
+    overflow: hidden;
+    border-top: 1px solid rgba(212, 175, 55, 0.08);
+}
+
+/* Subtle ambient grid */
+.aia-section::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+        linear-gradient(rgba(212, 175, 55, 0.015) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(212, 175, 55, 0.015) 1px, transparent 1px);
+    background-size: 80px 80px;
+    pointer-events: none;
+}
+
+/* ============================================================
+   HEADER
+   ============================================================ */
+.aia-header {
+    text-align: center;
+    margin-bottom: 5rem;
+    position: relative;
+    z-index: 2;
+}
+
+.aia-label {
+    display: block;
+    color: #00f5d4;
+    font-family: 'Rajdhani', sans-serif;
+    letter-spacing: 5px;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+}
+
+.aia-title {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 3.5rem;
+    font-weight: 700;
+    letter-spacing: 3px;
+    color: #fff;
+    text-transform: uppercase;
+    margin: 0;
+}
+
+.aia-title span {
+    color: transparent;
+    background: linear-gradient(90deg, #d4af37, #f3d473);
+    -webkit-background-clip: text;
+    background-clip: text;
+}
+
+/* ============================================================
+   ARCHITECTURE DIAGRAM NODES
+   ============================================================ */
+.aia-arch-diagram {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    flex-wrap: wrap;
+    margin-bottom: 5rem;
+    position: relative;
+    z-index: 2;
+}
+
+.aia-arch-node {
+    background: rgba(15, 15, 15, 0.8);
+    border: 1px solid rgba(0, 245, 212, 0.2);
+    border-radius: 12px;
+    padding: 2rem 2rem;
+    text-align: center;
+    width: 200px;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(12px);
+}
+
+.aia-node-gold {
+    border-color: rgba(212, 175, 55, 0.3);
+}
+
+.aia-node-red {
+    border-color: rgba(255, 0, 85, 0.3);
+}
+
+.aia-arch-node:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+}
+
+.aia-node-teal:hover {
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5), 0 0 20px rgba(0, 245, 212, 0.1);
+}
+
+.aia-node-gold:hover {
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5), 0 0 20px rgba(212, 175, 55, 0.1);
+}
+
+.aia-node-red:hover {
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5), 0 0 20px rgba(255, 0, 85, 0.1);
+}
+
+.aia-node-icon {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+.aia-arch-node h4 {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 1rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #00f5d4;
+    margin: 0 0 0.6rem;
+}
+
+.aia-node-gold h4 {
+    color: #d4af37;
+}
+
+.aia-node-red h4 {
+    color: #ff0055;
+}
+
+.aia-node-pill {
+    display: inline-block;
+    border: 1px solid rgba(0, 245, 212, 0.4);
+    color: #00f5d4;
+    font-size: 0.72rem;
+    padding: 4px 12px;
+    border-radius: 20px;
+    margin-bottom: 0.6rem;
+    font-family: 'Courier New', monospace;
+}
+
+.aia-pill-gold {
+    border-color: rgba(212, 175, 55, 0.4);
+    color: #d4af37;
+}
+
+.aia-pill-red {
+    border-color: rgba(255, 0, 85, 0.4);
+    color: #ff0055;
+}
+
+.aia-arch-node p {
+    color: #666;
+    font-size: 0.78rem;
+    margin: 0;
+}
+
+.aia-arch-arrow {
+    font-size: 1.8rem;
+    color: #333;
+    padding: 0 1rem;
+    user-select: none;
+    flex-shrink: 0;
+}
+
+/* ============================================================
+   CHAT WRAPPER
+   ============================================================ */
+.aia-chat-wrapper {
+    max-width: 860px;
+    margin: 0 auto;
+    background: rgba(10, 10, 10, 0.85);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 16px;
+    overflow: hidden;
+    backdrop-filter: blur(20px);
+    box-shadow: 0 40px 80px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(212, 175, 55, 0.05);
+    position: relative;
+    z-index: 2;
+}
+
+/* ============================================================
+   CHAT HEADER
+   ============================================================ */
+.aia-chat-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.2rem 1.8rem;
+    background: rgba(20, 20, 20, 0.95);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.aia-chat-header-left {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.aia-status-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #00f5d4;
+    flex-shrink: 0;
+    box-shadow: 0 0 10px rgba(0, 245, 212, 0.6);
+    animation: pulseDot 2s infinite;
+}
+
+@keyframes pulseDot {
+
+    0%,
+    100% {
+        box-shadow: 0 0 6px rgba(0, 245, 212, 0.5);
+    }
+
+    50% {
+        box-shadow: 0 0 16px rgba(0, 245, 212, 0.9);
+    }
+}
+
+.aia-chat-header h3 {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 1.1rem;
+    color: #fff;
+    margin: 0 0 3px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.aia-chat-header p {
+    font-size: 0.72rem;
+    color: #555;
+    margin: 0;
+    font-family: 'Courier New', monospace;
+}
+
+.aia-header-badge {
+    font-size: 0.65rem;
+    background: rgba(0, 245, 212, 0.1);
+    color: #00f5d4;
+    border: 1px solid rgba(0, 245, 212, 0.3);
+    padding: 4px 12px;
+    border-radius: 20px;
+    letter-spacing: 1px;
+    font-family: 'Courier New', monospace;
+    animation: pulseDot 2s infinite;
+}
+
+/* ============================================================
+   MESSAGES WINDOW
+   ============================================================ */
+.aia-messages {
+    height: 380px;
+    overflow-y: auto;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.08) transparent;
+}
+
+.aia-messages::-webkit-scrollbar {
+    width: 4px;
+}
+
+.aia-messages::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 2px;
+}
+
+/* ============================================================
+   MESSAGE BUBBLES
+   ============================================================ */
+.aia-msg {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    max-width: 88%;
+}
+
+.aia-msg-ai {
+    align-self: flex-start;
+}
+
+.aia-msg-user {
+    align-self: flex-end;
+    flex-direction: row-reverse;
+}
+
+.aia-msg-avatar {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: rgba(0, 245, 212, 0.15);
+    border: 1px solid rgba(0, 245, 212, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.62rem;
+    color: #00f5d4;
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 700;
+    flex-shrink: 0;
+    letter-spacing: 0.5px;
+}
+
+.aia-user-avatar {
+    background: rgba(212, 175, 55, 0.1);
+    border-color: rgba(212, 175, 55, 0.3);
+    color: #d4af37;
+}
+
+.aia-msg-bubble {
+    background: rgba(25, 25, 25, 0.9);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    padding: 0.8rem 1.1rem;
+    border-radius: 12px;
+    font-size: 0.9rem;
+    color: #ddd;
+    line-height: 1.55;
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+
+.aia-msg-ai .aia-msg-bubble {
+    border-color: rgba(0, 245, 212, 0.1);
+    background: rgba(0, 245, 212, 0.04);
+    color: #ccc;
+}
+
+.aia-msg-user .aia-msg-bubble {
+    background: rgba(212, 175, 55, 0.08);
+    border-color: rgba(212, 175, 55, 0.15);
+    color: #e8e8e8;
+}
+
+.aia-msg-error .aia-msg-bubble {
+    border-color: rgba(255, 80, 80, 0.2);
+    background: rgba(255, 0, 0, 0.05);
+    color: #ff8888;
+}
+
+/* ============================================================
+   TYPING INDICATOR
+   ============================================================ */
+.aia-typing-indicator {
+    background: rgba(0, 245, 212, 0.04);
+    border: 1px solid rgba(0, 245, 212, 0.1);
+    padding: 0.8rem 1.1rem;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.aia-typing-indicator span {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #00f5d4;
+    opacity: 0.4;
+    animation: typingBounce 1.2s infinite;
+}
+
+.aia-typing-indicator span:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.aia-typing-indicator span:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+@keyframes typingBounce {
+
+    0%,
+    100% {
+        opacity: 0.3;
+        transform: scale(0.8);
+    }
+
+    50% {
+        opacity: 1;
+        transform: scale(1.2);
+    }
+}
+
+/* ============================================================
+   SUGGESTION CHIPS
+   ============================================================ */
+.aia-suggestions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    padding: 0.8rem 1.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.04);
+    background: rgba(5, 5, 5, 0.5);
+}
+
+.aia-suggestion-chip {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: #888;
+    font-size: 0.72rem;
+    padding: 5px 12px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    font-family: 'Inter', sans-serif;
+    white-space: nowrap;
+}
+
+.aia-suggestion-chip:hover:not(:disabled) {
+    border-color: rgba(0, 245, 212, 0.4);
+    color: #00f5d4;
+    background: rgba(0, 245, 212, 0.05);
+}
+
+.aia-suggestion-chip:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+/* ============================================================
+   INPUT BAR
+   ============================================================ */
+.aia-input-bar {
+    display: flex;
+    gap: 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    background: rgba(8, 8, 8, 0.9);
+}
+
+.aia-input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    color: #fff;
+    padding: 1.1rem 1.5rem;
+    font-size: 0.9rem;
+    font-family: 'Inter', sans-serif;
+    outline: none;
+}
+
+.aia-input::placeholder {
+    color: #444;
+}
+
+.aia-send-btn {
+    flex-shrink: 0;
+    padding: 0 1.8rem;
+    background: #d4af37;
+    border: none;
+    color: #000;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 800;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 90px;
+}
+
+.aia-send-btn:hover:not(:disabled) {
+    background: #f3d473;
+    box-shadow: 0 0 20px rgba(212, 175, 55, 0.4);
+}
+
+.aia-send-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Spinner */
+.aia-btn-spinner {
+    width: 16px;
+    height: 16px;
+    border: 2px solid rgba(0, 0, 0, 0.3);
+    border-top-color: #000;
+    border-radius: 50%;
+    animation: btnSpin 0.6s linear infinite;
+    display: inline-block;
+}
+
+@keyframes btnSpin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* ============================================================
+   CHAT FOOTER
+   ============================================================ */
+.aia-chat-footer {
+    text-align: center;
+    padding: 0.7rem;
+    font-size: 0.65rem;
+    color: #333;
+    letter-spacing: 1px;
+    font-family: 'Courier New', monospace;
+    background: rgba(5, 5, 5, 0.6);
+    border-top: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 900px) {
+    .aia-arch-diagram {
+        gap: 0;
+        row-gap: 1rem;
+    }
+
+    .aia-arch-node {
+        width: 160px;
+        padding: 1.5rem 1rem;
+    }
+
+    .aia-arch-arrow {
+        padding: 0 0.5rem;
+        font-size: 1.2rem;
+    }
+}
+
+@media (max-width: 650px) {
+    .aia-arch-diagram {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .aia-arch-arrow {
+        transform: rotate(90deg);
+        padding: 0.3rem 0;
+    }
+
+    .aia-arch-node {
+        width: 100%;
+        max-width: 280px;
+        padding: 1.2rem;
+    }
+
+    .aia-title {
+        font-size: 2.2rem;
+    }
+
+    .aia-messages {
+        height: 300px;
+    }
+
+    .aia-chat-header {
+        padding: 1rem;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+
+    .aia-send-btn {
+        padding: 0 1rem;
+        min-width: 70px;
+        font-size: 0.78rem;
+    }
+
+    .aia-input {
+        padding: 0.9rem 1rem;
+        font-size: 0.85rem;
+    }
+
+    .aia-suggestions {
+        padding: 0.6rem 1rem;
+    }
+}

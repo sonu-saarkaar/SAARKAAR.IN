@@ -23,7 +23,7 @@ export default function WorkspaceArea({ position = [0, 0, 4] }) {
             <boxGeometry args={[2, 0.8, 1]} />
             <primitive object={deskMaterial} attach="material" />
           </mesh>
-          
+
           {/* Monitor */}
           <group position={[0, 0.9, 0.2]}>
             <mesh position={[0, -0.1, 0]} castShadow>
@@ -66,7 +66,7 @@ export default function WorkspaceArea({ position = [0, 0, 4] }) {
 
       {/* Glass Partitions */}
       {[-4.5, -1.5, 1.5, 4.5].map((x, i) => (
-        <mesh key={i} position={[x, 1.5, 0]} receiveShadow>
+        <mesh key={i} position={[x, 1.5, 0]}>
           <boxGeometry args={[0.05, 3, 8]} />
           <meshPhysicalMaterial
             color="#ffffff"

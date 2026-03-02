@@ -1,0 +1,518 @@
+/* ============================================================
+   TECHNICAL INTELLIGENCE MATRIX — OPEN BOOK DESIGN
+   ============================================================ */
+
+.tech-matrix-section {
+    padding: 8rem 2rem;
+    background-color: #050505;
+    color: #fff;
+    font-family: 'Inter', sans-serif;
+    position: relative;
+    overflow: hidden;
+    border-top: 1px solid rgba(0, 245, 212, 0.1);
+    border-bottom: 1px solid rgba(212, 175, 55, 0.1);
+}
+
+/* Ambient grid bg */
+.tech-matrix-section::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+        linear-gradient(rgba(0, 245, 212, 0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 245, 212, 0.02) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+}
+
+/* ============================================================
+   HEADER
+   ============================================================ */
+.tm-header {
+    text-align: center;
+    margin-bottom: 5rem;
+    position: relative;
+    z-index: 2;
+}
+
+.tm-label {
+    display: block;
+    color: #00f5d4;
+    font-family: 'Rajdhani', sans-serif;
+    letter-spacing: 4px;
+    font-size: 1rem;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+}
+
+.tm-title-wrapper {
+    position: relative;
+    display: inline-block;
+}
+
+.tm-title-back {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 5rem;
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 800;
+    text-transform: uppercase;
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(255, 255, 255, 0.04);
+    white-space: nowrap;
+    pointer-events: none;
+    z-index: 1;
+    letter-spacing: 5px;
+    animation: pulseOutline 4s infinite alternate ease-in-out;
+}
+
+@keyframes pulseOutline {
+    0% {
+        -webkit-text-stroke-color: rgba(255, 255, 255, 0.02);
+        transform: translate(-50%, -50%) scale(0.96);
+    }
+
+    100% {
+        -webkit-text-stroke-color: rgba(0, 245, 212, 0.12);
+        transform: translate(-50%, -50%) scale(1.04);
+    }
+}
+
+.tm-title-front {
+    position: relative;
+    font-size: 3.5rem;
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin: 0;
+    z-index: 2;
+    color: #fff;
+    text-shadow: 0 5px 20px rgba(0, 0, 0, 0.8);
+}
+
+.tm-title-front span {
+    color: transparent;
+    background: linear-gradient(90deg, #d4af37, #f3d473);
+    -webkit-background-clip: text;
+    background-clip: text;
+}
+
+/* ============================================================
+   BOOK CONTAINER & VIEWPORT
+   ============================================================ */
+.tm-book-container {
+    position: relative;
+    max-width: 1300px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    z-index: 2;
+    perspective: 2000px;
+}
+
+.tm-book-viewport {
+    flex: 1;
+    position: relative;
+    min-height: 560px;
+    overflow: visible;
+}
+
+/* The open-book spread (two pages side by side) */
+.tm-book-spread {
+    display: flex;
+    width: 100%;
+    min-height: 560px;
+    border-radius: 4px;
+    box-shadow:
+        0 40px 80px rgba(0, 0, 0, 0.9),
+        0 0 0 1px rgba(255, 255, 255, 0.04),
+        0 0 60px rgba(0, 245, 212, 0.04);
+    overflow: hidden;
+    cursor: grab;
+    transform-style: preserve-3d;
+    will-change: transform;
+}
+
+.tm-book-spread:active {
+    cursor: grabbing;
+}
+
+/* ============================================================
+   INDIVIDUAL PAGES
+   ============================================================ */
+.tm-page {
+    flex: 1;
+    min-height: 560px;
+    padding: 3rem 3rem 4rem;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+    background: #0d0d0d;
+}
+
+/* Left page — slightly different tone */
+.tm-page-left {
+    background: linear-gradient(160deg, #101010 0%, #0a0a0a 100%);
+    border-right: none;
+}
+
+/* Right page */
+.tm-page-right {
+    background: linear-gradient(200deg, #0c0c0c 0%, #0e0e0e 100%);
+}
+
+/* Subtle inner page shadow (book curve) */
+.tm-page-gradient-left {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 60px;
+    height: 100%;
+    background: linear-gradient(to left, rgba(0, 0, 0, 0.5), transparent);
+    pointer-events: none;
+    z-index: 2;
+}
+
+.tm-page-gradient-right {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 60px;
+    height: 100%;
+    background: linear-gradient(to right, rgba(0, 0, 0, 0.5), transparent);
+    pointer-events: none;
+    z-index: 2;
+}
+
+/* ============================================================
+   BOOK SPINE (Center Divider)
+   ============================================================ */
+.tm-book-spine {
+    width: 4px;
+    min-height: 560px;
+    flex-shrink: 0;
+    background: linear-gradient(180deg,
+            rgba(212, 175, 55, 0.05) 0%,
+            rgba(212, 175, 55, 0.3) 20%,
+            rgba(212, 175, 55, 0.6) 50%,
+            rgba(212, 175, 55, 0.3) 80%,
+            rgba(212, 175, 55, 0.05) 100%);
+    box-shadow: 0 0 20px rgba(212, 175, 55, 0.2), -4px 0 15px rgba(0, 0, 0, 0.6), 4px 0 15px rgba(0, 0, 0, 0.6);
+    position: relative;
+    z-index: 5;
+}
+
+/* ============================================================
+   PAGE CONTENT — SLIDE HEADER
+   ============================================================ */
+.tm-page-content {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.tm-slide-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.25rem;
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.tm-slide-icon {
+    font-size: 2rem;
+    background: rgba(255, 255, 255, 0.03);
+    width: 52px;
+    height: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    flex-shrink: 0;
+}
+
+.tm-slide-titles h3 {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 1.4rem;
+    color: #fff;
+    margin: 0 0 0.3rem 0;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.tm-slide-titles p {
+    color: #666;
+    font-size: 0.82rem;
+    margin: 0;
+    line-height: 1.4;
+}
+
+/* ============================================================
+   SKILLS LIST
+   ============================================================ */
+.tm-skills-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    flex: 1;
+}
+
+.tm-skill-item {
+    display: flex;
+    flex-direction: column;
+}
+
+.tm-skill-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 0.4rem;
+}
+
+.tm-skill-name {
+    color: #e0e0e0;
+    font-weight: 600;
+    font-size: 0.95rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.tm-primary-badge {
+    background: rgba(212, 175, 55, 0.1);
+    color: #d4af37;
+    border: 1px solid rgba(212, 175, 55, 0.35);
+    font-size: 0.58rem;
+    padding: 2px 7px;
+    border-radius: 3px;
+    letter-spacing: 1px;
+}
+
+.tm-skill-type {
+    color: #00f5d4;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    white-space: nowrap;
+    margin-left: 8px;
+}
+
+/* Progress Bars */
+.tm-skill-bar-bg {
+    width: 100%;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.06);
+    border-radius: 2px;
+    overflow: hidden;
+    margin-bottom: 0.6rem;
+}
+
+.tm-skill-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #00f5d4, #00a896);
+    border-radius: 2px;
+    box-shadow: 0 0 8px rgba(0, 245, 212, 0.4);
+}
+
+/* Gold for primary skill */
+.tm-skill-item:has(.tm-primary-badge) .tm-skill-bar-fill {
+    background: linear-gradient(90deg, #d4af37, #f3d473);
+    box-shadow: 0 0 8px rgba(212, 175, 55, 0.4);
+}
+
+/* Chips */
+.tm-skill-desc {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+
+.tm-skill-chip {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    padding: 3px 8px;
+    border-radius: 3px;
+    font-size: 0.68rem;
+    color: #888;
+    transition: all 0.2s;
+}
+
+.tm-skill-item:hover .tm-skill-chip {
+    background: rgba(255, 255, 255, 0.06);
+    color: #ccc;
+}
+
+/* ============================================================
+   PAGE NUMBER (Bottom of each page)
+   ============================================================ */
+.tm-page-number {
+    position: absolute;
+    bottom: 1.5rem;
+    right: 2.5rem;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.15);
+    letter-spacing: 2px;
+}
+
+.tm-page-left .tm-page-number {
+    right: auto;
+    left: 2.5rem;
+}
+
+/* ============================================================
+   EMPTY / END PAGE
+   ============================================================ */
+.tm-page-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    gap: 1rem;
+}
+
+.tm-logo-watermark {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 5rem;
+    font-weight: 900;
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(212, 175, 55, 0.15);
+    letter-spacing: 8px;
+    animation: pulseOutline 4s infinite alternate ease-in-out;
+}
+
+.tm-end-text {
+    font-family: 'Courier New', monospace;
+    font-size: 0.8rem;
+    color: #333;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+}
+
+/* ============================================================
+   NAVIGATION BUTTONS
+   ============================================================ */
+.tm-nav-btn {
+    flex-shrink: 0;
+    width: 52px;
+    height: 52px;
+    background: rgba(10, 10, 10, 0.9);
+    border: 1px solid rgba(212, 175, 55, 0.3);
+    border-radius: 50%;
+    color: #d4af37;
+    font-size: 1.4rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(12px);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
+    z-index: 10;
+}
+
+.tm-nav-btn:hover {
+    background: rgba(212, 175, 55, 0.15);
+    border-color: #d4af37;
+    box-shadow: 0 0 25px rgba(212, 175, 55, 0.3);
+    transform: scale(1.1);
+}
+
+.tm-nav-hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* ============================================================
+   DRAG HINT
+   ============================================================ */
+.tm-drag-hint {
+    text-align: center;
+    margin-top: 2.5rem;
+    color: rgba(255, 255, 255, 0.25);
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-family: 'Courier New', monospace;
+    animation: pulseHint 3s infinite;
+}
+
+@keyframes pulseHint {
+
+    0%,
+    100% {
+        opacity: 0.4;
+    }
+
+    50% {
+        opacity: 0.9;
+        color: #d4af37;
+    }
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 1024px) {
+    .tm-book-spread {
+        flex-direction: column;
+        min-height: auto;
+    }
+
+    .tm-page {
+        min-height: auto;
+        padding: 2rem 2rem 3rem;
+    }
+
+    .tm-book-spine {
+        width: 100%;
+        height: 3px;
+        min-height: unset;
+        background: linear-gradient(90deg,
+                rgba(212, 175, 55, 0.05) 0%,
+                rgba(212, 175, 55, 0.5) 50%,
+                rgba(212, 175, 55, 0.05) 100%);
+        box-shadow: 0 0 15px rgba(212, 175, 55, 0.2);
+    }
+
+    .tm-page-gradient-left,
+    .tm-page-gradient-right {
+        display: none;
+    }
+}
+
+@media (max-width: 768px) {
+    .tm-book-container {
+        gap: 0.75rem;
+    }
+
+    .tm-nav-btn {
+        width: 40px;
+        height: 40px;
+        font-size: 1rem;
+    }
+
+    .tm-title-front {
+        font-size: 2rem;
+    }
+
+    .tm-title-back {
+        font-size: 2.5rem;
+    }
+
+    .tm-page {
+        padding: 1.5rem 1.5rem 3rem;
+    }
+
+    .tm-slide-titles h3 {
+        font-size: 1.1rem;
+    }
+}

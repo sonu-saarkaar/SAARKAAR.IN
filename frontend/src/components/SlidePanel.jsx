@@ -1,68 +1,42 @@
-import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { useExperienceStore } from '../store/experienceStore'
 import './SlidePanel.css'
 
 export default function SlidePanel() {
-  const [isOpen, setIsOpen] = useState(false)
-  const [activeSection, setActiveSection] = useState(null)
+  const showSlidePanel = useExperienceStore((state) => state.showSlidePanel)
+  const setShowSlidePanel = useExperienceStore((state) => state.setShowSlidePanel)
+  const navigate = useNavigate()
 
-  const sections = {
-    about: {
-      title: 'About',
-      content: 'Welcome to SAARKAAR. This is a virtual office experience designed to create a professional, human connection.'
-    },
-    journey: {
-      title: 'Journey',
-      content: 'A journey of growth, learning, and building meaningful solutions.'
-    },
-    projects: {
-      title: 'Projects',
-      content: 'Explore the portfolio of innovative projects and solutions.'
-    },
-    resume: {
-      title: 'Resume',
-      content: 'Download or view the professional resume tailored to your needs.'
-    },
-    contact: {
-      title: 'Contact',
-      content: 'Get in touch for collaborations, opportunities, or inquiries.'
-    }
+  const handlePortfolioSwitch = () => {
+    setShowSlidePanel(false)
+    navigate('/portfolio')
   }
+
+  if (!showSlidePanel) return null
 
   return (
     <>
-      <div className={`slide-panel ${isOpen ? 'open' : ''}`}>
-        <div className="panel-header">
-          <h2>Explore</h2>
-          <button className="close-button" onClick={() => setIsOpen(false)}>
-            ×
-          </button>
-        </div>
-        
-        <div className="panel-content">
-          {Object.entries(sections).map(([key, section]) => (
-            <div
-              key={key}
-              className={`panel-section ${activeSection === key ? 'active' : ''}`}
-              onClick={() => setActiveSection(activeSection === key ? null : key)}
-            >
-              <h3>{section.title}</h3>
-              {activeSection === key && (
-                <div className="section-content">
-                  <p>{section.content}</p>
-                </div>
-              )}
-            </div>
-          ))}
-        </div>
-      </div>
+      <div
+        className="menu-backdrop-minimal"
+        onClick={() => setShowSlidePanel(false)}
+      />
 
-      {!isOpen && (
-        <div className="panel-trigger" onClick={() => setIsOpen(true)}>
-          <div className="trigger-handle">
-            <span>→</span>
-          </div>
-        </div>
-      )}
+      <div className="premium-menu-card">
+        <h2 className="menu-title">NAVIGATION</h2>
+        <div className="menu-divider"></div>
+
+        <button className="premium-portfolio-btn" onClick={handlePortfolioSwitch}>
+          <span className="btn-glow"></span>
+          <span className="btn-text">Switch to Portfolio</span>
+          <svg className="btn-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <path d="M5 12h14M12 5l7 7-7 7" strokeWidth="2" strokeLinecap="round" />
+          </svg>
+        </button>
+
+        <button className="menu-close-btn" onClick={() => setShowSlidePanel(false)}>
+          Resume Experience
+        </button>
+      </div>
     </>
   )
 }

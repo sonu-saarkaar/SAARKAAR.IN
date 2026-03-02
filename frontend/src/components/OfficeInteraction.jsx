@@ -1,79 +1,70 @@
-import { useState, useEffect } from 'react'
+/*
+  OfficeInteraction.jsx
+  Premium Boss Interaction Interface
+*/
+import React, { useState, useEffect } from 'react'
 import { useExperienceStore } from '../store/experienceStore'
+import { useAnimationStore } from '../store/animationStore'
 import './OfficeInteraction.css'
 
 export default function OfficeInteraction() {
-  const [showSeatingPrompt, setShowSeatingPrompt] = useState(false)
-  const [showTeaOffer, setShowTeaOffer] = useState(false)
-  const isSitting = useExperienceStore((state) => state.isSitting)
-  const setSitting = useExperienceStore((state) => state.setSitting)
-  const setMeetingActive = useExperienceStore((state) => state.setMeetingActive)
-  const setHasMetFounder = useExperienceStore((state) => state.setHasMetFounder)
-  const setNearSeating = useExperienceStore((state) => state.setNearSeating)
-  const isInOffice = useExperienceStore((state) => state.isInOffice)
   const userPosition = useExperienceStore((state) => state.userPosition)
+  const setCeoDoorOpen = useExperienceStore((state) => state.setCeoDoorOpen)
+  const setUserPosition = useExperienceStore((state) => state.setUserPosition)
 
+  const {
+    bossState,
+    setBossState,
+    startReceptionistInteraction, // reusing for generic 'startInteraction' if needed
+    setInteraction,
+    isInteracting,
+    interactionTarget
+  } = useAnimationStore()
+
+  const [promptVisible, setPromptVisible] = useState(false)
+  const [dialogueStep, setDialogueStep] = useState(0)
+
+  // Check distance to Boss Cabin Gate (Approx x=8 to 9, z=0)
   useEffect(() => {
-    if (!isInOffice) return
-
-    // Check if user is near seating area in boss cabin
-    const bossCabinPos = [8, 0, -6]
-    const distance = Math.sqrt(
-      Math.pow(userPosition[0] - bossCabinPos[0], 2) +
-      Math.pow(userPosition[2] - bossCabinPos[2], 2)
+    // We want the prompt to appear near the gate, before entering
+    const gatePos = [8, 0, 0]
+    const dist = Math.sqrt(
+      Math.pow(userPosition[0] - gatePos[0], 2) +
+      Math.pow(userPosition[2] - gatePos[2], 2)
     )
-    
-    const near = distance < 2
-    setNearSeating(near)
-    
-    if (near && !isSitting) {
-      setShowSeatingPrompt(true)
+
+    // Only show if user is near gate and NOT already inside (x > 9.5 is inside)
+    if (dist < 3 && userPosition[0] < 9.5) {
+      setPromptVisible(true)
     } else {
-      setShowSeatingPrompt(false)
+      setPromptVisible(false)
     }
-  }, [userPosition, isSitting, setNearSeating, isInOffice])
+  }, [userPosition, isInteracting])
 
-  useEffect(() => {
-    if (isSitting) {
-      setTimeout(() => {
-        setShowTeaOffer(true)
-      }, 2000)
-    }
-  }, [isSitting])
-
-  const handleSit = () => {
-    setSitting(true)
-    setShowSeatingPrompt(false)
-    useExperienceStore.getState().setUserPosition([7, 0.4, -5])
-  }
-
-  const handleTeaCoffee = () => {
-    setShowTeaOffer(false)
+  const handleEnterBossCabin = () => {
+    // Open the door
+    setCeoDoorOpen(true)
+    // Small delay to let the door open smoothly, then move player inside
     setTimeout(() => {
-      setMeetingActive(true)
-      setHasMetFounder(true)
-    }, 1500)
+      setUserPosition([12, userPosition[1], 0])
+    }, 500)
+    setPromptVisible(false)
   }
 
-  if (!isInOffice) return null
+  if (!isInteracting) return null
 
   return (
-    <div className="office-interaction">
-      {showSeatingPrompt && !isSitting && (
-        <div className="interaction-prompt">
-          <button className="interaction-button" onClick={handleSit}>
-            Sit Here
-          </button>
-        </div>
-      )}
-
-      {showTeaOffer && isSitting && (
-        <div className="founder-message">
-          <p>"Please have a seat. Tea or coffee?"</p>
-          <div className="tea-coffee-options">
-            <button onClick={handleTeaCoffee}>Tea</button>
-            <button onClick={handleTeaCoffee}>Coffee</button>
-          </div>
+    <div className="office-overlay">
+      {isInteracting && interactionTarget === 'boss' && (
+        <div className="boss-dialogue">
+          <h3>CEO</h3>
+          <p>
+            {dialogueStep === 1 ? "Welcome. I've been expecting you. Let's discuss the project." : "..."}
+          </p>
+          <button onClick={() => {
+            setInteraction(false, null)
+            setBossState('typing')
+          }}>End Meeting</button>
         </div>
       )}
     </div>

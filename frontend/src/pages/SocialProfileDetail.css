@@ -1,0 +1,443 @@
+.social-ig-page {
+  min-height: 100vh;
+  padding: 16px;
+  color: #eaf0ff;
+  background: var(--ig-gradient);
+  font-family: Inter, 'SF Pro Text', Poppins, system-ui, -apple-system, sans-serif;
+}
+
+.social-ig-shell {
+  max-width: 1040px;
+  margin: 0 auto;
+  display: grid;
+  gap: 14px;
+}
+
+.glass-card {
+  background: linear-gradient(150deg, rgba(255, 255, 255, 0.09), rgba(255, 255, 255, 0.03));
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 18px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.38), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(12px);
+}
+
+.social-ig-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px;
+}
+
+.icon-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(10, 15, 25, 0.66);
+  color: #fff;
+  font-size: 1.05rem;
+  cursor: pointer;
+  transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+}
+
+.icon-btn:hover {
+  transform: translateY(-1px);
+  border-color: rgba(59, 130, 246, 0.66);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+}
+
+.topbar-user-block {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.topbar-user-block h1 {
+  margin: 0;
+  font-size: clamp(1.1rem, 3vw, 1.4rem);
+  font-weight: 700;
+  letter-spacing: 0.2px;
+}
+
+.verified-badge {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--ig-accent);
+  color: #fff;
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+
+.topbar-icons {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.social-ig-profile {
+  padding: 18px;
+  display: grid;
+  grid-template-columns: 88px 1fr;
+  gap: 16px;
+}
+
+.profile-avatar-wrap {
+  width: 88px;
+  height: 88px;
+  border-radius: 50%;
+  padding: 3px;
+  background: linear-gradient(45deg, #0ea5e9, #3b82f6, #60a5fa);
+  box-shadow: 0 10px 25px rgba(59, 130, 246, 0.32);
+}
+
+.profile-avatar-wrap img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #05080e;
+}
+
+.profile-content h2 {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.profile-title {
+  margin: 5px 0 8px;
+  color: #c9d8ff;
+  font-size: 0.92rem;
+}
+
+.profile-bio {
+  margin: 0;
+  color: rgba(226, 234, 255, 0.92);
+  font-size: 0.9rem;
+  line-height: 1.45;
+}
+
+.profile-stats {
+  margin-top: 12px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.profile-stats div {
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(8, 14, 24, 0.6);
+  border-radius: 12px;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+}
+
+.profile-stats strong {
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.profile-stats span {
+  margin-top: 2px;
+  font-size: 0.74rem;
+  color: #b8c7ea;
+}
+
+.profile-actions {
+  margin-top: 12px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.profile-actions button {
+  border: 1px solid rgba(130, 170, 255, 0.32);
+  background: linear-gradient(160deg, rgba(30, 64, 175, 0.4), rgba(37, 99, 235, 0.2));
+  color: #eef4ff;
+  border-radius: 999px;
+  padding: 10px 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+}
+
+.profile-actions button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 0 16px rgba(59, 130, 246, 0.25);
+  border-color: rgba(147, 197, 253, 0.8);
+}
+
+.social-ig-highlights {
+  padding: 14px;
+}
+
+.social-ig-highlights h3,
+.social-ig-posts h3,
+.social-editor h3 {
+  margin: 0 0 12px;
+  font-size: 1rem;
+  font-weight: 650;
+}
+
+.highlights-row {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  padding-bottom: 6px;
+  scrollbar-width: thin;
+}
+
+.highlight-item {
+  min-width: 76px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.highlight-ring {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  padding: 2px;
+  background: linear-gradient(45deg, #0ea5e9, #2563eb, #60a5fa);
+  transition: transform 220ms ease, box-shadow 220ms ease;
+}
+
+.highlight-item:hover .highlight-ring {
+  transform: translateY(-2px);
+  box-shadow: 0 0 18px rgba(59, 130, 246, 0.35);
+}
+
+.highlight-core {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-weight: 700;
+  background: #090d16;
+  color: #dbeafe;
+}
+
+.highlight-item span {
+  font-size: 0.75rem;
+  color: #b5c5e9;
+  max-width: 76px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.social-ig-posts {
+  padding: 14px;
+}
+
+.posts-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.posts-head a {
+  color: #93c5fd;
+  text-decoration: none;
+  font-size: 0.84rem;
+}
+
+.posts-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.post-card {
+  border: 0;
+  padding: 0;
+  margin: 0;
+  position: relative;
+  aspect-ratio: 1/1;
+  border-radius: 12px;
+  overflow: hidden;
+  cursor: pointer;
+  background: #0a1020;
+}
+
+.post-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 260ms ease;
+}
+
+.post-card:hover img {
+  transform: scale(1.06);
+}
+
+.gallery-mark {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 22px;
+  height: 22px;
+  display: grid;
+  place-items: center;
+  border-radius: 7px;
+  background: rgba(4, 8, 16, 0.65);
+  color: #dbeafe;
+  font-size: 0.72rem;
+}
+
+.social-editor {
+  padding: 14px;
+}
+
+.editor-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.editor-grid label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  color: #c5d4f3;
+  font-size: 0.8rem;
+}
+
+.editor-grid input {
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(6, 11, 18, 0.58);
+  color: #eff6ff;
+  border-radius: 10px;
+  padding: 9px 10px;
+  font-size: 0.9rem;
+  outline: none;
+}
+
+.editor-grid input:focus {
+  border-color: rgba(96, 165, 250, 0.8);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+}
+
+.editor-grid .wide {
+  grid-column: 1 / -1;
+}
+
+.post-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: grid;
+  place-items: center;
+  background: rgba(2, 5, 10, 0.72);
+  backdrop-filter: blur(8px);
+  animation: fadeIn 220ms ease;
+  padding: 16px;
+}
+
+.post-modal {
+  width: min(720px, 100%);
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: #04070e;
+  position: relative;
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.55);
+  animation: riseIn 240ms ease;
+}
+
+.modal-close {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: rgba(3, 8, 17, 0.78);
+  color: #fff;
+  font-size: 1.2rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.post-modal img {
+  width: 100%;
+  aspect-ratio: 1/1;
+  object-fit: cover;
+}
+
+.social-ig-not-found {
+  min-height: 70vh;
+  display: grid;
+  place-items: center;
+  text-align: center;
+}
+
+.social-ig-not-found button {
+  margin-top: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(59, 130, 246, 0.22);
+  color: #fff;
+  border-radius: 10px;
+  padding: 10px 14px;
+  cursor: pointer;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes riseIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@media (max-width: 760px) {
+  .social-ig-page {
+    padding: 12px;
+  }
+
+  .social-ig-profile {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    text-align: center;
+  }
+
+  .profile-stats,
+  .profile-actions,
+  .editor-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .posts-head {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .posts-grid {
+    gap: 6px;
+  }
+}

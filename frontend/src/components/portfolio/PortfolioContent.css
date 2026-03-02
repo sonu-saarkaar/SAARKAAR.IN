@@ -1,0 +1,1399 @@
+/* ----------------------------------------------------
+   PROJECT COMMAND CENTER - BASE & GRID
+   ---------------------------------------------------- */
+.command-center {
+    padding: 6rem 2rem;
+    background-color: #0a0a0a;
+    color: #fff;
+    font-family: 'Inter', sans-serif;
+    position: relative;
+    overflow: hidden;
+    min-height: 100vh;
+}
+
+.cc-particles {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+    background-image: radial-gradient(rgba(0, 245, 212, 0.05) 1px, transparent 1px);
+    background-size: 40px 40px;
+    z-index: 0;
+}
+
+.cc-header {
+    text-align: center;
+    margin-bottom: 5rem;
+    position: relative;
+    z-index: 2;
+}
+
+.cc-title {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 4rem;
+    font-weight: 700;
+    letter-spacing: 4px;
+    color: #fff;
+    text-transform: uppercase;
+    margin: 0;
+    text-shadow: 0 0 20px rgba(212, 175, 55, 0.2);
+}
+
+.cc-title span {
+    color: #d4af37;
+}
+
+.cc-section-title {
+    color: #00f5d4;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 2rem;
+    letter-spacing: 2px;
+    margin-top: 4rem;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid rgba(0, 245, 212, 0.2);
+    padding-bottom: 0.5rem;
+    position: relative;
+    z-index: 2;
+    text-transform: uppercase;
+}
+
+.cc-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+    gap: 2.5rem;
+    position: relative;
+    z-index: 2;
+}
+
+/* ----------------------------------------------------
+   PROJECT CARDS
+   ---------------------------------------------------- */
+.cc-card {
+    background: rgba(20, 20, 20, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    padding: 2rem;
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    transition: all 0.3s ease-out;
+}
+
+.cc-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at top right, rgba(212, 175, 55, 0.1), transparent 50%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.cc-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(212, 175, 55, 0.2);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.8), 0 0 20px rgba(212, 175, 55, 0.1);
+}
+
+.cc-card:hover::before {
+    opacity: 1;
+}
+
+.cc-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1.5rem;
+}
+
+.cc-card-logo {
+    font-size: 2.5rem;
+    background: rgba(255, 255, 255, 0.05);
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.cc-card-status {
+    font-size: 0.75rem;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+.status-LIVE {
+    background: rgba(0, 245, 212, 0.1);
+    color: #00f5d4;
+    border: 1px solid rgba(0, 245, 212, 0.3);
+}
+
+.status-SOLD {
+    background: rgba(212, 175, 55, 0.1);
+    color: #d4af37;
+    border: 1px solid rgba(212, 175, 55, 0.3);
+}
+
+.status-BUILD {
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.status-UPCOMING {
+    background: rgba(150, 150, 150, 0.1);
+    color: #aaa;
+    border: 1px solid rgba(150, 150, 150, 0.3);
+}
+
+.cc-card-title {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 1.8rem;
+    margin: 0 0 0.5rem 0;
+    font-weight: 700;
+    color: #fff;
+}
+
+.cc-card-tagline {
+    color: #aaa;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    margin-bottom: 1.5rem;
+}
+
+.cc-card-tech {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 1.5rem;
+}
+
+.tech-chip {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    color: #ccc;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
+}
+
+.cc-card:hover .tech-chip {
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+.cc-card-archtext {
+    font-size: 0.75rem;
+    color: #666;
+    margin-bottom: 1.5rem;
+    font-style: italic;
+    letter-spacing: 0.5px;
+}
+
+.cc-card-buttons {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.cc-btn {
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: 'Inter', sans-serif;
+}
+
+.cc-btn-gold {
+    background: #d4af37;
+    color: #000;
+    border: 1px solid #d4af37;
+}
+
+.cc-btn-gold:hover {
+    background: transparent;
+    color: #d4af37;
+    box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
+}
+
+.cc-btn-teal {
+    background: transparent;
+    color: #00f5d4;
+    border: 1px solid rgba(0, 245, 212, 0.5);
+}
+
+.cc-btn-teal:hover {
+    background: rgba(0, 245, 212, 0.1);
+    border-color: #00f5d4;
+    box-shadow: 0 0 15px rgba(0, 245, 212, 0.2);
+}
+
+.cc-btn-minimal {
+    background: transparent;
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.cc-btn-minimal:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.5);
+}
+
+
+/* ----------------------------------------------------
+   [ NEW ] FULL-WIDTH HIGH-DENSITY MODAL OVERLAY
+   ---------------------------------------------------- */
+.cs-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(5, 5, 5, 0.95);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    z-index: 999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.golden-sweep-fast {
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.15), transparent);
+    transform: skewX(-20deg);
+    animation: sweepFast 0.8s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+    pointer-events: none;
+    z-index: 1000;
+}
+
+@keyframes sweepFast {
+    0% {
+        left: -100%;
+    }
+
+    100% {
+        left: 150%;
+    }
+}
+
+.cs-modal-container {
+    width: 100%;
+    height: 100%;
+    /* Full screen */
+    background: #0a0a0a;
+    overflow-y: auto;
+    position: relative;
+    z-index: 1001;
+    display: flex;
+    flex-direction: column;
+}
+
+.cs-modal-close {
+    position: fixed;
+    top: 2rem;
+    right: 2rem;
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #fff;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 1.5rem;
+    transition: all 0.3s ease;
+    z-index: 1010;
+    backdrop-filter: blur(10px);
+}
+
+.cs-modal-close:hover {
+    background: rgba(212, 175, 55, 0.2);
+    border-color: #d4af37;
+    color: #d4af37;
+    transform: rotate(90deg);
+}
+
+
+/* ----------------------------------------------------
+   HERO SECTION (Full Width)
+   ---------------------------------------------------- */
+.cs-hero {
+    width: 100%;
+    padding: 6rem 4rem 4rem 4rem;
+    position: relative;
+    background: linear-gradient(180deg, rgba(20, 20, 20, 0.8) 0%, #0a0a0a 100%);
+}
+
+.cs-hero-glow {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60%;
+    height: 300px;
+    background: radial-gradient(ellipse at top, rgba(212, 175, 55, 0.15), transparent 70%);
+    pointer-events: none;
+}
+
+.cs-hero-content {
+    max-width: 1600px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
+}
+
+.cs-title-group {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    margin-bottom: 1rem;
+}
+
+.cs-hero-icon {
+    font-size: 5rem;
+    background: rgba(255, 255, 255, 0.03);
+    padding: 1rem;
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.cs-hero-title {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 5rem;
+    margin: 0 0 1rem 0;
+    color: #fff;
+    text-shadow: 0 0 30px rgba(212, 175, 55, 0.4);
+    line-height: 1;
+    letter-spacing: -1px;
+}
+
+.cs-badge {
+    display: inline-block;
+    font-size: 0.85rem;
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    border: 1px solid;
+}
+
+.badge-LIVE {
+    background: rgba(0, 245, 212, 0.1);
+    color: #00f5d4;
+    border-color: rgba(0, 245, 212, 0.3);
+}
+
+.badge-SOLD {
+    background: rgba(212, 175, 55, 0.1);
+    color: #d4af37;
+    border-color: rgba(212, 175, 55, 0.3);
+}
+
+.badge-BUILD {
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+.badge-UPCOMING {
+    background: rgba(150, 150, 150, 0.1);
+    color: #aaa;
+    border-color: rgba(150, 150, 150, 0.3);
+}
+
+.cs-hero-tagline {
+    font-size: 1.5rem;
+    color: #aaa;
+    max-width: 800px;
+    margin-bottom: 2rem;
+    line-height: 1.4;
+}
+
+.cs-hero-actions {
+    display: flex;
+    gap: 1rem;
+}
+
+.cs-btn {
+    padding: 12px 24px;
+    border-radius: 4px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: 'Inter', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.cs-btn-gold {
+    background: #d4af37;
+    color: #000;
+    border: 1px solid #d4af37;
+}
+
+.cs-btn-gold:hover {
+    background: transparent;
+    color: #d4af37;
+    box-shadow: 0 0 20px rgba(212, 175, 55, 0.5);
+}
+
+.cs-btn-teal {
+    background: transparent;
+    color: #00f5d4;
+    border: 1px solid rgba(0, 245, 212, 0.5);
+}
+
+.cs-btn-teal:hover {
+    background: rgba(0, 245, 212, 0.1);
+    border-color: #00f5d4;
+    box-shadow: 0 0 20px rgba(0, 245, 212, 0.3);
+}
+
+.cs-hero-underline {
+    height: 1px;
+    width: 100%;
+    background: linear-gradient(90deg, #d4af37, transparent);
+    margin-top: 4rem;
+    opacity: 0.3;
+}
+
+
+/* ----------------------------------------------------
+   BODY 2-COLUMN GRID (Left 65%, Right 35%)
+   ---------------------------------------------------- */
+.cs-body-grid {
+    display: grid;
+    grid-template-columns: 65% 35%;
+    max-width: 1600px;
+    margin: 0 auto;
+    width: 100%;
+    padding: 0 4rem 6rem 4rem;
+    box-sizing: border-box;
+}
+
+@media (max-width: 1100px) {
+    .cs-body-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .cs-right-col {
+        margin-top: 4rem;
+    }
+
+    .cs-sticky-panel {
+        position: relative !important;
+        top: 0 !important;
+        max-height: none !important;
+    }
+}
+
+
+/* ----------------------------------------------------
+   LEFT COLUMN
+   ---------------------------------------------------- */
+.cs-left-col {
+    padding-right: 4rem;
+}
+
+.cs-block {
+    margin-bottom: 5rem;
+}
+
+.cs-block-title {
+    color: #00f5d4;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 1.5rem;
+    letter-spacing: 2px;
+    margin: 0 0 0.5rem 0;
+    text-transform: uppercase;
+}
+
+.cs-block-subtitle {
+    color: #fff;
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin: 0 0 1.5rem 0;
+    letter-spacing: -0.5px;
+}
+
+/* Story */
+.cs-story-content {
+    color: #aaa;
+    font-size: 1.1rem;
+    line-height: 1.8;
+}
+
+.cs-story-content p {
+    margin-bottom: 1rem;
+}
+
+.cs-story-content strong {
+    color: #fff;
+}
+
+/* Flow Diagram */
+.cs-flow-diagram {
+    background: rgba(20, 20, 20, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 2.5rem;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.cs-flow-node {
+    background: rgba(0, 245, 212, 0.05);
+    border: 1px solid rgba(0, 245, 212, 0.3);
+    padding: 1rem 2rem;
+    border-radius: 4px;
+    color: #00f5d4;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 1.2rem;
+    letter-spacing: 1px;
+    text-align: center;
+    width: 100%;
+    max-width: 400px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.cs-flow-arrow {
+    color: rgba(255, 255, 255, 0.3);
+    font-size: 1.5rem;
+}
+
+/* Tech Matrix */
+.cs-matrix-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+}
+
+.cs-matrix-card {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 1.5rem;
+    border-radius: 8px;
+    transition: background 0.3s;
+}
+
+.cs-matrix-card:hover {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.cs-matrix-name {
+    color: #d4af37;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 0.5rem;
+}
+
+.cs-matrix-stack {
+    color: #fff;
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.cs-matrix-desc {
+    color: #888;
+    font-size: 0.9rem;
+    line-height: 1.4;
+}
+
+/* Metrics */
+.cs-metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+}
+
+.cs-metric-wide {
+    grid-column: span 2;
+}
+
+@media (max-width: 768px) {
+    .cs-metrics-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+.cs-metric-box {
+    background: rgba(20, 20, 20, 0.8);
+    border: 1px solid rgba(212, 175, 55, 0.2);
+    padding: 1.5rem;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    text-align: center;
+}
+
+.cs-metric-box span {
+    color: #888;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.cs-metric-box strong {
+    color: #fff;
+    font-size: 1.8rem;
+    font-family: 'Rajdhani', sans-serif;
+}
+
+/* Business & R&D */
+.cs-text-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+}
+
+.cs-text-wide {
+    grid-column: span 2;
+}
+
+.cs-text-box {
+    background: rgba(255, 255, 255, 0.02);
+    border-left: 2px solid #00f5d4;
+    padding: 1.5rem;
+}
+
+.cs-text-box h4 {
+    color: #fff;
+    margin: 0 0 1rem 0;
+    font-size: 1.1rem;
+}
+
+.cs-text-box p {
+    color: #aaa;
+    margin: 0;
+    line-height: 1.6;
+}
+
+
+/* ----------------------------------------------------
+   RIGHT COLUMN (STICKY SYSTEM PANEL)
+   ---------------------------------------------------- */
+.cs-right-col {
+    position: relative;
+}
+
+.cs-sticky-panel {
+    position: sticky;
+    top: 2rem;
+    background: rgba(15, 15, 15, 0.7);
+    border: 1px solid rgba(212, 175, 55, 0.15);
+    border-radius: 12px;
+    padding: 2rem;
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    max-height: calc(100vh - 4rem);
+    overflow-y: auto;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+}
+
+/* Webkit Scrollbar for panel */
+.cs-sticky-panel::-webkit-scrollbar {
+    width: 6px;
+}
+
+.cs-sticky-panel::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.cs-sticky-panel::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+}
+
+.sys-panel-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #fff;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 1.2rem;
+    letter-spacing: 2px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    padding-bottom: 1rem;
+    margin-bottom: 2rem;
+}
+
+.sys-dot {
+    width: 8px;
+    height: 8px;
+    background: #00f5d4;
+    border-radius: 50%;
+    box-shadow: 0 0 10px #00f5d4;
+}
+
+.sys-panel-section {
+    margin-bottom: 3rem;
+}
+
+.sys-panel-heading {
+    color: #888;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin: 0 0 1rem 0;
+}
+
+/* Progress Items */
+.sys-progress-item {
+    margin-bottom: 1rem;
+}
+
+.sys-progress-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.85rem;
+    color: #ccc;
+    margin-bottom: 0.4rem;
+}
+
+.sys-progress-labels span:last-child {
+    color: #d4af37;
+    font-family: 'Rajdhani', sans-serif;
+}
+
+.sys-progress-bg {
+    background: rgba(255, 255, 255, 0.05);
+    height: 6px;
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.sys-progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #d4af37, #f3d473);
+    box-shadow: 0 0 10px rgba(212, 175, 55, 0.4);
+}
+
+/* Mini Stats */
+.sys-mini-stats {
+    display: flex;
+    gap: 1rem;
+    justify-content: space-between;
+}
+
+.sys-stat {
+    display: flex;
+    flex-direction: column;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 1rem;
+    border-radius: 6px;
+    width: 100%;
+    align-items: center;
+}
+
+.sys-stat span {
+    font-size: 0.7rem;
+    color: #888;
+    text-transform: uppercase;
+    margin-bottom: 0.2rem;
+}
+
+.sys-stat strong {
+    font-size: 1.2rem;
+    color: #00f5d4;
+    font-family: 'Rajdhani', sans-serif;
+}
+
+/* Team List */
+.sys-team-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+
+.sys-team-card {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background: rgba(255, 255, 255, 0.02);
+    padding: 0.8rem;
+    border-radius: 6px;
+    border: 1px solid rgba(255, 255, 255, 0.02);
+    transition: 0.2s;
+}
+
+.sys-team-card:hover {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.sys-team-avatar {
+    width: 36px;
+    height: 36px;
+    background: rgba(212, 175, 55, 0.2);
+    color: #d4af37;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    border: 1px solid rgba(212, 175, 55, 0.5);
+}
+
+.sys-team-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.sys-team-info strong {
+    color: #fff;
+    font-size: 0.95rem;
+}
+
+.sys-team-info span {
+    color: #888;
+    font-size: 0.8rem;
+}
+
+/* Feedback Panel */
+.sys-feedback-panel {
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(0, 245, 212, 0.2);
+    padding: 1.5rem;
+    border-radius: 8px;
+}
+
+.fb-row {
+    margin-bottom: 1rem;
+}
+
+.fb-row label {
+    display: block;
+    color: #aaa;
+    font-size: 0.85rem;
+    margin-bottom: 0.3rem;
+}
+
+.fb-range {
+    width: 100%;
+    accent-color: #00f5d4;
+    cursor: pointer;
+}
+
+.fb-score {
+    margin-top: 1.5rem;
+    text-align: center;
+    background: rgba(0, 245, 212, 0.05);
+    border: 1px dashed rgba(0, 245, 212, 0.3);
+    padding: 1rem;
+    border-radius: 6px;
+}
+
+.fb-score-label {
+    font-size: 0.75rem;
+    color: #888;
+    letter-spacing: 1px;
+}
+
+.fb-score-value {
+    font-size: 2.2rem;
+    color: #00f5d4;
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: bold;
+    margin-top: 0.5rem;
+    text-shadow: 0 0 10px rgba(0, 245, 212, 0.3);
+}
+
+/* License */
+.sys-license {
+    text-align: center;
+    font-size: 0.7rem;
+    color: #555;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    margin-top: 3rem;
+}
+
+/* ======================================================
+   UNIFIED STATUS TIMELINE STRIP
+   ====================================================== */
+.cc-status-strip {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    margin: 0 auto 3.5rem;
+    flex-wrap: wrap;
+    position: relative;
+    z-index: 2;
+}
+
+.cc-status-pill {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: #666;
+    padding: 10px 22px;
+    border-radius: 40px;
+    font-size: 0.78rem;
+    font-family: 'Rajdhani', sans-serif;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.35s ease;
+    font-weight: 600;
+}
+
+.cc-status-pill:hover {
+    border-color: rgba(255, 255, 255, 0.2);
+    color: #ccc;
+}
+
+.cc-status-pill--active {
+    border-color: var(--pill-color);
+    color: #fff;
+    background: rgba(255, 255, 255, 0.05);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5), 0 0 10px color-mix(in srgb, var(--pill-color) 20%, transparent);
+}
+
+.cc-status-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    box-shadow: 0 0 6px currentColor;
+}
+
+.cc-status-count {
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    padding: 1px 7px;
+    font-size: 0.7rem;
+    color: #888;
+    margin-left: 2px;
+}
+
+.cc-status-pill--active .cc-status-count {
+    color: var(--pill-color);
+}
+
+.cc-status-connector {
+    color: #333;
+    font-size: 1rem;
+    padding: 0 0.8rem;
+    user-select: none;
+}
+
+/* ======================================================
+   CAROUSEL ROOT
+   ====================================================== */
+.cc-carousel-root {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    max-width: 1300px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
+}
+
+.cc-stage {
+    flex: 1;
+    position: relative;
+    min-height: 360px;
+    overflow: hidden;
+}
+
+/* ======================================================
+   CAROUSEL CARD — TWO COLUMN LAYOUT
+   ====================================================== */
+.cc-carousel-card {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 0;
+    width: 100%;
+    background: rgba(15, 15, 15, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 14px;
+    overflow: hidden;
+    backdrop-filter: blur(20px);
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.7);
+    cursor: default;
+    will-change: transform, opacity;
+}
+
+/* Left Column */
+.cc-ccard-left {
+    padding: 2.5rem 2.5rem;
+    display: flex;
+    flex-direction: column;
+    border-right: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.cc-ccard-top {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.cc-ccard-logo {
+    font-size: 2.8rem;
+    background: rgba(255, 255, 255, 0.03);
+    width: 64px;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    flex-shrink: 0;
+}
+
+.cc-ccard-cat {
+    display: block;
+    font-size: 0.7rem;
+    color: #555;
+    font-family: 'Courier New', monospace;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-top: 4px;
+}
+
+.cc-ccard-title {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 2.8rem;
+    font-weight: 800;
+    margin: 0 0 0.4rem;
+    color: #fff;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    line-height: 1;
+}
+
+.cc-ccard-tagline {
+    color: #888;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    margin-bottom: 0.4rem;
+    font-style: italic;
+}
+
+/* Right Column */
+.cc-ccard-right {
+    padding: 2.5rem 2.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    background: rgba(8, 8, 8, 0.5);
+}
+
+.cc-ccard-stats-label {
+    font-family: 'Courier New', monospace;
+    font-size: 0.72rem;
+    color: #00f5d4;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+    border-bottom: 1px solid rgba(0, 245, 212, 0.1);
+    padding-bottom: 0.5rem;
+}
+
+.cc-ccard-stat-row {
+    display: grid;
+    grid-template-columns: 1fr auto auto;
+    align-items: center;
+    gap: 0.8rem;
+}
+
+.cc-ccard-stat-name {
+    font-size: 0.78rem;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.cc-ccard-bar-bg {
+    height: 4px;
+    background: rgba(255, 255, 255, 0.06);
+    border-radius: 2px;
+    overflow: hidden;
+    width: 80px;
+}
+
+.cc-ccard-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #d4af37, #f3d473);
+    border-radius: 2px;
+    box-shadow: 0 0 6px rgba(212, 175, 55, 0.4);
+}
+
+.cc-ccard-stat-val {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 0.85rem;
+    color: #d4af37;
+    width: 36px;
+    text-align: right;
+}
+
+/* Metrics boxes */
+.cc-ccard-metrics {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-top: 0.5rem;
+}
+
+.cc-ccard-metric-box {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 6px;
+    padding: 6px 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+    min-width: 80px;
+}
+
+.cc-ccard-metric-box span {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    color: #fff;
+}
+
+.cc-ccard-metric-box small {
+    font-size: 0.6rem;
+    color: #555;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    margin-top: 2px;
+}
+
+/* Mini stats */
+.cc-ccard-ministats {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: auto;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.cc-ccard-ministats>div {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+}
+
+.cc-ccard-ministats strong {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 1rem;
+    color: #00f5d4;
+}
+
+.cc-ccard-ministats span {
+    font-size: 0.62rem;
+    color: #555;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* ======================================================
+   NAV ARROWS
+   ====================================================== */
+.cc-arrow {
+    flex-shrink: 0;
+    width: 52px;
+    height: 52px;
+    background: rgba(10, 10, 10, 0.9);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    color: #888;
+    font-size: 1.3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+    z-index: 5;
+}
+
+.cc-arrow:hover {
+    border-color: #d4af37;
+    color: #d4af37;
+    box-shadow: 0 0 20px rgba(212, 175, 55, 0.2);
+    transform: scale(1.08);
+}
+
+.cc-arrow--hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* ======================================================
+   DOT NAVIGATION
+   ====================================================== */
+.cc-dot-nav {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 2rem;
+    position: relative;
+    z-index: 2;
+}
+
+.cc-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(255, 255, 255, 0.12);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    padding: 0;
+}
+
+.cc-dot--LIVE {
+    --dot-color: #00f5d4;
+}
+
+.cc-dot--BUILD {
+    --dot-color: #fff;
+}
+
+.cc-dot--UPCOMING {
+    --dot-color: #666;
+}
+
+.cc-dot--SOLD {
+    --dot-color: #d4af37;
+}
+
+.cc-dot--active {
+    background: var(--dot-color, #fff);
+    box-shadow: 0 0 8px var(--dot-color, #fff);
+    transform: scale(1.4);
+}
+
+.cc-dot:hover {
+    background: rgba(255, 255, 255, 0.4);
+    transform: scale(1.3);
+}
+
+/* ======================================================
+   PROJECT COUNTER
+   ====================================================== */
+.cc-project-counter {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 1.5rem;
+    font-family: 'Rajdhani', sans-serif;
+    letter-spacing: 1px;
+    position: relative;
+    z-index: 2;
+}
+
+.cc-counter-current {
+    font-size: 1.4rem;
+    color: #d4af37;
+    font-weight: 800;
+}
+
+.cc-counter-sep {
+    color: #333;
+    font-size: 1rem;
+}
+
+.cc-counter-total {
+    font-size: 1rem;
+    color: #444;
+}
+
+.cc-counter-name {
+    font-size: 0.75rem;
+    color: #555;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-left: 8px;
+    font-family: 'Courier New', monospace;
+}
+
+/* ======================================================
+   RESPONSIVE
+   ====================================================== */
+@media (max-width: 900px) {
+    .cc-carousel-card {
+        grid-template-columns: 1fr;
+    }
+
+    .cc-ccard-left {
+        border-right: none;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .cc-ccard-right {
+        padding: 1.5rem;
+    }
+
+    .cc-ccard-title {
+        font-size: 2rem;
+    }
+}
+
+@media (max-width: 600px) {
+    .cc-status-strip {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .cc-status-connector {
+        transform: rotate(90deg);
+    }
+
+    .cc-carousel-root {
+        gap: 0.5rem;
+    }
+
+    .cc-arrow {
+        width: 38px;
+        height: 38px;
+        font-size: 1rem;
+    }
+
+    .cc-ccard-left {
+        padding: 1.5rem;
+    }
+}

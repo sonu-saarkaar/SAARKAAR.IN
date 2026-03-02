@@ -1,27 +1,165 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+/* Global CSS for Standard Web Pages */
+:root {
+  --primary: #eebb44;
+  --bg-dark: #0a0a0a;
+  --bg-darker: #050505;
+  --text-muted: #888;
+  --text-light: #eee;
+  --gold-accent: #eebb44;
+  --glass-bg: rgba(255, 255, 255, 0.05);
+  --glass-border: rgba(255, 255, 255, 0.1);
 }
 
-html, body {
-  width: 100%;
+html {
   height: 100%;
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  overflow-y: auto;
 }
 
-#root {
-  width: 100vw;
-  height: 100vh;
+body {
+  background-color: var(--bg-dark);
+  color: var(--text-light);
+  font-family: 'Inter', sans-serif;
   margin: 0;
   padding: 0;
-  position: relative;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
+  min-height: 100%;
+  height: auto;
+}
+
+/* Page Layout */
+.loading-screen {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.5rem;
+  color: var(--gold-accent);
+  background: var(--bg-dark);
+}
+
+.grid-2 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+.page-container {
+  min-height: 100vh;
+  padding-top: 100px;
+  padding-bottom: 60px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.section-head {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.section-head h1 {
+  font-size: 3rem;
+  font-weight: 800;
+  margin-bottom: 10px;
+  background: linear-gradient(to right, #fff, #aaa);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.section-head .sub {
+  color: var(--primary);
+  font-size: 1rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+/* Card Grid Layout */
+.grid-cols {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+}
+
+.card {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 30px;
+  transition: transform 0.3s, border-color 0.3s;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  border-color: var(--primary);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.card h3 {
+  margin-top: 0;
+  font-size: 1.5rem;
+  color: white;
+}
+
+.card p {
+  color: #bbb;
+  line-height: 1.6;
+}
+
+/* Interactive Button */
+.btn-cta {
+  display: inline-block;
+  background: var(--primary);
+  color: black;
+  padding: 12px 30px;
+  font-weight: 700;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: transform 0.2s;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-cta:hover {
+  transform: scale(1.05);
+  background: #ffcc55;
+}
+
+/* Navigation Overlay for Pages */
+.temp-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(10, 10, 10, 0.8);
+  backdrop-filter: blur(10px);
+  z-index: 100;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.temp-nav .logo {
+  font-weight: 800;
+  color: var(--primary);
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+.temp-nav .back-btn {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: white;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.temp-nav .back-btn:hover {
+  background: white;
+  color: black;
 }

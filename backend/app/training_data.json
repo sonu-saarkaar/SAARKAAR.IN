@@ -1,0 +1,3202 @@
+[
+  {
+    "text": "Is the boss available for a meeting? sir",
+    "intent": "meeting_request"
+  },
+  {
+    "text": "Umm, Greetings sir",
+    "intent": "casual_talk"
+  },
+  {
+    "text": "can you bring me some tea right now",
+    "intent": "drink_request"
+  },
+  {
+    "text": "is the boss available for a meeting? today",
+    "intent": "meeting_request"
+  },
+  {
+    "text": "can you what is in the portfolio? man",
+    "intent": "portfolio_query"
+  },
+  {
+    "text": "Hey, Close this office view",
+    "intent": "exit_office"
+  },
+  {
+    "text": "Umm, I am done here please",
+    "intent": "exit_office"
+  },
+  {
+    "text": "hey, arrange a meeting man",
+    "intent": "meeting_request"
+  },
+  {
+    "text": "umm, i'm thirsty",
+    "intent": "drink_request"
+  },
+  {
+    "text": "I'm thirsty",
+    "intent": "drink_request"
+  },
+  {
+    "text": "leave today",
+    "intent": "exit_office"
+  },
+  {
+    "text": "Hey, I'm thirsty man",
+    "intent": "drink_request"
+  },
+  {
+    "text": "please can we set up an appointment? sir",
+    "intent": "appointment_booking"
+  },
+  {
+    "text": "Can I schedule a meeting?",
+    "intent": "meeting_request"
+  },
+  {
+    "text": "so, back to homepage",
+    "intent": "exit_office"
+  },
+  {
+    "text": "I think I need a coffee man",
+    "intent": "drink_request"
+  },
+  {
+    "text": "i think what are the services provided?",
+    "intent": "service_query"
+  },
+  {
+    "text": "i think when can i meet him? please",
+    "intent": "meeting_request"
+  },
+  {
+    "text": "Umm, What is the weather today? man",
+    "intent": "unknown"
+  },
+  {
+    "text": "Umm, Bring me some tea man",
+    "intent": "drink_request"
+  },
+  {
+    "text": "Hey, What kind of development do you do? sir",
+    "intent": "service_query"
+  },
+  {
+    "text": "Services please",
+    "intent": "service_query"
+  },
+  {
+    "text": "Hey, Can you dance? today",
+    "intent": "unknown"
+  },
+  {
+    "text": "I want to see your work",
+    "intent": "portfolio_query"
+  },
+  {
+    "text": "hey, bring me a latte please",
+    "intent": "drink_request"
+  },
+  {
+    "text": "Hey, I want to reserve a time block today",
+    "intent": "appointment_booking"
+  },
+  {
+    "text": "i think who is the president of usa? today",
+    "intent": "unknown"
+  },
+  {
+    "text": "So, When can I meet him? sir",
+    "intent": "meeting_request"
+  },
+  {
+    "text": "So, What kind of projects do you make? please",
+    "intent": "portfolio_query"
+  },
+  {
+    "text": "Tea please",
+    "intent": "drink_request"
+  },
+  {
+    "text": "Umm, What services do you offer? please",
+    "intent": "service_query"
+  },
+  {
+    "text": "umm, what kind of development do you do? today",
+    "intent": "service_query"
+  },
+  {
+    "text": "umm, do you serve drinks? sir",
+    "intent": "drink_request"
+  },
+  {
+    "text": "i think i am done here right now",
+    "intent": "exit_office"
+  },
+  {
+    "text": "I think Greetings today",
+    "intent": "casual_talk"
+  },
+  {
+    "text": "ajksdfhkajsdf",
+    "intent": "unknown"
+  },
+  {
+    "text": "What projects have you done?",
+    "intent": "portfolio_query"
+  },
+  {
+    "text": "please i want to close this sir",
+    "intent": "exit_office"
+  },
+  {
+    "text": "Can you Make an appointment with Sonu please",
+    "intent": "appointment_booking"
+  },
+  {
+    "text": "So, Can I book an appointment? man",
+    "intent": "appointment_booking"
+  },
+  {
+    "text": "can you do you have time for an appointment? man",
+    "intent": "appointment_booking"
+  },
+  {
+    "text": "So, Just saying hi sir",
+    "intent": "casual_talk"
+  },
+  {
+    "text": "I think Coffee please right now",
+    "intent": "drink_request"
+  },
+  {
+    "text": "hey, how can you help me? today",
+    "intent": "service_query"
+  },
+  {
+    "text": "Hey, Get me a cappuccino man",
+    "intent": "drink_request"
+  },
+  {
+    "text": "Can you Who is the president of USA? today",
+    "intent": "unknown"
+  },
+  {
+    "text": "umm, can i schedule a meeting? please",
+    "intent": "meeting_request"
+  },
+  {
+    "text": "I think I need a short meeting with the boss man",
+    "intent": "meeting_request"
+  },
+  {
+    "text": "So, Set an appointment for me today",
+    "intent": "appointment_booking"
+  },
+  {
+    "text": "A cup of tea, please",
+    "intent": "drink_request"
+  },
+  {
+    "text": "I think Tea or coffee? sir",
+    "intent": "drink_request"
+  },
+  {
+    "text": "Umm, Can you show me the projects?",
+    "intent": "portfolio_query"
+  },
+  {
+    "text": "hey, who are you really? sir",
+    "intent": "unknown"
+  },
+  {
+    "text": "Can you What is in the portfolio? sir",
+    "intent": "portfolio_query"
+  },
+  {
+    "text": "So, Do you play games?",
+    "intent": "unknown"
+  },
+  {
+    "text": "I think I need a short meeting with the boss",
+    "intent": "meeting_request"
+  },
+  {
+    "text": "Hey, How do I make an appointment? sir",
+    "intent": "appointment_booking"
+  },
+  {
+    "text": "Can you Hello there sir",
+    "intent": "casual_talk"
+  },
+  {
+    "text": "please show case studies man",
+    "intent": "portfolio_query"
+  },
+  {
+    "text": "Hey, What do you do? man",
+    "intent": "service_query"
+  },
+  {
+    "text": "I think Do you serve drinks? sir",
+    "intent": "drink_request"
+  },
+  {
+    "text": "Umm, Can I get coffee?",
+    "intent": "drink_request"
+  },
+  {
+    "text": "Umm, Do you provide web services? sir",
+    "intent": "service_query"
+  },
+  {
+    "text": "Hey, Is the boss available for a meeting? please",
+    "intent": "meeting_request"
+  },
+  {
+    "text": "What is in the portfolio?",
+    "intent": "portfolio_query"
+  },
+  {
+    "text": "I want a hot beverage",
+    "intent": "drink_request"
+  },
+  {
+    "text": "I think What is going on? man",
+    "intent": "casual_talk"
+  },
+  {
+    "text": "hey, bring me some tea right now",
+    "intent": "drink_request"
+  },
+  {
+    "text": "I think I am done here please",
+    "intent": "exit_office"
+  },
+  {
+    "text": "please some coffee would be great sir",
+    "intent": "drink_request"
+  },
+  {
+    "text": "I think Exit the office man",
+    "intent": "exit_office"
+  },
+  {
+    "text": "What are the services provided?",
+    "intent": "service_query"
+  },
+  {
+    "text": "Umm, ajksdfhkajsdf please",
+    "intent": "unknown"
+  },
+  {
+    "text": "Umm, Leave today",
+    "intent": "exit_office"
+  },
+  {
+    "text": "please can you offer me something to drink? sir",
+    "intent": "drink_request"
+  },
+  {
+    "text": "Hey, Can we have a meeting? right now",
+    "intent": "meeting_request"
+  },
+  {
+    "text": "set up a meeting",
+    "intent": "meeting_request"
+  },
+  {
+    "text": "umm, back to normal site right now",
+    "intent": "exit_office"
+  },
+  {
+    "text": "Hey, Can I schedule a meeting? today",
+    "intent": "meeting_request"
+  },
+  {
+    "text": "Hey, What is in the portfolio? right now",
+    "intent": "portfolio_query"
+  },
+  {
+    "text": "Umm, Show me past work man",
+    "intent": "portfolio_query"
+  },
+  {
+    "text": "please hi there please",
+    "intent": "casual_talk"
+  },
+  {
+    "text": "What services do you offer?",
+    "intent": "service_query"
+  },
+  {
+    "text": "so, i wanna meet the creator right now",
+    "intent": "meeting_request"
+  },
+  {
+    "text": "i think greetings sir",
+    "intent": "casual_talk"
+  },
+  {
+    "text": "umm, can i see your portfolio?",
+    "intent": "portfolio_query"
+  },
+  {
+    "text": "umm, make an appointment with sonu right now",
+    "intent": "appointment_booking"
+  },
+  {
+    "text": "Please I am hungry",
+    "intent": "unknown"
+  },
+  {
+    "text": "hey, greetings today",
+    "intent": "casual_talk"
+  },
+  {
+    "text": "Please Hey please",
+    "intent": "casual_talk"
+  },
+  {
+    "text": "Back to homepage",
+    "intent": "exit_office"
+  },
+  {
+    "text": "What is going on? sir",
+    "intent": "casual_talk"
+  },
+  {
+    "text": "Can you What do you do? sir",
+    "intent": "service_query"
+  },
+  {
+    "text": "can you how high is the sky? sir",
+    "intent": "unknown"
+  },
+  {
+    "text": "hey, what services do you offer? right now",
+    "intent": "service_query"
+  },
+  {
+    "text": "Hey, Just saying hi",
+    "intent": "casual_talk"
+  },
+  {
+    "text": "so, some coffee would be great please",
+    "intent": "drink_request"
+  },
+  {
+    "text": "umm, how can you help me? right now",
+    "intent": "service_query"
+  },
+  {
+    "text": "Tell me a joke",
+    "intent": "unknown"
+  },
+  {
+    "text": "i think exit please right now",
+    "intent": "exit_office"
+  },
+  {
+    "text": "Show me the portfolio",
+    "intent": "portfolio_query"
+  },
+  {
+    "text": "Please What is going on? man",
+    "intent": "casual_talk"
+  },
+  {
+    "text": "can you how can you help me? please",
+    "intent": "service_query"
+  },
+  {
+    "text": "Umm, Create a new appointment",
+    "intent": "appointment_booking"
+  },
+  {
+    "text": "umm, can i have a drink? sir",
+    "intent": "drink_request"
+  },
+  {
+    "text": "Can you I wanna meet the creator today",
+    "intent": "meeting_request"
+  },
+  {
+    "text": "so, where do babies come from?",
+    "intent": "unknown"
+  },
+  {
+    "text": "I need a coffee",
+    "intent": "drink_request"
+  },
+  {
+    "text": "can you coffee please right now",
+    "intent": "drink_request"
+  },
+  {
+    "text": "so, greetings",
+    "intent": "casual_talk"
+  },
+  {
+    "text": "Can you Set an appointment for me today",
+    "intent": "appointment_booking"
+  },
+  {
+    "text": "can you i need 10 minutes with the boss right now",
+    "intent": "meeting_request"
+  },
+  {
+    "text": "umm, create a new appointment please",
+    "intent": "appointment_booking"
+  },
+  {
+    "text": "Umm, What is the weather today?",
+    "intent": "unknown"
+  },
+  {
+    "text": "can you can i get coffee?",
+    "intent": "drink_request"
+  },
+  {
+    "text": "please show me the portfolio",
+    "intent": "portfolio_query"
+  },
+  {
+    "text": "Hey, Who are you really? right now",
+    "intent": "unknown"
+  },
+  {
+    "text": "I think I want to hire you for a service right now",
+    "intent": "service_query"
+  },
+  {
+    "text": "umm, hi today",
+    "intent": "casual_talk"
+  },
+  {
+    "text": "Umm, Leave the 3D office today",
+    "intent": "exit_office"
+  },
+  {
+    "text": "umm, can i schedule a meeting? sir",
+    "intent": "meeting_request"
+  },
+  {
+    "text": "please make an appointment with sonu man",
+    "intent": "appointment_booking"
+  },
+  {
+    "text": "I want to meet the boss",
+    "intent": "meeting_request"
+  },
+  {
+    "text": "i think what color is a mirror? please",
+    "intent": "unknown"
+  },
+  {
+    "text": "Hey, I need a short meeting with the boss",
+    "intent": "meeting_request"
+  },
+  {
+    "text": "umm, i need a short meeting with the boss right now",
+    "intent": "meeting_request"
+  },
+  {
+    "text": "Umm, Make an appointment with Sonu please",
+    "intent": "appointment_booking"
+  },
+  {
+    "text": "need to book a consultation today",
+    "intent": "appointment_booking"
+  },
+  {
+    "text": "so, i want a hot beverage right now",
+    "intent": "drink_request"
+  },
+  {
+    "text": "Umm, Tell me about your portfolio man",
+    "intent": "portfolio_query"
+  },
+  {
+    "text": "so, do you have time for an appointment?",
+    "intent": "appointment_booking"
+  },
+  {
+    "text": "Hey, Book a meeting with the boss sir",
+    "intent": "meeting_request"
+  },
+  {
+    "text": "umm, can i schedule a meeting? today",
+    "intent": "meeting_request"
+  },
+  {
+    "text": "how do i make an appointment?",
+    "intent": "appointment_booking"
+  },
+  {
+    "text": "Would love to meet with the boss",
+    "intent": "meeting_request"
+  },
+  {
+    "text": "So, What is going on? please",
+    "intent": "casual_talk"
+  },
+  {
+    "text": "Exit man",
+    "intent": "exit_office"
+  },
+  {
+    "text": "please i want a facetime with your boss man",
+    "intent": "meeting_request"
+  },
+  {
+    "text": "Bring me some tea today",
+    "intent": "drink_request"
+  },
+  {
+    "text": "Umm, Bla bla bla today",
+    "intent": "unknown"
+  },
+  {
+    "text": "I need a website built",
+    "intent": "service_query"
+  },
+  {
+    "text": "i think sing a song sir",
+    "intent": "unknown"
+  },
+  {
+    "text": "i think i want a hot beverage man",
+    "intent": "drink_request"
+  },
+  {
+    "text": "can you need to book a consultation sir",
+    "intent": "appointment_booking"
+  },
+  {
+    "text": "hey, what color is a mirror? sir",
+    "intent": "unknown"
+  },
+  {
+    "text": "Umm, Show case studies",
+    "intent": "portfolio_query"
+  },
+  {
+    "text": "Please I'm interested in your previous projects today",
+    "intent": "portfolio_query"
+  },
+  {
+    "text": "I want tea",
+    "intent": "drink_request"
+  },
+  {
+    "text": "i think do you do ai development? today",
+    "intent": "service_query"
+  },
+  {
+    "text": "can i see your portfolio? please",
+    "intent": "portfolio_query"
+  },
+  {
+    "text": "Please Let me see the boss today",
+    "intent": "meeting_request"
+  },
+  {
+    "text": "so, make an appointment with sonu",
+    "intent": "appointment_booking"
+  },
+  {
+    "text": "Can you Leave the 3D office",
+    "intent": "exit_office"
+  },
+  {
+    "text": "Umm, Get me a cappuccino please",
+    "intent": "drink_request"
+  },
+  {
+    "text": "Can you Can you offer me something to drink? man",
+    "intent": "drink_request"
+  },
+  {
+    "text": "Please Can I see your portfolio? sir",
+    "intent": "portfolio_query"
+  },
+  {
+    "text": "Exit",
+    "intent": "exit_office"
+  },
+  {
+    "text": "Hey, What kind of projects do you make? today",
+    "intent": "portfolio_query"
+  },
+  {
+    "text": "What is the meaning of life?",
+    "intent": "unknown"
+  },
+  {
+    "text": "so, display the projects please",
+    "intent": "portfolio_query"
+  },
+  {
+    "text": "can you i want tea",
+    "intent": "drink_request"
+  },
+  {
+    "text": "so, set an appointment for me man",
+    "intent": "appointment_booking"
+  },
+  {
+    "text": "I think Hi there right now",
+    "intent": "casual_talk"
+  },
+  {
+    "text": "So, Create a new appointment please",
+    "intent": "appointment_booking"
+  },
+  {
+    "text": "Can you Bla bla bla sir",
+    "intent": "unknown"
+  },
+  {
+    "text": "Can you Show case studies man",
+    "intent": "portfolio_query"
+  },
+  {
+    "text": "What can you build?",
+    "intent": "service_query"
+  },
+  {
+    "text": "please just saying hi",
+    "intent": "casual_talk"
+  },
+  {
+    "text": "can you what is the meaning of life? right now",
+    "intent": "unknown"
+  },
+  {
+    "text": "I think What services do you offer? sir",
+    "intent": "service_query"
+  },
+  {
+    "text": "Hey, Services please sir",
+    "intent": "service_query"
+  },
+  {
+    "text": "can you create a new appointment man",
+    "intent": "appointment_booking"
+  },
+  {
+    "text": "Hey, Tell me about your portfolio man",
+    "intent": "portfolio_query"
+  },
+  {
+    "text": "Bring me a latte sir",
+    "intent": "drink_request"
+  },
+  {
+    "text": "Can you I'd like to book some time today",
+    "intent": "appointment_booking"
+  },
+  {
+    "text": "so, what kind of development do you do? please",
+    "intent": "service_query"
+  },
+  {
+    "text": "I'm interested in your previous projects",
+    "intent": "portfolio_query"
+  },
+  {
+    "text": "can you i am done here please",
+    "intent": "exit_office"
+  },
+  {
+    "text": "What kind of development do you do?",
+    "intent": "service_query"
+  },
+  {
+    "text": "please do you do ai development? sir",
+    "intent": "service_query"
+  },
+  {
+    "text": "can you can i get coffee? man",
+    "intent": "drink_request"
+  },
+  {
+    "text": "When can I meet him?",
+    "intent": "meeting_request"
+  },
+  {
+    "text": "i think hi man",
+    "intent": "casual_talk"
+  },
+  {
+    "text": "so, what do you do? man",
+    "intent": "service_query"
+  },
+  {
+    "text": "I think Good evening right now",
+    "intent": "casual_talk"
+  },
+  {
+    "text": "I think Would love to meet with the boss please",
+    "intent": "meeting_request"
+  },
+  {
+    "text": "So, Hello sir",
+    "intent": "casual_talk"
+  },
+  {
+    "text": "Just saying hi",
+    "intent": "casual_talk"
+  },
+  {
+    "text": "i think can i book an appointment? please",
+    "intent": "appointment_booking"
+  },
+  {
+    "text": "So, I want to hire you for a service today",
+    "intent": "service_query"
+  },
+  {
+    "text": "so, i'm interested in your previous projects",
+    "intent": "portfolio_query"
+  },
+  {
+    "text": "set an appointment for me please",
+    "intent": "appointment_booking"
+  },
+  {
+    "text": "so, can you build an app for me? today",
+    "intent": "service_query"
+  },
+  {
+    "text": "Hey, Is Sonu free to meet? please",
+    "intent": "meeting_request"
+  },
+  {
+    "text": "bring me some tea right now",
+    "intent": "drink_request"
+  },
+  {
+    "text": "i think schedule an appointment man",
+    "intent": "appointment_booking"
+  },
+  {
+    "text": "can you bla bla bla",
+    "intent": "unknown"
+  },
+  {
+    "text": "I want to reserve a time block",
+    "intent": "appointment_booking"
+  },
+  {
+    "text": "so, get me out of here sir",
+    "intent": "exit_office"
+  },
+  {
+    "text": "please book a meeting with the boss right now",
+    "intent": "meeting_request"
+  },
+  {
+    "text": "please i'd like to book some time today",
+    "intent": "appointment_booking"
+  },
+  {
+    "text": "so, is sonu free to meet?",
+    "intent": "meeting_request"
+  },
+  {
+    "text": "i think i want to reserve a time block please",
+    "intent": "appointment_booking"
+  },
+  {
+    "text": "I think Go back home right now",
+    "intent": "exit_office"
+  },
+  {
+    "text": "so, get me a cappuccino sir",
+    "intent": "drink_request"
+  },
+  {
+    "text": "I think What kind of projects do you make? right now",
+    "intent": "portfolio_query"
+  },
+  {
+    "text": "So, I'd like to book some time right now",
+    "intent": "appointment_booking"
+  },
+  {
+    "text": "Umm, Good evening today",
+    "intent": "casual_talk"
+  },
+  {
+    "text": "What is going on?",
+    "intent": "casual_talk"
+  },
+  {
+    "text": "Please Need to book a consultation",
+    "intent": "appointment_booking"
+  },
+  {
+    "text": "so, do you do ai development? right now",
+    "intent": "service_query"
+  },
+  {
+    "text": "Leave the 3D office",
+    "intent": "exit_office"
+  },
+  {
+    "text": "How high is the sky? sir",
+    "intent": "unknown"
+  },
+  {
+    "text": "I think What's up? today",
+    "intent": "casual_talk"
+  },
+  {
+    "text": "please leave please",
+    "intent": "exit_office"
+  },
+  {
+    "text": "please what kind of development do you do?",
+    "intent": "service_query"
+  },
+  {
+    "text": "Hey, Is Sonu free to meet? man",
+    "intent": "meeting_request"
+  },
+  {
+    "text": "Good evening",
+    "intent": "casual_talk"
+  },
+  {
+    "text": "Arrange a meeting",
+    "intent": "meeting_request"
+  },
+  {
+    "text": "I am hungry",
+    "intent": "unknown"
+  },
+  {
+    "text": "Bring me some tea please",
+    "intent": "drink_request"
+  },
+  {
+    "text": "So, I want a facetime with your boss sir",
+    "intent": "meeting_request"
+  },
+  {
+    "text": "hey, appointment registration man",
+    "intent": "appointment_booking"
+  },
+  {
+    "text": "hey, i need to speak with sonu please",
+    "intent": "meeting_request"
+  },
+  {
+    "text": "I want to meet the boss please",
+    "intent": "meeting_request"
+  },
+  {
+    "text": "hey, close the 3d view please",
+    "intent": "exit_office"
+  },
+  {
+    "text": "please do you provide web services? please",
+    "intent": "service_query"
+  },
+  {
+    "text": "Can you show me the projects? please",
+    "intent": "portfolio_query"
+  },
+  {
+    "text": "I think Tell me about your services today",
+    "intent": "service_query"
+  },
+  {
+    "text": "Hey, Set an appointment for me sir",
+    "intent": "appointment_booking"
+  },
+  {
+    "text": "i think let's check out the portfolio sir",
+    "intent": "portfolio_query"
+  },
+  {
+    "text": "Hello",
+    "intent": "casual_talk"
+  },
+  {
+    "text": "please what's up?",
+    "intent": "casual_talk"
+  },
+  {
+    "text": "Coffee please",
+    "intent": "drink_request"
+  },
+  {
+    "text": "Appointment registration",
+    "intent": "appointment_booking"
+  },
+  {
+    "text": "Hey, Bring me some tea sir",
+    "intent": "drink_request"
+  },
+  {
+    "text": "Can you Close this office view today",
+    "intent": "exit_office"
+  },
+  {
+    "text": "go back home man",
+    "intent": "exit_office"
+  },
+  {
+    "text": "i think tell me a joke sir",
+    "intent": "unknown"
+  },
+  {
+    "text": "umm, what can you build? today",
+    "intent": "service_query"
+  },
+  {
+    "text": "I think Bla bla bla",
+    "intent": "unknown"
+  },
+  {
+    "text": "hey, can i get a custom project done? right now",
+    "intent": "service_query"
+  },
+  {
+    "text": "Can you Show me past work sir",
+    "intent": "portfolio_query"
+  },
+  {
+    "text": "please greetings today",
+    "intent": "casual_talk"
+  },
+  {
+    "text": "can you what color is a mirror? today",
+    "intent": "unknown"
+  },
+  {
+    "text": "get me a cappuccino man",
+    "intent": "drink_request"
+  },
+  {
+    "text": "Hey, Tea please man",
+    "intent": "drink_request"
+  },
+  {
+    "text": "So, Do you have time for an appointment?",
+    "intent": "appointment_booking"
+  },
+  {
+    "text": "Umm, Schedule an appointment sir",
+    "intent": "appointment_booking"
+  },
+  {
+    "text": "Hey boss sir",
+    "intent": "casual_talk"
+  },
+  {
+    "text": "Do you play games?",
+    "intent": "unknown"
+  },
+  {
+    "text": "I think What is the weather today? man",
+    "intent": "unknown"
+  },
+  {
+    "text": "Bring me a latte",
+    "intent": "drink_request"
+  },
+  {
+    "text": "please book a meeting with the boss",
+    "intent": "meeting_request"
+  },
+  {
+    "text": "umm, i want to reserve a time block",
+    "intent": "appointment_booking"
+  },
+  {
+    "text": "Hey, What can you build?",
+    "intent": "service_query"
+  },
+  {
+    "text": "hey, get me out of here right now",
+    "intent": "exit_office"
+  },
+  {
+    "text": "I want to leave",
+    "intent": "exit_office"
+  },
+  {
+    "text": "Show case studies",
+    "intent": "portfolio_query"
+  },
+  {
+    "text": "can you what is the weather today? right now",
+    "intent": "unknown"
+  },
+  {
+    "text": "I think I want to close this",
+    "intent": "exit_office"
+  },
+  {
+    "text": "hey, is sonu free to meet? today",
+    "intent": "meeting_request"
+  },
+  {
+    "text": "Just saying hi right now",
+    "intent": "casual_talk"
+  },
+  {
+    "text": "I think What can you build? please",
+    "intent": "service_query"
+  },
+  {
+    "text": "can you take me back to the website right now",
+    "intent": "exit_office"
+  },
+  {
+    "text": "Umm, Can you build an app for me? right now",
+    "intent": "service_query"
+  },
+  {
+    "text": "Umm, Do you do AI development? today",
+    "intent": "service_query"
+  },
+  {
+    "text": "So, What's up? today",
+    "intent": "casual_talk"
+  },
+  {
+    "text": "I think What services do you offer? man",
+    "intent": "service_query"
+  },
+  {
+    "text": "So, Sing a song",
+    "intent": "unknown"
+  },
+  {
+    "text": "please how do i make an appointment? right now",
+    "intent": "appointment_booking"
+  },
+  {
+    "text": "Umm, I want to leave please",
+    "intent": "exit_office"
+  },
+  {
+    "text": "please let me see what you've built please",
+    "intent": "portfolio_query"
+  },
+  {
+    "text": "Umm, I want to meet the boss sir",
+    "intent": "meeting_request"
+  },
+  {
+    "text": "hey, what are the services provided? today",
+    "intent": "service_query"
+  },
+  {
+    "text": "please exit sir",
+    "intent": "exit_office"
+  },
+  {
+    "text": "I need 10 minutes with the boss",
+    "intent": "meeting_request"
+  },
+  {
+    "text": "So, I'm thirsty sir",
+    "intent": "drink_request"
+  },
+  {
+    "text": "Hey, Appointment registration right now",
+    "intent": "appointment_booking"
+  },
+  {
+    "text": "Do you serve drinks?",
+    "intent": "drink_request"
+  },
+  {
+    "text": "i think greetings",
+    "intent": "casual_talk"
+  },
+  {
+    "text": "Hey, I want tea",
+    "intent": "drink_request"
+  },
+  {
+    "text": "can you i'd like to book some time right now",
+    "intent": "appointment_booking"
+  },
+  {
+    "text": "please i want tea please",
+    "intent": "drink_request"
+  },
+  {
+    "text": "So, What projects have you done? please",
+    "intent": "portfolio_query"
+  },
+  {
+    "text": "hey, i'm interested in your previous projects today",
+    "intent": "portfolio_query"
+  },
+  {
+    "text": "umm, i need to book a slot please",
+    "intent": "appointment_booking"
+  },
+  {
+    "text": "So, Do you serve drinks? man",
+    "intent": "drink_request"
+  },
+  {
+    "text": "so, i want to close this man",
+    "intent": "exit_office"
+  },
+  {
+    "text": "Close this office view sir",
+    "intent": "exit_office"
+  },
+  {
+    "text": "So, Tea or coffee? today",
+    "intent": "drink_request"
+  },
+  {
+    "text": "Book an appointment",
+    "intent": "appointment_booking"
+  },
+  {
+    "text": "I think Back to homepage right now",
+    "intent": "exit_office"
+  },
+  {
+    "text": "You there? sir",
+    "intent": "casual_talk"
+  },
+  {
+    "text": "Can you Tell me a joke right now",
+    "intent": "unknown"
+  },
+  {
+    "text": "I think Hi sir",
+    "intent": "casual_talk"
+  },
+  {
+    "text": "please i want to leave man",
+    "intent": "exit_office"
+  },
+  {
+    "text": "Tell me what services you provide",
+    "intent": "service_query"
+  },
+  {
+    "text": "I think Exit right now",
+    "intent": "exit_office"
+  },
+  {
+    "text": "umm, meeting request, please",
+    "intent": "meeting_request"
+  },
+  {
+    "text": "so, set an appointment for me please",
+    "intent": "appointment_booking"
+  },
+  {
+    "text": "show case studies",
+    "intent": "portfolio_query"
+  },
+  {
+    "text": "Can you Sing a song right now",
+    "intent": "unknown"
+  },
+  {
+    "text": "hey, can i book an appointment? today",
+    "intent": "appointment_booking"
+  },
+  {
+    "text": "Hey, I wanna meet the creator right now",
+    "intent": "meeting_request"
+  },
+  {
+    "text": "Can you offer me something to drink?",
+    "intent": "drink_request"
+  },
+  {
+    "text": "So, Can you show me the projects? today",
+    "intent": "portfolio_query"
+  },
+  {
+    "text": "Hi there right now",
+    "intent": "casual_talk"
+  },
+  {
+    "text": "hey, 123456 sir",
+    "intent": "unknown"
+  },
+  {
+    "text": "hey, let me see what you've built today",
+    "intent": "portfolio_query"
+  },
+  {
+    "text": "Hey, I'd like to book some time",
+    "intent": "appointment_booking"
+  },
+  {
+    "text": "I think Get me an espresso right now",
+    "intent": "drink_request"
+  },
+  {
+    "text": "Please Please show me your portfolio section please",
+    "intent": "portfolio_query"
+  },
+  {
+    "text": "Show me past work",
+    "intent": "portfolio_query"
+  },
+  {
+    "text": "what can you build? today",
+    "intent": "service_query"
+  },
+  {
+    "text": "i think can i schedule a meeting? sir",
+    "intent": "meeting_request"
+  },
+  {
+    "text": "Umm, Please show me your portfolio section man",
+    "intent": "portfolio_query"
+  },
+  {
+    "text": "Hello there right now",
+    "intent": "casual_talk"
+  },
+  {
+    "text": "Please What projects have you done? right now",
+    "intent": "portfolio_query"
+  },
+  {
+    "text": "Umm, ajksdfhkajsdf today",
+    "intent": "unknown"
+  },
+  {
+    "text": "Please What color is a mirror? right now",
+    "intent": "unknown"
+  },
+  {
+    "text": "Umm, Who is the president of USA?",
+    "intent": "unknown"
+  },
+  {
+    "text": "hey, how high is the sky? right now",
+    "intent": "unknown"
+  },
+  {
+    "text": "Is Sonu free to meet?",
+    "intent": "meeting_request"
+  },
+  {
+    "text": "Tea please please",
+    "intent": "drink_request"
+  },
+  {
+    "text": "How can you help me?",
+    "intent": "service_query"
+  },
+  {
+    "text": "Get me a cappuccino",
+    "intent": "drink_request"
+  },
+  {
+    "text": "So, I want to leave",
+    "intent": "exit_office"
+  },
+  {
+    "text": "good afternoon right now",
+    "intent": "casual_talk"
+  },
+  {
+    "text": "I want to close this",
+    "intent": "exit_office"
+  },
+  {
+    "text": "i think get me a cappuccino right now",
+    "intent": "drink_request"
+  },
+  {
+    "text": "Close this office view right now",
+    "intent": "exit_office"
+  },
+  {
+    "text": "please let's check out the portfolio man",
+    "intent": "portfolio_query"
+  },
+  {
+    "text": "i think exit please man",
+    "intent": "exit_office"
+  },
+  {
+    "text": "So, What can you build? please",
+    "intent": "service_query"
+  },
+  {
+    "text": "hey, show me past work sir",
+    "intent": "portfolio_query"
+  },
+  {
+    "text": "umm, what is going on? please",
+    "intent": "casual_talk"
+  },
+  {
+    "text": "Hey, Greetings",
+    "intent": "casual_talk"
+  },
+  {
+    "text": "Close the 3D view",
+    "intent": "exit_office"
+  },
+  {
+    "text": "hey, do you have time for an appointment? please",
+    "intent": "appointment_booking"
+  },
+  {
+    "text": "Hey, Schedule an appointment sir",
+    "intent": "appointment_booking"
+  },
+  {
+    "text": "Please Let me see the boss",
+    "intent": "meeting_request"
+  },
+  {
+    "text": "Who is the president of USA?",
+    "intent": "unknown"
+  },
+  {
+    "text": "so, sing a song",
+    "intent": "unknown"
+  },
+  {
+    "text": "please hey right now",
+    "intent": "casual_talk"
+  },
+  {
+    "text": "can you appointment registration right now",
+    "intent": "appointment_booking"
+  },
+  {
+    "text": "So, Would love to meet with the boss man",
+    "intent": "meeting_request"
+  },
+  {
+    "text": "Exit the office",
+    "intent": "exit_office"
+  },
+  {
+    "text": "Nice to meet you",
+    "intent": "casual_talk"
+  },
+  {
+    "text": "Hey, Create a new appointment today",
+    "intent": "appointment_booking"
+  },
+  {
+    "text": "Hi",
+    "intent": "casual_talk"
+  },
+  {
+    "text": "so, can you show me the projects? man",
+    "intent": "portfolio_query"
+  },
+  {
+    "text": "Do you do AI development?",
+    "intent": "service_query"
+  },
+  {
+    "text": "umm, what are the services provided? sir",
+    "intent": "service_query"
+  },
+  {
+    "text": "i think you there? man",
+    "intent": "casual_talk"
+  },
+  {
+    "text": "Please 123456 man",
+    "intent": "unknown"
+  },
+  {
+    "text": "Please You there?",
+    "intent": "casual_talk"
+  },
+  {
+    "text": "Let's check out the portfolio",
+    "intent": "portfolio_query"
+  },
+  {
+    "text": "So, I need a website built man",
+    "intent": "service_query"
+  },
+  {
+    "text": "I'd like some water",
+    "intent": "drink_request"
+  },
+  {
+    "text": "can you build an app for me? sir",
+    "intent": "service_query"
+  },
+  {
+    "text": "so, show case studies right now",
+    "intent": "portfolio_query"
+  },
+  {
+    "text": "can you show me past work sir",
+    "intent": "portfolio_query"
+  },
+  {
+    "text": "please what kind of projects do you make? man",
+    "intent": "portfolio_query"
+  },
+  {
+    "text": "So, How high is the sky? man",
+    "intent": "unknown"
+  },
+  {
+    "text": "I think Can we set up an appointment? right now",
+    "intent": "appointment_booking"
+  },
+  {
+    "text": "i think i need to book a slot today",
+    "intent": "appointment_booking"
+  },
+  {
+    "text": "i think i want a facetime with your boss man",
+    "intent": "meeting_request"
+  },
+  {
+    "text": "I think Close this office view today",
+    "intent": "exit_office"
+  },
+  {
+    "text": "Please Tea please right now",
+    "intent": "drink_request"
+  },
+  {
+    "text": "Hey, Take me back to the website",
+    "intent": "exit_office"
+  },
+  {
+    "text": "I want to schedule an appointment",
+    "intent": "appointment_booking"
+  },
+  {
+    "text": "Hey, What projects have you done? sir",
+    "intent": "portfolio_query"
+  },
+  {
+    "text": "Please What is the weather today? sir",
+    "intent": "unknown"
+  },
+  {
+    "text": "please tell me what services you provide man",
+    "intent": "service_query"
+  },
+  {
+    "text": "umm, tell me what services you provide today",
+    "intent": "service_query"
+  },
+  {
+    "text": "Can you I need a coffee man",
+    "intent": "drink_request"
+  },
+  {
+    "text": "so, i want to meet the boss please",
+    "intent": "meeting_request"
+  },
+  {
+    "text": "what can you build? right now",
+    "intent": "service_query"
+  },
+  {
+    "text": "so, what can you build? please",
+    "intent": "service_query"
+  },
+  {
+    "text": "Please Greetings right now",
+    "intent": "casual_talk"
+  },
+  {
+    "text": "umm, i want to schedule an appointment please",
+    "intent": "appointment_booking"
+  },
+  {
+    "text": "Umm, Where do babies come from? man",
+    "intent": "unknown"
+  },
+  {
+    "text": "Please What services do you offer? right now",
+    "intent": "service_query"
+  },
+  {
+    "text": "umm, i'd like to book some time sir",
+    "intent": "appointment_booking"
+  },
+  {
+    "text": "Hey, Can we have a meeting? sir",
+    "intent": "meeting_request"
+  },
+  {
+    "text": "umm, i am done here right now",
+    "intent": "exit_office"
+  },
+  {
+    "text": "Can you I want to hire you for a service",
+    "intent": "service_query"
+  },
+  {
+    "text": "i think exit please today",
+    "intent": "exit_office"
+  },
+  {
+    "text": "Can you You there? man",
+    "intent": "casual_talk"
+  },
+  {
+    "text": "umm, what are the services provided? right now",
+    "intent": "service_query"
+  },
+  {
+    "text": "please get me a cappuccino",
+    "intent": "drink_request"
+  },
+  {
+    "text": "Can you Can we have a meeting?",
+    "intent": "meeting_request"
+  },
+  {
+    "text": "So, What is in the portfolio? right now",
+    "intent": "portfolio_query"
+  },
+  {
+    "text": "What kind of projects do you make?",
+    "intent": "portfolio_query"
+  },
+  {
+    "text": "I think Exit please",
+    "intent": "exit_office"
+  },
+  {
+    "text": "can you display the projects today",
+    "intent": "portfolio_query"
+  },
+  {
+    "text": "Can you Can you dance? man",
+    "intent": "unknown"
+  },
+  {
+    "text": "Display the projects",
+    "intent": "portfolio_query"
+  },
+  {
+    "text": "can you how is your day going?",
+    "intent": "casual_talk"
+  },
+  {
+    "text": "I think Nice to meet you today",
+    "intent": "casual_talk"
+  },
+  {
+    "text": "i think you there? today",
+    "intent": "casual_talk"
+  },
+  {
+    "text": "Please show me your portfolio section",
+    "intent": "portfolio_query"
+  },
+  {
+    "text": "hey, arrange a meeting today",
+    "intent": "meeting_request"
+  },
+  {
+    "text": "Can we set up an appointment?",
+    "intent": "appointment_booking"
+  },
+  {
+    "text": "Tea or coffee?",
+    "intent": "drink_request"
+  },
+  {
+    "text": "Umm, Back to normal site man",
+    "intent": "exit_office"
+  },
+  {
+    "text": "can you build an app for me? right now",
+    "intent": "service_query"
+  },
+  {
+    "text": "so, nice to meet you today",
+    "intent": "casual_talk"
+  },
+  {
+    "text": "bla bla bla right now",
+    "intent": "unknown"
+  },
+  {
+    "text": "I'd like to book some time",
+    "intent": "appointment_booking"
+  },
+  {
+    "text": "Umm, Set an appointment for me right now",
+    "intent": "appointment_booking"
+  },
+  {
+    "text": "I think Go back home man",
+    "intent": "exit_office"
+  },
+  {
+    "text": "Can you Bring me some tea sir",
+    "intent": "drink_request"
+  },
+  {
+    "text": "So, I wanna meet the creator right now",
+    "intent": "meeting_request"
+  },
+  {
+    "text": "Can you Show case studies right now",
+    "intent": "portfolio_query"
+  },
+  {
+    "text": "please what can you build? please",
+    "intent": "service_query"
+  },
+  {
+    "text": "What color is a mirror?",
+    "intent": "unknown"
+  },
+  {
+    "text": "umm, get me an espresso right now",
+    "intent": "drink_request"
+  },
+  {
+    "text": "Hi there",
+    "intent": "casual_talk"
+  },
+  {
+    "text": "Can I have a drink?",
+    "intent": "drink_request"
+  },
+  {
+    "text": "can you i need to speak with sonu today",
+    "intent": "meeting_request"
+  },
+  {
+    "text": "Umm, Just saying hi man",
+    "intent": "casual_talk"
+  },
+  {
+    "text": "Please Get me a cappuccino please",
+    "intent": "drink_request"
+  },
+  {
+    "text": "Please Can you offer me something to drink?",
+    "intent": "drink_request"
+  },
+  {
+    "text": "i think i'm interested in your previous projects",
+    "intent": "portfolio_query"
+  },
+  {
+    "text": "please can i book an appointment? right now",
+    "intent": "appointment_booking"
+  },
+  {
+    "text": "so, good evening sir",
+    "intent": "casual_talk"
+  },
+  {
+    "text": "i think i want to close this right now",
+    "intent": "exit_office"
+  },
+  {
+    "text": "Please What can you build?",
+    "intent": "service_query"
+  },
+  {
+    "text": "Can we have a meeting?",
+    "intent": "meeting_request"
+  },
+  {
+    "text": "umm, exit today",
+    "intent": "exit_office"
+  },
+  {
+    "text": "Bla bla bla today",
+    "intent": "unknown"
+  },
+  {
+    "text": "Services please sir",
+    "intent": "service_query"
+  },
+  {
+    "text": "Book a meeting with the boss",
+    "intent": "meeting_request"
+  },
+  {
+    "text": "So, Exit the office please",
+    "intent": "exit_office"
+  },
+  {
+    "text": "i think what are the services provided? today",
+    "intent": "service_query"
+  },
+  {
+    "text": "I think Tell me a joke",
+    "intent": "unknown"
+  },
+  {
+    "text": "Umm, I'm interested in your previous projects sir",
+    "intent": "portfolio_query"
+  },
+  {
+    "text": "i need to speak with sonu today",
+    "intent": "meeting_request"
+  },
+  {
+    "text": "so, make an appointment with sonu today",
+    "intent": "appointment_booking"
+  },
+  {
+    "text": "Tell me about your portfolio right now",
+    "intent": "portfolio_query"
+  },
+  {
+    "text": "so, get me an espresso right now",
+    "intent": "drink_request"
+  },
+  {
+    "text": "Hey, Do you serve drinks?",
+    "intent": "drink_request"
+  },
+  {
+    "text": "Please Who are you really? right now",
+    "intent": "unknown"
+  },
+  {
+    "text": "can you what color is a mirror? man",
+    "intent": "unknown"
+  },
+  {
+    "text": "So, Good afternoon man",
+    "intent": "casual_talk"
+  },
+  {
+    "text": "i think i want to reserve a time block man",
+    "intent": "appointment_booking"
+  },
+  {
+    "text": "Umm, Do you serve drinks? today",
+    "intent": "drink_request"
+  },
+  {
+    "text": "please what kind of projects do you make? please",
+    "intent": "portfolio_query"
+  },
+  {
+    "text": "umm, get me out of here sir",
+    "intent": "exit_office"
+  },
+  {
+    "text": "Hey, Exit man",
+    "intent": "exit_office"
+  },
+  {
+    "text": "So, You there?",
+    "intent": "casual_talk"
+  },
+  {
+    "text": "can you do you do ai development? please",
+    "intent": "service_query"
+  },
+  {
+    "text": "can you what color is a mirror? right now",
+    "intent": "unknown"
+  },
+  {
+    "text": "please schedule an appointment today",
+    "intent": "appointment_booking"
+  },
+  {
+    "text": "please show case studies",
+    "intent": "portfolio_query"
+  },
+  {
+    "text": "Set up a meeting",
+    "intent": "meeting_request"
+  },
+  {
+    "text": "Schedule an appointment",
+    "intent": "appointment_booking"
+  },
+  {
+    "text": "so, bla bla bla right now",
+    "intent": "unknown"
+  },
+  {
+    "text": "i'd like to book some time sir",
+    "intent": "appointment_booking"
+  },
+  {
+    "text": "I think Tell me about your services please",
+    "intent": "service_query"
+  },
+  {
+    "text": "Please What kind of development do you do? sir",
+    "intent": "service_query"
+  },
+  {
+    "text": "can you i want to schedule an appointment please",
+    "intent": "appointment_booking"
+  },
+  {
+    "text": "hey, exit please today",
+    "intent": "exit_office"
+  },
+  {
+    "text": "can you can you dance? today",
+    "intent": "unknown"
+  },
+  {
+    "text": "Can you offer me something to drink? sir",
+    "intent": "drink_request"
+  },
+  {
+    "text": "I think What services do you offer?",
+    "intent": "service_query"
+  },
+  {
+    "text": "Close this office view",
+    "intent": "exit_office"
+  },
+  {
+    "text": "So, Leave man",
+    "intent": "exit_office"
+  },
+  {
+    "text": "Please Greetings sir",
+    "intent": "casual_talk"
+  },
+  {
+    "text": "so, i want to see your work",
+    "intent": "portfolio_query"
+  },
+  {
+    "text": "appointment registration sir",
+    "intent": "appointment_booking"
+  },
+  {
+    "text": "I think I'm interested in your previous projects man",
+    "intent": "portfolio_query"
+  },
+  {
+    "text": "Set an appointment for me",
+    "intent": "appointment_booking"
+  },
+  {
+    "text": "Hey boss",
+    "intent": "casual_talk"
+  },
+  {
+    "text": "Can you A cup of tea, please sir",
+    "intent": "drink_request"
+  },
+  {
+    "text": "i think 123456 sir",
+    "intent": "unknown"
+  },
+  {
+    "text": "Do you provide web services?",
+    "intent": "service_query"
+  },
+  {
+    "text": "I want a hot beverage today",
+    "intent": "drink_request"
+  },
+  {
+    "text": "i think do you have time for an appointment? today",
+    "intent": "appointment_booking"
+  },
+  {
+    "text": "I want to see your work sir",
+    "intent": "portfolio_query"
+  },
+  {
+    "text": "Can you I wanna meet the creator man",
+    "intent": "meeting_request"
+  },
+  {
+    "text": "How do I make an appointment?",
+    "intent": "appointment_booking"
+  },
+  {
+    "text": "So, Exit please man",
+    "intent": "exit_office"
+  },
+  {
+    "text": "where do babies come from?",
+    "intent": "unknown"
+  },
+  {
+    "text": "So, Display the projects today",
+    "intent": "portfolio_query"
+  },
+  {
+    "text": "How are you? please",
+    "intent": "casual_talk"
+  },
+  {
+    "text": "can you leave the 3d office man",
+    "intent": "exit_office"
+  },
+  {
+    "text": "So, What do you do?",
+    "intent": "service_query"
+  },
+  {
+    "text": "please let me see what you've built sir",
+    "intent": "portfolio_query"
+  },
+  {
+    "text": "Where do babies come from?",
+    "intent": "unknown"
+  },
+  {
+    "text": "can you hi right now",
+    "intent": "casual_talk"
+  },
+  {
+    "text": "I think I'd like to book some time sir",
+    "intent": "appointment_booking"
+  },
+  {
+    "text": "get me an espresso sir",
+    "intent": "drink_request"
+  },
+  {
+    "text": "Do you have time for an appointment?",
+    "intent": "appointment_booking"
+  },
+  {
+    "text": "Hey, Need to book a consultation please",
+    "intent": "appointment_booking"
+  },
+  {
+    "text": "hey, can i schedule a meeting?",
+    "intent": "meeting_request"
+  },
+  {
+    "text": "please bring me a latte today",
+    "intent": "drink_request"
+  },
+  {
+    "text": "can you i'm interested in your previous projects sir",
+    "intent": "portfolio_query"
+  },
+  {
+    "text": "hey, i need to book a slot sir",
+    "intent": "appointment_booking"
+  },
+  {
+    "text": "Umm, Show case studies today",
+    "intent": "portfolio_query"
+  },
+  {
+    "text": "i think can i book an appointment? man",
+    "intent": "appointment_booking"
+  },
+  {
+    "text": "hey, i am hungry please",
+    "intent": "unknown"
+  },
+  {
+    "text": "So, Can I schedule a meeting?",
+    "intent": "meeting_request"
+  },
+  {
+    "text": "So, Close this office view man",
+    "intent": "exit_office"
+  },
+  {
+    "text": "123456",
+    "intent": "unknown"
+  },
+  {
+    "text": "what's up? right now",
+    "intent": "casual_talk"
+  },
+  {
+    "text": "hello sir",
+    "intent": "casual_talk"
+  },
+  {
+    "text": "so, close the 3d view man",
+    "intent": "exit_office"
+  },
+  {
+    "text": "can you where do babies come from?",
+    "intent": "unknown"
+  },
+  {
+    "text": "Make an appointment with Sonu right now",
+    "intent": "appointment_booking"
+  },
+  {
+    "text": "umm, exit please",
+    "intent": "exit_office"
+  },
+  {
+    "text": "I think What's up? right now",
+    "intent": "casual_talk"
+  },
+  {
+    "text": "Do you play games? right now",
+    "intent": "unknown"
+  },
+  {
+    "text": "i think where do babies come from? sir",
+    "intent": "unknown"
+  },
+  {
+    "text": "Umm, I need to speak with Sonu please",
+    "intent": "meeting_request"
+  },
+  {
+    "text": "Umm, What is the meaning of life? man",
+    "intent": "unknown"
+  },
+  {
+    "text": "i think what is the meaning of life? man",
+    "intent": "unknown"
+  },
+  {
+    "text": "Hey, Can I see your portfolio? please",
+    "intent": "portfolio_query"
+  },
+  {
+    "text": "can you get me out of here please",
+    "intent": "exit_office"
+  },
+  {
+    "text": "Umm, Do you do AI development? right now",
+    "intent": "service_query"
+  },
+  {
+    "text": "can you i want to hire you for a service",
+    "intent": "service_query"
+  },
+  {
+    "text": "I am done here",
+    "intent": "exit_office"
+  },
+  {
+    "text": "so, i am done here today",
+    "intent": "exit_office"
+  },
+  {
+    "text": "can you meeting request, please right now",
+    "intent": "meeting_request"
+  },
+  {
+    "text": "Please Would love to meet with the boss right now",
+    "intent": "meeting_request"
+  },
+  {
+    "text": "hey, how do i make an appointment? man",
+    "intent": "appointment_booking"
+  },
+  {
+    "text": "Umm, Tea or coffee? today",
+    "intent": "drink_request"
+  },
+  {
+    "text": "Please Hi today",
+    "intent": "casual_talk"
+  },
+  {
+    "text": "so, coffee please today",
+    "intent": "drink_request"
+  },
+  {
+    "text": "please coffee please please",
+    "intent": "drink_request"
+  },
+  {
+    "text": "can you make an appointment with sonu right now",
+    "intent": "appointment_booking"
+  },
+  {
+    "text": "I need a short meeting with the boss",
+    "intent": "meeting_request"
+  },
+  {
+    "text": "Can I book an appointment?",
+    "intent": "appointment_booking"
+  },
+  {
+    "text": "Can I book an appointment? sir",
+    "intent": "appointment_booking"
+  },
+  {
+    "text": "Umm, Show me past work right now",
+    "intent": "portfolio_query"
+  },
+  {
+    "text": "Please What is the meaning of life? today",
+    "intent": "unknown"
+  },
+  {
+    "text": "Can I get coffee?",
+    "intent": "drink_request"
+  },
+  {
+    "text": "umm, what is the meaning of life? please",
+    "intent": "unknown"
+  },
+  {
+    "text": "Please I need a short meeting with the boss right now",
+    "intent": "meeting_request"
+  },
+  {
+    "text": "can you is sonu free to meet? please",
+    "intent": "meeting_request"
+  },
+  {
+    "text": "I think Leave right now",
+    "intent": "exit_office"
+  },
+  {
+    "text": "Please What services do you offer? today",
+    "intent": "service_query"
+  },
+  {
+    "text": "Can I get a custom project done?",
+    "intent": "service_query"
+  },
+  {
+    "text": "Hey, What's up?",
+    "intent": "casual_talk"
+  },
+  {
+    "text": "I think Leave the 3D office man",
+    "intent": "exit_office"
+  },
+  {
+    "text": "please back to normal site sir",
+    "intent": "exit_office"
+  },
+  {
+    "text": "Can you Make an appointment with Sonu right now",
+    "intent": "appointment_booking"
+  },
+  {
+    "text": "please what is the meaning of life? man",
+    "intent": "unknown"
+  },
+  {
+    "text": "hey, get me out of here sir",
+    "intent": "exit_office"
+  },
+  {
+    "text": "I wanna meet the creator",
+    "intent": "meeting_request"
+  },
+  {
+    "text": "Tell me about your portfolio",
+    "intent": "portfolio_query"
+  },
+  {
+    "text": "i think how high is the sky? sir",
+    "intent": "unknown"
+  },
+  {
+    "text": "Let me see the boss",
+    "intent": "meeting_request"
+  },
+  {
+    "text": "So, Who is the president of USA? today",
+    "intent": "unknown"
+  },
+  {
+    "text": "Need to book a consultation",
+    "intent": "appointment_booking"
+  },
+  {
+    "text": "Hey, Can I have a drink? man",
+    "intent": "drink_request"
+  },
+  {
+    "text": "What are the services provided? sir",
+    "intent": "service_query"
+  },
+  {
+    "text": "Umm, How can you help me? please",
+    "intent": "service_query"
+  },
+  {
+    "text": "umm, what is in the portfolio? today",
+    "intent": "portfolio_query"
+  },
+  {
+    "text": "can you take me back to the website please",
+    "intent": "exit_office"
+  },
+  {
+    "text": "I want tea right now",
+    "intent": "drink_request"
+  },
+  {
+    "text": "so, can i see your portfolio? right now",
+    "intent": "portfolio_query"
+  },
+  {
+    "text": "i think i need 10 minutes with the boss right now",
+    "intent": "meeting_request"
+  },
+  {
+    "text": "i think tell me about your services man",
+    "intent": "service_query"
+  },
+  {
+    "text": "umm, i want to close this sir",
+    "intent": "exit_office"
+  },
+  {
+    "text": "I want to hire you for a service",
+    "intent": "service_query"
+  },
+  {
+    "text": "I need to speak with Sonu",
+    "intent": "meeting_request"
+  },
+  {
+    "text": "i want to see your work man",
+    "intent": "portfolio_query"
+  },
+  {
+    "text": "So, Coffee please",
+    "intent": "drink_request"
+  },
+  {
+    "text": "Umm, Sing a song",
+    "intent": "unknown"
+  },
+  {
+    "text": "can you i need to speak with sonu sir",
+    "intent": "meeting_request"
+  },
+  {
+    "text": "Can you build an app for me? please",
+    "intent": "service_query"
+  },
+  {
+    "text": "good evening please",
+    "intent": "casual_talk"
+  },
+  {
+    "text": "Can you Close the 3D view man",
+    "intent": "exit_office"
+  },
+  {
+    "text": "please exit please",
+    "intent": "exit_office"
+  },
+  {
+    "text": "Can you Can I get a custom project done? sir",
+    "intent": "service_query"
+  },
+  {
+    "text": "So, Go back home man",
+    "intent": "exit_office"
+  },
+  {
+    "text": "hey, hey man",
+    "intent": "casual_talk"
+  },
+  {
+    "text": "Can you Tell me about your services man",
+    "intent": "service_query"
+  },
+  {
+    "text": "can you can you dance? sir",
+    "intent": "unknown"
+  },
+  {
+    "text": "Hey, Close this office view sir",
+    "intent": "exit_office"
+  },
+  {
+    "text": "Hello there",
+    "intent": "casual_talk"
+  },
+  {
+    "text": "i'd like to book some time please",
+    "intent": "appointment_booking"
+  },
+  {
+    "text": "umm, services please sir",
+    "intent": "service_query"
+  },
+  {
+    "text": "Umm, Set up a meeting right now",
+    "intent": "meeting_request"
+  },
+  {
+    "text": "Can you Coffee please man",
+    "intent": "drink_request"
+  },
+  {
+    "text": "can you what is the weather today? man",
+    "intent": "unknown"
+  },
+  {
+    "text": "umm, what is in the portfolio?",
+    "intent": "portfolio_query"
+  },
+  {
+    "text": "umm, i am done here today",
+    "intent": "exit_office"
+  },
+  {
+    "text": "Umm, Can I get a custom project done? today",
+    "intent": "service_query"
+  },
+  {
+    "text": "hey, i am done here today",
+    "intent": "exit_office"
+  },
+  {
+    "text": "i think i want to meet the boss please",
+    "intent": "meeting_request"
+  },
+  {
+    "text": "so, just saying hi please",
+    "intent": "casual_talk"
+  },
+  {
+    "text": "You there?",
+    "intent": "casual_talk"
+  },
+  {
+    "text": "Can you What kind of projects do you make? sir",
+    "intent": "portfolio_query"
+  },
+  {
+    "text": "Umm, I am done here",
+    "intent": "exit_office"
+  },
+  {
+    "text": "I think I want a facetime with your boss sir",
+    "intent": "meeting_request"
+  },
+  {
+    "text": "Umm, Show me the portfolio today",
+    "intent": "portfolio_query"
+  },
+  {
+    "text": "Some coffee would be great",
+    "intent": "drink_request"
+  },
+  {
+    "text": "Good afternoon",
+    "intent": "casual_talk"
+  },
+  {
+    "text": "Who are you really?",
+    "intent": "unknown"
+  },
+  {
+    "text": "Please Sing a song man",
+    "intent": "unknown"
+  },
+  {
+    "text": "can we have a meeting?",
+    "intent": "meeting_request"
+  },
+  {
+    "text": "Good morning",
+    "intent": "casual_talk"
+  },
+  {
+    "text": "please let me see the boss please",
+    "intent": "meeting_request"
+  },
+  {
+    "text": "i think hi right now",
+    "intent": "casual_talk"
+  },
+  {
+    "text": "Umm, Services please today",
+    "intent": "service_query"
+  },
+  {
+    "text": "umm, i want a hot beverage man",
+    "intent": "drink_request"
+  },
+  {
+    "text": "i think back to homepage right now",
+    "intent": "exit_office"
+  },
+  {
+    "text": "Please Can we have a meeting? please",
+    "intent": "meeting_request"
+  },
+  {
+    "text": "Can you Create a new appointment sir",
+    "intent": "appointment_booking"
+  },
+  {
+    "text": "so, get me out of here man",
+    "intent": "exit_office"
+  },
+  {
+    "text": "is the boss available for a meeting? sir",
+    "intent": "meeting_request"
+  },
+  {
+    "text": "tea please please",
+    "intent": "drink_request"
+  },
+  {
+    "text": "What color is a mirror? please",
+    "intent": "unknown"
+  },
+  {
+    "text": "Can you How high is the sky? please",
+    "intent": "unknown"
+  },
+  {
+    "text": "How high is the sky?",
+    "intent": "unknown"
+  },
+  {
+    "text": "so, exit sir",
+    "intent": "exit_office"
+  },
+  {
+    "text": "Is the boss available for a meeting? man",
+    "intent": "meeting_request"
+  },
+  {
+    "text": "i think meeting request, please sir",
+    "intent": "meeting_request"
+  },
+  {
+    "text": "I want a facetime with your boss",
+    "intent": "meeting_request"
+  },
+  {
+    "text": "can you dance?",
+    "intent": "unknown"
+  },
+  {
+    "text": "Can you show me the projects?",
+    "intent": "portfolio_query"
+  },
+  {
+    "text": "I think Show me the portfolio",
+    "intent": "portfolio_query"
+  },
+  {
+    "text": "Please Hi there man",
+    "intent": "casual_talk"
+  },
+  {
+    "text": "Umm, Get me a cappuccino right now",
+    "intent": "drink_request"
+  },
+  {
+    "text": "can you i need a coffee sir",
+    "intent": "drink_request"
+  },
+  {
+    "text": "can you can you dance?",
+    "intent": "unknown"
+  },
+  {
+    "text": "I think ajksdfhkajsdf sir",
+    "intent": "unknown"
+  },
+  {
+    "text": "please sing a song please",
+    "intent": "unknown"
+  },
+  {
+    "text": "Can you Can I see your portfolio? right now",
+    "intent": "portfolio_query"
+  },
+  {
+    "text": "do you do ai development?",
+    "intent": "service_query"
+  },
+  {
+    "text": "hey, what projects have you done? sir",
+    "intent": "portfolio_query"
+  },
+  {
+    "text": "you there? sir",
+    "intent": "casual_talk"
+  },
+  {
+    "text": "hey, exit the office sir",
+    "intent": "exit_office"
+  },
+  {
+    "text": "Create a new appointment",
+    "intent": "appointment_booking"
+  },
+  {
+    "text": "So, Sing a song man",
+    "intent": "unknown"
+  },
+  {
+    "text": "Can you Schedule an appointment man",
+    "intent": "appointment_booking"
+  },
+  {
+    "text": "please i want to leave right now",
+    "intent": "exit_office"
+  },
+  {
+    "text": "umm, when can i meet him? sir",
+    "intent": "meeting_request"
+  },
+  {
+    "text": "Please I'd like to book some time please",
+    "intent": "appointment_booking"
+  },
+  {
+    "text": "So, I need to book a slot please",
+    "intent": "appointment_booking"
+  },
+  {
+    "text": "Umm, I want a hot beverage",
+    "intent": "drink_request"
+  },
+  {
+    "text": "i think you there? please",
+    "intent": "casual_talk"
+  },
+  {
+    "text": "Go back home",
+    "intent": "exit_office"
+  },
+  {
+    "text": "Can I see your portfolio?",
+    "intent": "portfolio_query"
+  },
+  {
+    "text": "Can you dance?",
+    "intent": "unknown"
+  },
+  {
+    "text": "i think what projects have you done?",
+    "intent": "portfolio_query"
+  },
+  {
+    "text": "umm, what is the weather today? today",
+    "intent": "unknown"
+  },
+  {
+    "text": "I think I need a short meeting with the boss please",
+    "intent": "meeting_request"
+  },
+  {
+    "text": "Can we have a meeting? man",
+    "intent": "meeting_request"
+  },
+  {
+    "text": "can you offer me something to drink? right now",
+    "intent": "drink_request"
+  },
+  {
+    "text": "What's up?",
+    "intent": "casual_talk"
+  },
+  {
+    "text": "Please Hi there sir",
+    "intent": "casual_talk"
+  },
+  {
+    "text": "Please I want to close this",
+    "intent": "exit_office"
+  },
+  {
+    "text": "Can you What is the meaning of life? today",
+    "intent": "unknown"
+  },
+  {
+    "text": "Please Coffee please please",
+    "intent": "drink_request"
+  },
+  {
+    "text": "Please Can you offer me something to drink? sir",
+    "intent": "drink_request"
+  },
+  {
+    "text": "I think Back to normal site please",
+    "intent": "exit_office"
+  },
+  {
+    "text": "i think close the 3d view right now",
+    "intent": "exit_office"
+  },
+  {
+    "text": "hey, leave man",
+    "intent": "exit_office"
+  },
+  {
+    "text": "Is the boss available for a meeting?",
+    "intent": "meeting_request"
+  },
+  {
+    "text": "Hey, How can you help me?",
+    "intent": "service_query"
+  },
+  {
+    "text": "Please Get me an espresso right now",
+    "intent": "drink_request"
+  },
+  {
+    "text": "please good evening today",
+    "intent": "casual_talk"
+  },
+  {
+    "text": "umm, i want to see your work please",
+    "intent": "portfolio_query"
+  },
+  {
+    "text": "Hey, I need 10 minutes with the boss right now",
+    "intent": "meeting_request"
+  },
+  {
+    "text": "I need to book a slot",
+    "intent": "appointment_booking"
+  },
+  {
+    "text": "Would love to meet with the boss please",
+    "intent": "meeting_request"
+  },
+  {
+    "text": "Hey, Display the projects right now",
+    "intent": "portfolio_query"
+  },
+  {
+    "text": "Take me back to the website",
+    "intent": "exit_office"
+  },
+  {
+    "text": "so, i'd like to book some time man",
+    "intent": "appointment_booking"
+  },
+  {
+    "text": "Bla bla bla",
+    "intent": "unknown"
+  },
+  {
+    "text": "Meeting request, please",
+    "intent": "meeting_request"
+  },
+  {
+    "text": "so, i need to speak with sonu please",
+    "intent": "meeting_request"
+  },
+  {
+    "text": "Hey, I need 10 minutes with the boss today",
+    "intent": "meeting_request"
+  },
+  {
+    "text": "Hey, I need a short meeting with the boss sir",
+    "intent": "meeting_request"
+  },
+  {
+    "text": "I think You there?",
+    "intent": "casual_talk"
+  },
+  {
+    "text": "Umm, When can I meet him? man",
+    "intent": "meeting_request"
+  },
+  {
+    "text": "Get me out of here",
+    "intent": "exit_office"
+  },
+  {
+    "text": "Umm, Hi there today",
+    "intent": "casual_talk"
+  },
+  {
+    "text": "Can you I am hungry man",
+    "intent": "unknown"
+  },
+  {
+    "text": "Please Back to homepage sir",
+    "intent": "exit_office"
+  },
+  {
+    "text": "Can you Good morning",
+    "intent": "casual_talk"
+  },
+  {
+    "text": "i think how do i make an appointment? sir",
+    "intent": "appointment_booking"
+  },
+  {
+    "text": "Can you Need to book a consultation sir",
+    "intent": "appointment_booking"
+  },
+  {
+    "text": "so, what can you build? sir",
+    "intent": "service_query"
+  },
+  {
+    "text": "please schedule an appointment please",
+    "intent": "appointment_booking"
+  },
+  {
+    "text": "please can i have a drink? please",
+    "intent": "drink_request"
+  },
+  {
+    "text": "hi",
+    "intent": "casual_talk"
+  },
+  {
+    "text": "leave the 3d office today",
+    "intent": "exit_office"
+  },
+  {
+    "text": "Hey, Hi man",
+    "intent": "casual_talk"
+  },
+  {
+    "text": "Can you Please show me your portfolio section",
+    "intent": "portfolio_query"
+  },
+  {
+    "text": "i think i want to hire you for a service right now",
+    "intent": "service_query"
+  },
+  {
+    "text": "Exit please",
+    "intent": "exit_office"
+  },
+  {
+    "text": "Hey",
+    "intent": "casual_talk"
+  },
+  {
+    "text": "hey, what is going on? please",
+    "intent": "casual_talk"
+  },
+  {
+    "text": "I think Can you show me the projects? man",
+    "intent": "portfolio_query"
+  },
+  {
+    "text": "i think what's up? sir",
+    "intent": "casual_talk"
+  },
+  {
+    "text": "Tell me about your services today",
+    "intent": "service_query"
+  },
+  {
+    "text": "I think Tell me about your portfolio right now",
+    "intent": "portfolio_query"
+  },
+  {
+    "text": "so, what kind of development do you do? sir",
+    "intent": "service_query"
+  },
+  {
+    "text": "So, I'm interested in your previous projects",
+    "intent": "portfolio_query"
+  },
+  {
+    "text": "Appointment registration sir",
+    "intent": "appointment_booking"
+  },
+  {
+    "text": "please do you provide web services? today",
+    "intent": "service_query"
+  },
+  {
+    "text": "i think i'm thirsty today",
+    "intent": "drink_request"
+  },
+  {
+    "text": "Hi please",
+    "intent": "casual_talk"
+  },
+  {
+    "text": "Can you What is going on? man",
+    "intent": "casual_talk"
+  },
+  {
+    "text": "Greetings",
+    "intent": "casual_talk"
+  },
+  {
+    "text": "please where do babies come from? today",
+    "intent": "unknown"
+  },
+  {
+    "text": "So, Is the boss available for a meeting? sir",
+    "intent": "meeting_request"
+  },
+  {
+    "text": "can you can i book an appointment? right now",
+    "intent": "appointment_booking"
+  },
+  {
+    "text": "Please Can I see your portfolio? man",
+    "intent": "portfolio_query"
+  },
+  {
+    "text": "How is your day going?",
+    "intent": "casual_talk"
+  },
+  {
+    "text": "please let me see the boss today",
+    "intent": "meeting_request"
+  },
+  {
+    "text": "Bring me some tea",
+    "intent": "drink_request"
+  },
+  {
+    "text": "do you do ai development? man",
+    "intent": "service_query"
+  },
+  {
+    "text": "can you 123456 sir",
+    "intent": "unknown"
+  },
+  {
+    "text": "bla bla bla sir",
+    "intent": "unknown"
+  },
+  {
+    "text": "i think services please right now",
+    "intent": "service_query"
+  },
+  {
+    "text": "umm, can i get coffee? sir",
+    "intent": "drink_request"
+  },
+  {
+    "text": "please i need to book a slot",
+    "intent": "appointment_booking"
+  },
+  {
+    "text": "hey, i am hungry",
+    "intent": "unknown"
+  },
+  {
+    "text": "hey, good evening right now",
+    "intent": "casual_talk"
+  },
+  {
+    "text": "i think hello please",
+    "intent": "casual_talk"
+  },
+  {
+    "text": "What do you do?",
+    "intent": "service_query"
+  },
+  {
+    "text": "Umm, Can you show me the projects? today",
+    "intent": "portfolio_query"
+  },
+  {
+    "text": "hey, how can you help me? please",
+    "intent": "service_query"
+  },
+  {
+    "text": "i think how can you help me? today",
+    "intent": "service_query"
+  },
+  {
+    "text": "Leave",
+    "intent": "exit_office"
+  },
+  {
+    "text": "so, how are you? sir",
+    "intent": "casual_talk"
+  },
+  {
+    "text": "Get me an espresso",
+    "intent": "drink_request"
+  },
+  {
+    "text": "Can you build an app for me?",
+    "intent": "service_query"
+  },
+  {
+    "text": "I think What kind of projects do you make? man",
+    "intent": "portfolio_query"
+  },
+  {
+    "text": "I think Do you do AI development? today",
+    "intent": "service_query"
+  },
+  {
+    "text": "i think how are you? man",
+    "intent": "casual_talk"
+  },
+  {
+    "text": "umm, what projects have you done? man",
+    "intent": "portfolio_query"
+  },
+  {
+    "text": "i think bring me some tea man",
+    "intent": "drink_request"
+  },
+  {
+    "text": "display the projects man",
+    "intent": "portfolio_query"
+  },
+  {
+    "text": "how high is the sky? man",
+    "intent": "unknown"
+  },
+  {
+    "text": "can you back to normal site right now",
+    "intent": "exit_office"
+  },
+  {
+    "text": "What is the weather today?",
+    "intent": "unknown"
+  },
+  {
+    "text": "can you how high is the sky? right now",
+    "intent": "unknown"
+  },
+  {
+    "text": "i think what is the weather today? sir",
+    "intent": "unknown"
+  },
+  {
+    "text": "Please Schedule an appointment man",
+    "intent": "appointment_booking"
+  },
+  {
+    "text": "can you need to book a consultation please",
+    "intent": "appointment_booking"
+  },
+  {
+    "text": "i think tell me about your portfolio right now",
+    "intent": "portfolio_query"
+  },
+  {
+    "text": "I think Book a meeting with the boss today",
+    "intent": "meeting_request"
+  },
+  {
+    "text": "i think can i get a custom project done? today",
+    "intent": "service_query"
+  },
+  {
+    "text": "do you do ai development? please",
+    "intent": "service_query"
+  },
+  {
+    "text": "can you what kind of projects do you make? man",
+    "intent": "portfolio_query"
+  },
+  {
+    "text": "some coffee would be great today",
+    "intent": "drink_request"
+  },
+  {
+    "text": "hey, i want to see your work today",
+    "intent": "portfolio_query"
+  },
+  {
+    "text": "Hi right now",
+    "intent": "casual_talk"
+  },
+  {
+    "text": "hey, i want to close this",
+    "intent": "exit_office"
+  },
+  {
+    "text": "Do you play games? sir",
+    "intent": "unknown"
+  },
+  {
+    "text": "close this office view sir",
+    "intent": "exit_office"
+  },
+  {
+    "text": "Please Make an appointment with Sonu man",
+    "intent": "appointment_booking"
+  },
+  {
+    "text": "i think i wanna meet the creator please",
+    "intent": "meeting_request"
+  },
+  {
+    "text": "Hey, I need 10 minutes with the boss",
+    "intent": "meeting_request"
+  },
+  {
+    "text": "Back to normal site",
+    "intent": "exit_office"
+  },
+  {
+    "text": "Hey, I want to close this right now",
+    "intent": "exit_office"
+  },
+  {
+    "text": "Please Exit please",
+    "intent": "exit_office"
+  },
+  {
+    "text": "hey, tell me what services you provide",
+    "intent": "service_query"
+  },
+  {
+    "text": "Can you What projects have you done? right now",
+    "intent": "portfolio_query"
+  },
+  {
+    "text": "Let me see the boss man",
+    "intent": "meeting_request"
+  },
+  {
+    "text": "Create a new appointment today",
+    "intent": "appointment_booking"
+  },
+  {
+    "text": "so, what is the meaning of life?",
+    "intent": "unknown"
+  },
+  {
+    "text": "so, how are you? man",
+    "intent": "casual_talk"
+  },
+  {
+    "text": "Can you Meeting request, please please",
+    "intent": "meeting_request"
+  },
+  {
+    "text": "i think services please man",
+    "intent": "service_query"
+  },
+  {
+    "text": "Can you Can you offer me something to drink? right now",
+    "intent": "drink_request"
+  },
+  {
+    "text": "I think I need to speak with Sonu today",
+    "intent": "meeting_request"
+  },
+  {
+    "text": "Please Exit man",
+    "intent": "exit_office"
+  },
+  {
+    "text": "can you i need a website built man",
+    "intent": "service_query"
+  },
+  {
+    "text": "Hey, Please show me your portfolio section",
+    "intent": "portfolio_query"
+  },
+  {
+    "text": "Can you What projects have you done? today",
+    "intent": "portfolio_query"
+  },
+  {
+    "text": "hey, can i see your portfolio? right now",
+    "intent": "portfolio_query"
+  },
+  {
+    "text": "Tell me about your services",
+    "intent": "service_query"
+  },
+  {
+    "text": "Make an appointment with Sonu",
+    "intent": "appointment_booking"
+  },
+  {
+    "text": "please what's up? right now",
+    "intent": "casual_talk"
+  },
+  {
+    "text": "what's up? sir",
+    "intent": "casual_talk"
+  },
+  {
+    "text": "i think can you offer me something to drink? today",
+    "intent": "drink_request"
+  },
+  {
+    "text": "I think Some coffee would be great",
+    "intent": "drink_request"
+  },
+  {
+    "text": "hey, good morning man",
+    "intent": "casual_talk"
+  },
+  {
+    "text": "hey, when can i meet him? right now",
+    "intent": "meeting_request"
+  },
+  {
+    "text": "So, Can you offer me something to drink? sir",
+    "intent": "drink_request"
+  },
+  {
+    "text": "Hey, I want to schedule an appointment please",
+    "intent": "appointment_booking"
+  },
+  {
+    "text": "Umm, Can you dance? right now",
+    "intent": "unknown"
+  },
+  {
+    "text": "so, 123456 right now",
+    "intent": "unknown"
+  },
+  {
+    "text": "Let me see what you've built",
+    "intent": "portfolio_query"
+  },
+  {
+    "text": "please i want to see your work sir",
+    "intent": "portfolio_query"
+  },
+  {
+    "text": "I think A cup of tea, please sir",
+    "intent": "drink_request"
+  },
+  {
+    "text": "How are you?",
+    "intent": "casual_talk"
+  },
+  {
+    "text": "Sing a song",
+    "intent": "unknown"
+  },
+  {
+    "text": "So, Can I book an appointment? today",
+    "intent": "appointment_booking"
+  },
+  {
+    "text": "please what are the services provided? man",
+    "intent": "service_query"
+  },
+  {
+    "text": "So, Services please",
+    "intent": "service_query"
+  }
+]

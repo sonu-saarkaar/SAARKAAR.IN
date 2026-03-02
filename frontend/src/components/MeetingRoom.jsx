@@ -34,7 +34,7 @@ export default function MeetingRoom({ position = [-8, 0, -6] }) {
     <group position={position}>
       {/* Glass Walls - Transparent meeting room */}
       {/* Front wall */}
-      <mesh position={[0, 2, 2]} receiveShadow>
+      <mesh position={[0, 2, 2]}>
         <boxGeometry args={[8, 4, 0.05]} />
         <primitive object={glassMaterial} attach="material" />
       </mesh>
@@ -44,7 +44,7 @@ export default function MeetingRoom({ position = [-8, 0, -6] }) {
       </mesh>
 
       {/* Side wall */}
-      <mesh position={[-4, 2, 0]} receiveShadow>
+      <mesh position={[-4, 2, 0]}>
         <boxGeometry args={[0.05, 4, 4]} />
         <primitive object={glassMaterial} attach="material" />
       </mesh>
@@ -60,7 +60,7 @@ export default function MeetingRoom({ position = [-8, 0, -6] }) {
           <boxGeometry args={[6, 0.8, 1.8]} />
           <primitive object={tableMaterial} attach="material" />
         </mesh>
-        
+
         {/* Table top */}
         <mesh position={[0, 0.8, 0]} receiveShadow>
           <boxGeometry args={[6.2, 0.1, 2]} />

@@ -1,4 +1,4 @@
-import { useRef } from 'react'
+import { useRef, useMemo } from 'react'
 import { useFrame } from '@react-three/fiber'
 import { useExperienceStore } from '../store/experienceStore'
 import * as THREE from 'three'
@@ -14,7 +14,7 @@ export default function UserAvatar() {
     if (meshRef.current) {
       meshRef.current.position.set(...userPosition)
       meshRef.current.rotation.y = userRotation[1]
-      
+
       if (isSitting) {
         meshRef.current.position.y = userPosition[1] - 0.4
       }
@@ -59,6 +59,12 @@ export default function UserAvatar() {
     metalness: 0.0,
   })
 
+  const faceTexture = useMemo(() => {
+    const tex = new THREE.TextureLoader().load('/face_texture.png')
+    tex.colorSpace = THREE.SRGBColorSpace
+    return tex
+  }, [])
+
   const buttonMaterial = new THREE.MeshStandardMaterial({
     color: '#1a1a1a', // Suit buttons
     roughness: 0.4,
@@ -75,47 +81,16 @@ export default function UserAvatar() {
     <group ref={meshRef} castShadow>
       {/* HEAD - Realistic professional male */}
       <group position={[0, height - headHeight * 0.5, 0]}>
-        {/* Head base - Oval shape for realism */}
-        <mesh position={[0, 0, 0]} castShadow>
-          <sphereGeometry args={[headHeight * 0.5, 24, 24]} />
-          <primitive object={skinMaterial} attach="material" />
-        </mesh>
-        
-        {/* Jaw structure - More defined */}
-        <mesh position={[0, -headHeight * 0.15, headHeight * 0.1]} castShadow>
-          <boxGeometry args={[headHeight * 0.45, headHeight * 0.25, headHeight * 0.35]} />
-          <primitive object={skinMaterial} attach="material" />
-        </mesh>
-
-        {/* Professional haircut - Short, neat, corporate style */}
-        <mesh position={[0, headHeight * 0.2, -headHeight * 0.1]} castShadow>
-          <boxGeometry args={[headHeight * 0.52, headHeight * 0.3, headHeight * 0.4]} />
-          <primitive object={hairMaterial} attach="material" />
-        </mesh>
-        {/* Hair sides */}
-        <mesh position={[-headHeight * 0.25, 0, 0]} castShadow>
-          <boxGeometry args={[headHeight * 0.1, headHeight * 0.5, headHeight * 0.4]} />
-          <primitive object={hairMaterial} attach="material" />
-        </mesh>
-        <mesh position={[headHeight * 0.25, 0, 0]} castShadow>
-          <boxGeometry args={[headHeight * 0.1, headHeight * 0.5, headHeight * 0.4]} />
-          <primitive object={hairMaterial} attach="material" />
-        </mesh>
-
-        {/* Eyes - Professional, calm expression */}
-        <mesh position={[-headHeight * 0.12, headHeight * 0.1, headHeight * 0.25]} castShadow>
-          <boxGeometry args={[headHeight * 0.08, headHeight * 0.04, headHeight * 0.02]} />
-          <meshStandardMaterial color="#1a1a1a" roughness={0.2} />
-        </mesh>
-        <mesh position={[headHeight * 0.12, headHeight * 0.1, headHeight * 0.25]} castShadow>
-          <boxGeometry args={[headHeight * 0.08, headHeight * 0.04, headHeight * 0.02]} />
-          <meshStandardMaterial color="#1a1a1a" roughness={0.2} />
-        </mesh>
-
-        {/* Nose - Subtle, professional */}
-        <mesh position={[0, headHeight * 0.05, headHeight * 0.22]} castShadow>
-          <boxGeometry args={[headHeight * 0.06, headHeight * 0.12, headHeight * 0.08]} />
-          <primitive object={skinMaterial} attach="material" />
+        {/* Head base - Box shape for texture mapping */}
+        <mesh position={[0, 0, 0]} castShadow material={[
+          skinMaterial, // right
+          skinMaterial, // left
+          hairMaterial, // top
+          skinMaterial, // bottom
+          new THREE.MeshStandardMaterial({ map: faceTexture, roughness: 0.6 }), // front
+          hairMaterial, // back
+        ]}>
+          <boxGeometry args={[headHeight * 0.8, headHeight, headHeight * 0.8]} />
         </mesh>
       </group>
 

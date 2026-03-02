@@ -148,6 +148,17 @@ npm run build
 - Add environment variables
 - Deploy
 
+### Kubernetes (Production)
+
+Production-ready Kubernetes manifests are available in [deploy/k8s/README.md](deploy/k8s/README.md).
+
+Includes:
+- Frontend + Backend Deployments
+- Services
+- Ingress
+- HPA
+- ConfigMap + Secret template
+
 ## 📚 Documentation
 
 - **Frontend**: See `frontend/README.md`

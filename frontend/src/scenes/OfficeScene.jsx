@@ -1,12 +1,23 @@
-import { useRef } from 'react'
+import { useRef, useEffect } from 'react'
 import { useFrame } from '@react-three/fiber'
-import UserAvatar from '../components/UserAvatar'
-import ThirdPersonCamera from '../components/ThirdPersonCamera'
+import Character from '../components/Character' // Updated import
 import BossCabin from '../components/BossCabin'
 import MeetingRoom from '../components/MeetingRoom'
 import WorkspaceArea from '../components/WorkspaceArea'
 import { useExperienceStore } from '../store/experienceStore'
 import * as THREE from 'three'
+
+const OFFICE_WALLS = [
+  // Room boundaries
+  [0, -10, 40, 0.3],
+  [-10, 0, 0.3, 40],
+  [10, 0, 0.3, 40],
+
+  // Major office structures
+  [8, -6, 6.2, 4.2],
+  [-8, -6, 8.2, 4.2],
+  [0, 4, 14.2, 8.2],
+]
 
 export default function OfficeScene() {
   const floorRef = useRef()
@@ -15,6 +26,13 @@ export default function OfficeScene() {
   const isSitting = useExperienceStore((state) => state.isSitting)
   const setSitting = useExperienceStore((state) => state.setSitting)
   const setNearSeating = useExperienceStore((state) => state.setNearSeating)
+  const setCameraFocus = useExperienceStore((state) => state.setCameraFocus)
+  const setConversationPartner = useExperienceStore((state) => state.setConversationPartner)
+
+  useEffect(() => {
+    setCameraFocus('lobby')
+    setConversationPartner(null)
+  }, [setCameraFocus, setConversationPartner])
 
   useFrame(() => {
     const seatingArea = new THREE.Vector3(0, 0, 2)
@@ -28,7 +46,7 @@ export default function OfficeScene() {
     roughness: 0.3,
     metalness: 0.1,
   })
-  
+
   // Wood grain pattern (simulated with subtle variation)
   const woodGrainMaterial = new THREE.MeshStandardMaterial({
     color: '#6b5234',
@@ -44,8 +62,6 @@ export default function OfficeScene() {
 
   return (
     <>
-      <ThirdPersonCamera />
-      
       {/* Premium Office Floor - Wooden with pattern */}
       <mesh ref={floorRef} rotation={[-Math.PI / 2, 0, 0]} position={[0, 0, 0]} receiveShadow>
         <planeGeometry args={[40, 40, 20, 20]} />
@@ -67,7 +83,7 @@ export default function OfficeScene() {
         </mesh>
         {/* Glass windows in wall */}
         {[-12, -6, 0, 6, 12].map((x, i) => (
-          <mesh key={`window-${i}`} position={[x, 0, 0.16]} receiveShadow>
+          <mesh key={`window-${i}`} position={[x, 0, 0.16]}>
             <boxGeometry args={[5, 4, 0.05]} />
             <meshPhysicalMaterial
               color="#ffffff"
@@ -79,12 +95,12 @@ export default function OfficeScene() {
           </mesh>
         ))}
       </group>
-      
+
       <mesh position={[-10, 3, 0]} receiveShadow>
         <boxGeometry args={[0.3, 6, 40]} />
         <primitive object={wallMaterial} attach="material" />
       </mesh>
-      
+
       <mesh position={[10, 3, 0]} receiveShadow>
         <boxGeometry args={[0.3, 6, 40]} />
         <primitive object={wallMaterial} attach="material" />
@@ -122,12 +138,12 @@ export default function OfficeScene() {
       {/* Open Workspace Area */}
       <WorkspaceArea position={[0, 0, 4]} />
 
-      {/* User Avatar */}
-      <UserAvatar />
+      {/* Realistic Character with Animations */}
+      <Character walls={OFFICE_WALLS} />
 
       {/* Premium Office Lighting - Bright and professional */}
       <ambientLight intensity={0.8} color="#ffffff" />
-      
+
       {/* Main light source */}
       <directionalLight
         position={[0, 10, -10]}
@@ -142,7 +158,7 @@ export default function OfficeScene() {
         shadow-camera-bottom={-20}
         shadow-radius={4}
       />
-      
+
       {/* Side fill lights */}
       <directionalLight
         position={[10, 8, 0]}
@@ -154,7 +170,7 @@ export default function OfficeScene() {
         intensity={1.2}
         color="#ffffff"
       />
-      
+
       {/* Top-down light for even illumination */}
       <directionalLight
         position={[0, 8, 0]}
@@ -164,3 +180,4 @@ export default function OfficeScene() {
     </>
   )
 }
+

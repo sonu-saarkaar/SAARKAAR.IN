@@ -1,0 +1,848 @@
+/* ═══════════════════════════════════════════════════════════════
+   ConversationUI.css — Call-feeling, Apple-glass design
+   3 fixed elements: reply box (upper-right) · status pill ·
+   input bar (bottom-center)
+   ═══════════════════════════════════════════════════════════════ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700&display=swap');
+
+/* ─────────────────────────────────────────────────────
+   1. REPLY BOX  ·  upper-right, near receptionist
+───────────────────────────────────────────────────── */
+.cui-reply-box {
+    position: fixed;
+    top: 14vh;
+    /* upper third of screen */
+    right: 3vw;
+    /* right side — near receptionist's head area */
+    z-index: 9999;
+
+    /* Auto-width based on content */
+    width: max-content;
+    min-width: 240px;
+    max-width: min(460px, 44vw);
+
+    /* Apple frosted glass */
+    background: rgba(12, 13, 22, 0.78);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-top-color: rgba(255, 255, 255, 0.18);
+    border-radius: 18px;
+    backdrop-filter: blur(48px) saturate(200%);
+    -webkit-backdrop-filter: blur(48px) saturate(200%);
+    box-shadow:
+        0 0 0 0.5px rgba(255, 255, 255, 0.06) inset,
+        0 24px 64px rgba(0, 0, 0, 0.55),
+        0 6px 20px rgba(0, 0, 0, 0.35);
+
+    overflow: hidden;
+    pointer-events: none;
+    /* read-only; close btn overrides below */
+    animation: rb-appear 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* Entry animation — slides in from upper-right */
+@keyframes rb-appear {
+    from {
+        opacity: 0;
+        transform: translateX(14px) translateY(-10px) scale(0.95);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0) translateY(0) scale(1);
+    }
+}
+
+/* ── Header ── */
+.cui-reply-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 12px 8px 14px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+    gap: 8px;
+}
+
+/* Left badge: LED + label */
+.cui-badge {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    min-width: 0;
+    flex: 1;
+}
+
+/* Colored living dot */
+.cui-led {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    transition: background 0.3s;
+}
+
+.cui-led.ready {
+    background: #4ade80;
+}
+
+.cui-led.thinking {
+    background: #facc15;
+    animation: led-blink 0.75s infinite;
+}
+
+.cui-led.sending {
+    background: #60a5fa;
+    animation: led-blink 0.6s infinite;
+}
+
+.cui-led.speaking {
+    background: #4ade80;
+    animation: led-blink 1.0s infinite;
+}
+
+.cui-led.listening {
+    background: #f87171;
+    animation: led-blink 0.65s infinite;
+}
+
+@keyframes led-blink {
+
+    0%,
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    50% {
+        opacity: 0.3;
+        transform: scale(0.7);
+    }
+}
+
+/* "Receptionist Reply" */
+.cui-badge-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.45);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Close ✕ */
+.cui-xhr-btn {
+    pointer-events: auto;
+    /* re-enable for this button inside no-pointer parent */
+    width: 21px;
+    height: 21px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(255, 255, 255, 0.09);
+    color: rgba(255, 255, 255, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    flex-shrink: 0;
+    padding: 0;
+    transition: background 0.18s, color 0.15s;
+}
+
+.cui-xhr-btn:hover {
+    background: rgba(248, 113, 113, 0.75);
+    color: #fff;
+}
+
+/* ── Message body ── */
+.cui-reply-body {
+    padding: 11px 16px 15px;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 400;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.9);
+    letter-spacing: 0.01em;
+    word-break: break-word;
+    min-height: 22px;
+}
+
+/* ── Typing dots ── */
+.tdots {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    height: 12px;
+    vertical-align: middle;
+}
+
+.tdots span {
+    display: inline-block;
+    width: 5px;
+    height: 5px;
+    background: rgba(255, 255, 255, 0.45);
+    border-radius: 50%;
+    animation: tdwave 1.2s infinite ease-in-out both;
+}
+
+.tdots span:nth-child(1) {
+    animation-delay: -0.4s;
+}
+
+.tdots span:nth-child(2) {
+    animation-delay: -0.2s;
+}
+
+.tdots span:nth-child(3) {
+    animation-delay: 0s;
+}
+
+@keyframes tdwave {
+
+    0%,
+    80%,
+    100% {
+        transform: scale(0.5);
+        opacity: 0.35;
+    }
+
+    40% {
+        transform: scale(1.1);
+        opacity: 1;
+    }
+}
+
+/* ─────────────────────────────────────────────────────
+   2. STATUS PILL — just above the input bar
+───────────────────────────────────────────────────── */
+.cui-status-pill {
+    position: fixed;
+    bottom: calc(56px + 28px + 10px);
+    /* input bar height + bottom offset + gap */
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 9999;
+
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    padding: 5px 13px 5px 9px;
+
+    background: rgba(10, 12, 22, 0.88);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 999px;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.4);
+
+    pointer-events: none;
+    white-space: nowrap;
+}
+
+/* Status dot */
+.cui-status-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    transition: background 0.3s;
+}
+
+.cui-status-dot.ready {
+    background: #4ade80;
+}
+
+.cui-status-dot.thinking {
+    background: #facc15;
+    animation: led-blink 0.75s infinite;
+}
+
+.cui-status-dot.sending {
+    background: #60a5fa;
+    animation: led-blink 0.6s infinite;
+}
+
+.cui-status-dot.speaking {
+    background: #4ade80;
+    animation: led-blink 1.0s infinite;
+}
+
+.cui-status-dot.listening {
+    background: #f87171;
+    animation: led-blink 0.65s infinite;
+}
+
+/* Status label */
+.cui-status-text {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.72);
+    letter-spacing: 0.2px;
+}
+
+/* Glow tint for active states */
+.cui-status-pill.cls-listening {
+    box-shadow: 0 4px 18px rgba(248, 113, 113, 0.18), 0 0 0 1px rgba(248, 113, 113, 0.2);
+}
+
+.cui-status-pill.cls-speaking {
+    box-shadow: 0 4px 18px rgba(74, 222, 128, 0.18), 0 0 0 1px rgba(74, 222, 128, 0.2);
+}
+
+.cui-status-pill.cls-thinking {
+    box-shadow: 0 4px 18px rgba(250, 204, 21, 0.15), 0 0 0 1px rgba(250, 204, 21, 0.2);
+}
+
+.cui-status-pill.cls-sending {
+    box-shadow: 0 4px 18px rgba(96, 165, 250, 0.18), 0 0 0 1px rgba(96, 165, 250, 0.2);
+}
+
+/* ─────────────────────────────────────────────────────
+   3. INPUT BAR — bottom center, pill design
+   "Call feeling": glows red when recording
+───────────────────────────────────────────────────── */
+.cui-input-bar {
+    position: fixed;
+    bottom: 28px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 9999;
+
+    width: min(500px, 86vw);
+    height: 56px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 0 6px 0 8px;
+
+    background: rgba(10, 12, 24, 0.92);
+    border: 1px solid rgba(255, 255, 255, 0.11);
+    border-bottom-color: rgba(255, 255, 255, 0.05);
+    border-radius: 999px;
+    backdrop-filter: blur(36px) saturate(160%);
+    -webkit-backdrop-filter: blur(36px) saturate(160%);
+    box-shadow:
+        0 1px 0 rgba(255, 255, 255, 0.06) inset,
+        0 18px 48px rgba(0, 0, 0, 0.55),
+        0 4px 14px rgba(0, 0, 0, 0.3);
+
+    pointer-events: auto;
+    transition: box-shadow 0.3s, border-color 0.3s;
+}
+
+/* Red glow when mic is active */
+.cui-input-bar.is-listening {
+    border-color: rgba(248, 113, 113, 0.35);
+    box-shadow:
+        0 1px 0 rgba(255, 255, 255, 0.06) inset,
+        0 18px 48px rgba(0, 0, 0, 0.55),
+        0 0 0 2px rgba(248, 113, 113, 0.18),
+        0 0 24px rgba(248, 113, 113, 0.12);
+}
+
+/* ── Mic button ── */
+.cui-mic-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(255, 255, 255, 0.07);
+    color: rgba(255, 255, 255, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: background 0.2s, color 0.15s, transform 0.12s, box-shadow 0.2s;
+}
+
+.cui-mic-btn:hover {
+    background: rgba(255, 255, 255, 0.13);
+    color: #fff;
+}
+
+.cui-mic-btn.active {
+    background: rgba(248, 113, 113, 0.22);
+    color: #fca5a5;
+    box-shadow: 0 0 0 2px rgba(248, 113, 113, 0.35);
+    animation: mic-pulse 1.2s infinite;
+}
+
+@keyframes mic-pulse {
+
+    0%,
+    100% {
+        box-shadow: 0 0 0 2px rgba(248, 113, 113, 0.35);
+    }
+
+    50% {
+        box-shadow: 0 0 0 6px rgba(248, 113, 113, 0.1);
+    }
+}
+
+/* Animated waveform bars (shown while recording) */
+.cui-wave-icon {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    height: 18px;
+}
+
+.cui-wave-icon span {
+    display: block;
+    width: 3px;
+    background: #fca5a5;
+    border-radius: 3px;
+    animation: wav 0.7s ease-in-out infinite alternate;
+}
+
+.cui-wave-icon span:nth-child(1) {
+    animation-delay: 0ms;
+    animation-duration: 0.55s;
+}
+
+.cui-wave-icon span:nth-child(2) {
+    animation-delay: 90ms;
+    animation-duration: 0.7s;
+}
+
+.cui-wave-icon span:nth-child(3) {
+    animation-delay: 180ms;
+    animation-duration: 0.6s;
+}
+
+.cui-wave-icon span:nth-child(4) {
+    animation-delay: 70ms;
+    animation-duration: 0.75s;
+}
+
+.cui-wave-icon span:nth-child(5) {
+    animation-delay: 150ms;
+    animation-duration: 0.5s;
+}
+
+@keyframes wav {
+    from {
+        height: 3px;
+        opacity: 0.5;
+    }
+
+    to {
+        height: 18px;
+        opacity: 1;
+    }
+}
+
+/* ── Text input ── */
+.cui-text-input {
+    flex: 1;
+    min-width: 0;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: #fff;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 400;
+    padding: 0 4px;
+    caret-color: #facc15;
+}
+
+.cui-text-input::placeholder {
+    color: rgba(255, 255, 255, 0.26);
+}
+
+/* ── Send button ── */
+.cui-send-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: none;
+    background: #facc15;
+    color: #111;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    flex-shrink: 0;
+    padding-left: 2px;
+    transition: background 0.18s, transform 0.12s, box-shadow 0.2s;
+    box-shadow: 0 4px 14px rgba(250, 204, 21, 0.45);
+}
+
+.cui-send-btn:hover {
+    background: #fde047;
+    transform: scale(1.08);
+}
+
+.cui-send-btn:active {
+    transform: scale(0.91);
+}
+
+.cui-send-btn:disabled {
+    background: rgba(255, 255, 255, 0.08);
+    color: rgba(255, 255, 255, 0.22);
+    box-shadow: none;
+    cursor: default;
+}
+
+/* ── Responsive ── */
+@media (max-width: 600px) {
+    .cui-reply-box {
+        top: 10vh;
+        right: 2vw;
+        max-width: 88vw;
+        border-radius: 14px;
+    }
+
+    .cui-input-bar {
+        width: 93vw;
+        height: 52px;
+        bottom: 16px;
+    }
+
+    .cui-status-pill {
+        bottom: calc(52px + 16px + 10px);
+    }
+}
+
+/* ══════════════════════════════════════════════════
+   SMART WIDGET PANEL (LEFT SIDE)
+   ══════════════════════════════════════════════════ */
+.cui-side-widget-panel {
+    position: fixed;
+    top: 15vh;
+    left: 20px;
+    width: 300px;
+    z-index: 10000;
+    backdrop-filter: blur(12px) contrast(0.95);
+    -webkit-backdrop-filter: blur(12px) contrast(0.95);
+    background: linear-gradient(135deg, rgba(8, 10, 15, 0.75), rgba(15, 20, 25, 0.65));
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: inset 0 0 1px rgba(255, 255, 255, 0.2), 0 12px 28px rgba(0, 0, 0, 0.5);
+    border-radius: 12px;
+    padding: 18px;
+    color: #fff;
+    font-family: 'Inter', sans-serif;
+    transform-origin: top left;
+}
+
+.cui-widget-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 8px;
+    margin-bottom: 15px;
+}
+
+.cui-widget-header-title {
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: rgba(255, 255, 255, 0.4);
+}
+
+.cui-smart-widget {
+    animation: fadeInWidget 0.4s ease-out forwards;
+}
+
+@keyframes fadeInWidget {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.cui-widget-title {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: #fff;
+    margin: 0 0 4px 0;
+}
+
+.cui-widget-subtitle {
+    font-size: 0.85rem;
+    color: #d4af37;
+    margin: 0 0 8px 0;
+}
+
+/* Profile Card */
+.cui-profile-card {
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 12px;
+    padding: 14px;
+    border: 1px solid rgba(212, 175, 55, 0.2);
+}
+
+.cui-profile-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.cui-profile-img {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: 2px solid #d4af37;
+    object-fit: cover;
+}
+
+.cui-profile-bio {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.8);
+    margin-bottom: 14px;
+    line-height: 1.4;
+}
+
+.cui-profile-actions {
+    display: flex;
+    gap: 8px;
+}
+
+/* Services Card */
+.cui-services-card {
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 12px;
+    padding: 14px;
+    border: 1px solid rgba(212, 175, 55, 0.2);
+}
+
+.cui-services-list {
+    list-style: none;
+    margin: 10px 0 0 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.cui-service-item {
+    background: rgba(0, 0, 0, 0.2);
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    line-height: 1.3;
+}
+
+.cui-service-item strong {
+    display: block;
+    color: #d4af37;
+    margin-bottom: 2px;
+}
+
+.cui-service-item span {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+/* Location Card */
+.cui-location-card {
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 12px;
+    padding: 14px;
+    border: 1px solid rgba(212, 175, 55, 0.2);
+}
+
+/* Skills Card */
+.cui-skills-card {
+    background: rgba(255, 255, 255, 0.04);
+    border-radius: 12px;
+    padding: 16px;
+    border: 1px solid rgba(255, 153, 102, 0.25);
+}
+
+.cui-skills-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 10px;
+}
+
+.cui-skill-category {
+    background: rgba(0, 0, 0, 0.2);
+    padding: 8px 12px;
+    border-radius: 8px;
+    border-left: 3px solid #ff9966;
+}
+
+.cui-skill-category strong {
+    display: block;
+    color: #fff;
+    font-size: 0.85rem;
+    margin-bottom: 2px;
+}
+
+.cui-skill-category span {
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+/* Social Card */
+.cui-social-card {
+    background: rgba(255, 255, 255, 0.04);
+    border-radius: 12px;
+    padding: 16px;
+    border: 1px solid rgba(0, 198, 255, 0.25);
+}
+
+.cui-social-links {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.cui-social-link-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(0, 0, 0, 0.3);
+    padding: 10px 14px;
+    border-radius: 8px;
+    text-decoration: none;
+    color: #fff;
+    transition: all 0.2s;
+    border: 1px solid transparent;
+}
+
+.cui-social-link-item:hover {
+    background: rgba(0, 198, 255, 0.1);
+    border-color: rgba(0, 198, 255, 0.3);
+    transform: translateY(-2px);
+}
+
+.cui-social-icon {
+    font-size: 1.2rem;
+}
+
+.cui-social-name {
+    flex: 1;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.cui-social-arrow {
+    color: #00c6ff;
+    font-family: monospace;
+    opacity: 0.7;
+}
+
+.cui-location-header {
+    margin-bottom: 10px;
+}
+
+.cui-map-preview {
+    width: 100%;
+    height: 120px;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.cui-location-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Project Cards */
+.cui-project-card,
+.cui-projects-list-widget {
+    background: rgba(255, 255, 255, 0.04);
+    border-radius: 12px;
+    padding: 16px;
+    border: 1px solid rgba(0, 198, 255, 0.25);
+}
+
+.cui-project-header {
+    margin-bottom: 12px;
+}
+
+.cui-project-tech {
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.75);
+}
+
+.cui-project-tech strong {
+    color: rgba(0, 198, 255, 0.8);
+}
+
+.cui-projects-list {
+    list-style: none;
+    margin: 10px 0 0 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.cui-project-list-item {
+    background: rgba(0, 0, 0, 0.3);
+    padding: 10px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.2s;
+    border: 1px solid transparent;
+}
+
+.cui-project-list-item:hover {
+    background: rgba(0, 198, 255, 0.1);
+    border-color: rgba(0, 198, 255, 0.3);
+}
+
+.cui-project-list-name {
+    color: #00c6ff;
+    font-weight: 600;
+    font-size: 0.9rem;
+    margin-bottom: 2px;
+}
+
+.cui-project-list-desc {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.75rem;
+}
+
+/* Buttons inside widgets */
+.cui-btn-action {
+    background: rgba(212, 175, 55, 0.15);
+    color: #d4af37;
+    border: 1px solid rgba(212, 175, 55, 0.4);
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    flex: 1;
+}
+
+.cui-btn-action:hover {
+    background: rgba(212, 175, 55, 0.3);
+    color: #fff;
+    border-color: #d4af37;
+    transform: translateY(-1px);
+}
+
+@media (max-width: 768px) {
+    .cui-side-widget-panel {
+        top: auto;
+        bottom: 120px;
+        left: 20px;
+        width: calc(100% - 40px);
+        max-width: 400px;
+    }
+}

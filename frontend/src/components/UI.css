@@ -1,3 +1,6 @@
+/* UI.css - PRO GAME HUD */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap');
+
 .ui-container {
   position: absolute;
   top: 0;
@@ -5,50 +8,246 @@
   width: 100%;
   height: 100%;
   pointer-events: none;
-  z-index: 100;
+  font-family: 'Inter', sans-serif;
+  z-index: 1000;
+  overflow: hidden;
 }
 
-.instructions {
+/* --- HUD HEADER --- */
+.hud-header {
   position: absolute;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: rgba(26, 37, 47, 0.9);
-  color: white;
-  padding: 12px 24px;
-  border-radius: 8px;
-  font-size: 14px;
-  pointer-events: none;
-  border: 1px solid rgba(74, 144, 226, 0.3);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  top: 20px;
+  left: 20px;
+  right: 20px;
+  display: flex;
+  justify-content: space-between;
+  pointer-events: auto;
 }
 
-.interaction-prompt {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  pointer-events: all;
+.game-logo {
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(5px);
+  color: #eebb44;
+  font-weight: 800;
+  font-size: 18px;
+  padding: 8px 16px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  border-left: 3px solid #eebb44;
 }
 
-.interaction-button {
-  background: rgba(74, 144, 226, 0.95);
-  color: white;
-  border: 1px solid rgba(74, 144, 226, 0.5);
-  padding: 15px 30px;
-  font-size: 16px;
-  font-weight: 500;
+.game-logo .version {
+  font-size: 10px;
+  background: #eebb44;
+  color: black;
+  padding: 2px 4px;
+  border-radius: 2px;
+  margin-left: 8px;
+}
+
+.hud-btn {
+  width: 44px;
+  height: 44px;
+  background: rgba(0, 0, 0, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
-  transition: all 0.3s;
-  box-shadow: 0 4px 12px rgba(26, 37, 47, 0.4);
+  transition: transform 0.15s ease, border-color 0.15s ease, background 0.15s ease;
 }
 
-.interaction-button:hover {
-  background: rgba(74, 144, 226, 1);
-  transform: scale(1.05);
+.hud-btn:hover {
+  border-color: rgba(255, 255, 255, 0.45);
+  background: rgba(10, 10, 10, 0.8);
 }
 
-.interaction-button:active {
+.hud-btn:active {
+  transform: scale(0.96);
+}
+
+.top-control {
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
+}
+
+.icon-hamburger span {
+  display: block;
+  width: 20px;
+  height: 2px;
+  background: white;
+  margin: 4px 0;
+}
+
+/* --- LEFT: JOYSTICK ZONE --- */
+.joystick-zone {
+  position: absolute;
+  bottom: 40px;
+  left: 40px;
+  pointer-events: auto;
+  z-index: 2000;
+}
+
+.game-pad {
+  position: relative;
+  width: 140px;
+  height: 140px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(2px);
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.d-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.d-row.mid {
+  width: 100%;
+  justify-content: space-between;
+  padding: 0 5px;
+}
+
+.stick-center {
+  width: 40px;
+  height: 40px;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.d-btn {
+  width: 40px;
+  height: 40px;
+  background: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.d-btn svg {
+  width: 24px;
+  height: 24px;
+  filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.5));
+}
+
+.d-btn:active {
+  color: white;
+  transform: scale(0.9);
+}
+
+/* --- RIGHT: ACTION ZONE --- */
+.action-zone {
+  position: absolute;
+  bottom: 40px;
+  right: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: flex-end;
+  pointer-events: auto;
+  z-index: 2000;
+}
+
+.action-btn {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.5);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(4px);
+  cursor: pointer;
+  transition: all 0.15s;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35);
+  flex-direction: column;
+  gap: 2px;
+}
+
+.action-btn svg {
+  width: 28px;
+  height: 28px;
+}
+
+.action-btn:active {
+  background: rgba(255, 255, 255, 0.2);
   transform: scale(0.95);
+}
+
+/* Specific Action Styles */
+.main-action {
+  width: 68px;
+  height: 68px;
+  background: rgba(255, 170, 0, 0.68);
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+.mic-btn {
+  background: rgba(0, 122, 255, 0.6);
+  /* Blue for mic */
+}
+
+.exit-btn {
+  width: 58px;
+  height: 58px;
+  background: rgba(255, 255, 255, 0.18);
+}
+
+.action-label {
+  font-size: 0.58rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  line-height: 1;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+  .joystick-zone {
+    left: 20px;
+    bottom: 20px;
+  }
+
+  .action-zone {
+    right: 20px;
+    bottom: 20px;
+  }
+
+  .game-pad {
+    width: 120px;
+    height: 120px;
+  }
+
+  .action-btn {
+    width: 50px;
+    height: 50px;
+  }
+
+  .main-action {
+    width: 62px;
+    height: 62px;
+  }
+
+  .exit-btn {
+    width: 54px;
+    height: 54px;
+  }
+}
+
+/* --- Instructions Override --- */
+.instructions {
+  display: none;
+  /* Hide old text instructions in game mode */
 }

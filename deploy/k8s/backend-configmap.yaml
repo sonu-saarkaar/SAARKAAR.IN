@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: backend-config
+  namespace: saarkaar-prod
+data:
+  CORS_ORIGINS: "https://your-domain.com"
+  ADMIN_USERNAME: "admin"

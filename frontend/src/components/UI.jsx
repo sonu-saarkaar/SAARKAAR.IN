@@ -1,164 +1,144 @@
-import { useEffect } from 'react'
+import { useMemo } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { useExperienceStore } from '../store/experienceStore'
-import ReceptionInteraction from './ReceptionInteraction'
+import { useAnimationStore } from '../store/animationStore'
 import OfficeInteraction from './OfficeInteraction'
 import MeetingInterface from './MeetingInterface'
 import SlidePanel from './SlidePanel'
 import './UI.css'
 
 export default function UI() {
+  const navigate = useNavigate()
   const isNearReception = useExperienceStore((state) => state.isNearReception)
+  const isNearOffice = useExperienceStore((state) => state.isNearOffice)
   const isInOffice = useExperienceStore((state) => state.isInOffice)
-  const isSitting = useExperienceStore((state) => state.isSitting)
   const isMeetingActive = useExperienceStore((state) => state.isMeetingActive)
-  const showSlidePanel = useExperienceStore((state) => state.showSlidePanel)
-  const setUserPosition = useExperienceStore((state) => state.setUserPosition)
-  const setUserRotation = useExperienceStore((state) => state.setUserRotation)
-  const setCameraRotation = useExperienceStore((state) => state.setCameraRotation)
+  const setShowSlidePanel = useExperienceStore((state) => state.setShowSlidePanel)
+  const setConversationPartner = useExperienceStore((state) => state.setConversationPartner)
+  const setSitting = useExperienceStore((state) => state.setSitting)
+  const setInOffice = useExperienceStore((state) => state.setInOffice)
+  const setInCEOOffice = useExperienceStore((state) => state.setInCEOOffice)
+  const setCameraFocus = useExperienceStore((state) => state.setCameraFocus)
+  const setReceptionistState = useAnimationStore((state) => state.setReceptionistState)
 
-  // Smooth keyboard movement
-  useEffect(() => {
-    const keys = new Set()
-    
-    const handleKeyDown = (e) => {
-      keys.add(e.key.toLowerCase())
+  const canInteract = useMemo(() => isNearReception || isNearOffice, [isNearReception, isNearOffice])
+
+  // --- MOVEMENT LOGIC (Virtual Joystick Simulation) ---
+  const simulateKey = (code, type) => {
+    const event = new KeyboardEvent(type, { code: code, bubbles: true })
+    window.dispatchEvent(event)
+  }
+  const handleMoveStart = (code) => simulateKey(code, 'keydown')
+  const handleMoveEnd = (code) => simulateKey(code, 'keyup')
+
+  const handleInteract = () => {
+    if (isNearReception) {
+      setConversationPartner('receptionist')
+      setReceptionistState('talking')
     }
-    
-    const handleKeyUp = (e) => {
-      keys.delete(e.key.toLowerCase())
-    }
+  }
 
-    const moveLoop = () => {
-      if (keys.size === 0) return
-      
-      // Professional walking speed (not game-like)
-      const speed = 0.06
-      const currentPos = useExperienceStore.getState().userPosition
-      const currentRot = useExperienceStore.getState().userRotation
-
-      if (keys.has('w')) {
-        setUserPosition([
-          currentPos[0] + Math.sin(currentRot[1]) * speed,
-          currentPos[1],
-          currentPos[2] + Math.cos(currentRot[1]) * speed
-        ])
-      }
-      if (keys.has('s')) {
-        setUserPosition([
-          currentPos[0] - Math.sin(currentRot[1]) * speed,
-          currentPos[1],
-          currentPos[2] - Math.cos(currentRot[1]) * speed
-        ])
-      }
-      if (keys.has('a')) {
-        setUserPosition([
-          currentPos[0] - Math.cos(currentRot[1]) * speed,
-          currentPos[1],
-          currentPos[2] + Math.sin(currentRot[1]) * speed
-        ])
-      }
-      if (keys.has('d')) {
-        setUserPosition([
-          currentPos[0] + Math.cos(currentRot[1]) * speed,
-          currentPos[1],
-          currentPos[2] - Math.sin(currentRot[1]) * speed
-        ])
-      }
-      if (keys.has('arrowleft')) {
-        setUserRotation([currentRot[0], currentRot[1] - 0.04, currentRot[2]])
-      }
-      if (keys.has('arrowright')) {
-        setUserRotation([currentRot[0], currentRot[1] + 0.04, currentRot[2]])
-      }
-    }
-
-    const interval = setInterval(moveLoop, 16) // ~60fps
-
-    window.addEventListener('keydown', handleKeyDown)
-    window.addEventListener('keyup', handleKeyUp)
-
-    return () => {
-      window.removeEventListener('keydown', handleKeyDown)
-      window.removeEventListener('keyup', handleKeyUp)
-      clearInterval(interval)
-    }
-  }, [setUserPosition, setUserRotation])
-
-  // Smooth mouse look
-  useEffect(() => {
-    let isMouseDown = false
-    let lastX = 0
-    let lastY = 0
-
-    const handleMouseDown = (e) => {
-      isMouseDown = true
-      lastX = e.clientX
-      lastY = e.clientY
-    }
-
-    const handleMouseUp = () => {
-      isMouseDown = false
-    }
-
-    const handleMouseMove = (e) => {
-      if (isMouseDown) {
-        // Smooth, professional mouse sensitivity
-        const sensitivity = 0.002
-        const deltaX = (e.clientX - lastX) * sensitivity
-        const deltaY = (e.clientY - lastY) * sensitivity
-        
-        const currentRot = useExperienceStore.getState().userRotation
-        const currentCamRot = useExperienceStore.getState().cameraRotation
-        
-        // Smooth rotation with slight damping
-        setUserRotation([currentRot[0], currentRot[1] - deltaX, currentRot[2]])
-        setCameraRotation([currentCamRot[0], currentCamRot[1] - deltaX * 0.4, currentCamRot[2]])
-        
-        lastX = e.clientX
-        lastY = e.clientY
-      }
-    }
-
-    window.addEventListener('mousedown', handleMouseDown)
-    window.addEventListener('mouseup', handleMouseUp)
-    window.addEventListener('mousemove', handleMouseMove)
-
-    return () => {
-      window.removeEventListener('mousedown', handleMouseDown)
-      window.removeEventListener('mouseup', handleMouseUp)
-      window.removeEventListener('mousemove', handleMouseMove)
-    }
-  }, [setUserRotation, setCameraRotation])
+  const handleExit = () => {
+    setConversationPartner(null)
+    setSitting(false)
+    setInCEOOffice(false)
+    setInOffice(false)
+    setCameraFocus('lobby')
+    setShowSlidePanel(false)
+    navigate('/portfolio')
+  }
 
   return (
     <div className="ui-container">
-      {/* Instructions */}
-      {!isInOffice && (
-        <div className="instructions">
-          <p style={{ color: '#1a252f', fontWeight: '500' }}>SAARKAAR Virtual Office</p>
-          <p style={{ fontSize: '0.9em', color: '#4a90e2', marginTop: '4px' }}>Use W/A/S/D to move, Click & Drag to look around</p>
+
+      {/* --- HUD HEADER --- */}
+      <div className="hud-header">
+        {!isInOffice && <div className="game-logo">SAARKAAR<span className="version">DEV</span></div>}
+
+        <button
+          className="hud-btn menu-btn top-control"
+          title="Open Menu"
+          onClick={() => setShowSlidePanel(true)}
+        >
+          <div className="icon-hamburger">
+            <span></span><span></span><span></span>
+          </div>
+        </button>
+      </div>
+
+      {/* --- LEFT CONTROL: MOVEMENT (Joystick Style) --- */}
+      <div className="joystick-zone">
+        <div className="d-pad game-pad">
+          <div className="d-row">
+            <button className="d-btn up"
+              onMouseDown={() => handleMoveStart('KeyW')} onMouseUp={() => handleMoveEnd('KeyW')}
+              onTouchStart={() => handleMoveStart('KeyW')} onTouchEnd={() => handleMoveEnd('KeyW')}
+            >
+              <svg viewBox="0 0 24 24"><path fill="currentColor" d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z" /></svg>
+            </button>
+          </div>
+          <div className="d-row mid">
+            <button className="d-btn left"
+              onMouseDown={() => handleMoveStart('KeyA')} onMouseUp={() => handleMoveEnd('KeyA')}
+              onTouchStart={() => handleMoveStart('KeyA')} onTouchEnd={() => handleMoveEnd('KeyA')}
+            >
+              <svg viewBox="0 0 24 24"><path fill="currentColor" d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z" /></svg>
+            </button>
+            <div className="stick-center"></div>
+            <button className="d-btn right"
+              onMouseDown={() => handleMoveStart('KeyD')} onMouseUp={() => handleMoveEnd('KeyD')}
+              onTouchStart={() => handleMoveStart('KeyD')} onTouchEnd={() => handleMoveEnd('KeyD')}
+            >
+              <svg viewBox="0 0 24 24"><path fill="currentColor" d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z" /></svg>
+            </button>
+          </div>
+          <div className="d-row">
+            <button className="d-btn down"
+              onMouseDown={() => handleMoveStart('KeyS')} onMouseUp={() => handleMoveEnd('KeyS')}
+              onTouchStart={() => handleMoveStart('KeyS')} onTouchEnd={() => handleMoveEnd('KeyS')}
+            >
+              <svg viewBox="0 0 24 24"><path fill="currentColor" d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6z" /></svg>
+            </button>
+          </div>
         </div>
-      )}
+      </div>
 
-      {/* Reception Interaction */}
-      {isNearReception && !isInOffice && (
-        <ReceptionInteraction />
-      )}
 
-      {/* Office Interactions */}
-      {isInOffice && (
-        <OfficeInteraction />
-      )}
+      {/* --- RIGHT CONTROL: ACTIONS --- */}
+      <div className="action-zone">
 
-      {/* Meeting Interface */}
-      {isMeetingActive && (
-        <MeetingInterface />
-      )}
+        {/* INTERACT (Context Aware) */}
+        {canInteract && (
+          <button className="action-btn interact-btn main-action" onClick={handleInteract}>
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M9 11.24V7.5C9 6.12 10.12 5 11.5 5S14 6.12 14 7.5v3.74c1.21-.81 2-2.18 2-3.74C16 5.01 13.99 3 11.5 3S7 5.01 7 7.5c0 1.56.79 2.93 2 3.74zM18.84 15.87l-4.54-2.26c-.17-.09-.38-.05-.51.09l-1.58 2.06c-.47-.52-1.22-1.33-1.65-1.92l2.36-1.18c.24-.12.35-.41.22-.67-.23-.46-.35-.97-.35-1.49 0-1.93 1.57-3.5 3.5-3.5s3.5 1.57 3.5 3.5c0 1.9-1.55 3.45-3.41 3.49l2.42 1.21c.29.15.4.51.25.8l-.71 1.42c-.09.18-.28.29-.48.29-.08 0-.17-.02-.24-.05z" />
+            </svg>
+          </button>
+        )}
 
-      {/* Slide Panel */}
-      {showSlidePanel && (
-        <SlidePanel />
-      )}
+        {/* EXIT */}
+        <button
+          className="action-btn exit-btn"
+          title="Exit"
+          onClick={handleExit}
+        >
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M14 4h4a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-4" />
+            <path d="M10 16l-4-4 4-4" />
+            <path d="M6 12h10" />
+          </svg>
+          <span className="action-label">EXIT</span>
+        </button>
+      </div>
+
+      {/* --- OVERLAYS --- */}
+      {/* Existing Interaction components still rendered but now we have HUD buttons for them if needed */}
+      <OfficeInteraction />
+      {isMeetingActive && <MeetingInterface />}
+
+      {/* Using the new SlidePanel trigger above, so just rendering the panel itself */}
+      <SlidePanel />
+
     </div>
   )
 }

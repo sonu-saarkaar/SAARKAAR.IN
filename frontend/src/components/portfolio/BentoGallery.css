@@ -1,0 +1,530 @@
+/* Premium Adaptive Bento Grid Styles */
+
+.bento-system-section {
+    width: 100%;
+    padding: 6rem 2rem;
+    background-color: #050508;
+    color: #fff;
+    font-family: 'Inter', sans-serif;
+    border-top: 1px solid rgba(0, 245, 212, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+.bento-sys-header {
+    text-align: center;
+    margin-bottom: 3rem;
+    position: relative;
+    z-index: 2;
+}
+
+.sys-label {
+    display: inline-block;
+    padding: 4px 12px;
+    border: 1px solid rgba(0, 245, 212, 0.4);
+    color: #00f5d4;
+    font-size: 0.8rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    border-radius: 4px;
+    /* Harder edge for engineered look */
+    margin-bottom: 1rem;
+    background: rgba(0, 245, 212, 0.05);
+}
+
+.sys-title {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 3.5rem;
+    margin: 0 0 1rem 0;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.sys-title span {
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(255, 255, 255, 0.4);
+}
+
+.sys-desc {
+    color: #888;
+    max-width: 600px;
+    margin: 0 auto;
+    font-size: 1.1rem;
+}
+
+.sys-filters {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-bottom: 4rem;
+    z-index: 2;
+    position: relative;
+}
+
+.sys-filter-btn {
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #aaa;
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    font-family: 'Courier New', monospace;
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.sys-filter-btn:hover {
+    color: #fff;
+    border-color: rgba(255, 255, 255, 0.4);
+}
+
+.sys-filter-btn.active {
+    background: rgba(212, 175, 55, 0.1);
+    border-color: #d4af37;
+    color: #d4af37;
+    box-shadow: inset 0 0 10px rgba(212, 175, 55, 0.2);
+}
+
+/* -------------------------------------
+   CSS GRID LAYOUT (BENTO)
+   ------------------------------------- */
+
+.bento-sys-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-auto-rows: 250px;
+    grid-auto-flow: dense;
+    /* Fills empty gaps */
+    gap: 16px;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 1rem;
+    position: relative;
+    z-index: 2;
+}
+
+/* Sizing Classes */
+.hero {
+    grid-column: span 2;
+    grid-row: span 2;
+}
+
+.medium {
+    grid-column: span 1;
+    grid-row: span 1;
+}
+
+.tall {
+    grid-column: span 1;
+    grid-row: span 2;
+}
+
+.wide {
+    grid-column: span 2;
+    grid-row: span 1;
+}
+
+.small {
+    grid-column: span 1;
+    grid-row: span 1;
+}
+
+.bento-tile {
+    position: relative;
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    /* Soft glass border */
+    overflow: hidden;
+    cursor: pointer;
+    background: #0a0a0a;
+    transition: box-shadow 0.3s ease, border-color 0.3s ease;
+    /* Box shadow is subtly present, enhances on hover */
+    box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.8), 0 5px 15px rgba(0, 0, 0, 0.5);
+}
+
+.bento-tile-inner {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    z-index: 1;
+}
+
+.bento-parallax-img {
+    position: absolute;
+    top: -5%;
+    left: -5%;
+    width: 110%;
+    height: 110%;
+    background-size: cover;
+    background-repeat: no-repeat;
+    /* initial background position is handled by jsx style */
+    transition: background-position 0.1s ease-out;
+    /* smooth parallax */
+    filter: brightness(0.5) contrast(1.2) grayscale(40%);
+    transform: scale(1.02);
+    z-index: 1;
+}
+
+.bento-tile-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.98) 0%, rgba(0, 0, 0, 0.5) 40%, transparent 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 1.5rem;
+    z-index: 2;
+    opacity: 0.85;
+    /* Base opacity */
+    transition: opacity 0.4s ease-out;
+}
+
+/* Hover Adjustments */
+.bento-tile:hover {
+    border-color: rgba(212, 175, 55, 0.4);
+    /* Gold glow border */
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.8), inset 0 0 20px rgba(212, 175, 55, 0.1);
+    z-index: 10;
+}
+
+.bento-tile:hover .bento-parallax-img {
+    filter: brightness(0.85) contrast(1.1) grayscale(0%);
+    transform: scale(1.05);
+    /* Smooth filter transition (fade + scale) */
+    transition: filter 0.5s ease, transform 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.bento-tile:hover .bento-tile-overlay {
+    opacity: 1;
+}
+
+.bento-tile-content {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    transition: transform 0.3s ease;
+    transform: translateY(15px);
+}
+
+.bento-tile:hover .bento-tile-content {
+    transform: translateY(0);
+}
+
+.bento-tag {
+    align-self: flex-start;
+    color: #d4af37;
+    font-size: 0.75rem;
+    font-family: 'Courier New', monospace;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.bento-tile-title {
+    margin: 0;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 1.4rem;
+    color: #fff;
+    letter-spacing: 1px;
+}
+
+.hero .bento-tile-title {
+    font-size: 2.2rem;
+}
+
+.bento-tagline {
+    color: #aaa;
+    font-size: 0.9rem;
+    margin: 5px 0 0 0;
+    opacity: 0.9;
+}
+
+.bento-cta {
+    font-size: 0.8rem;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    opacity: 0;
+    margin-top: 10px;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    transition: opacity 0.3s ease 0.1s;
+}
+
+.bento-tile:hover .bento-cta {
+    opacity: 1;
+}
+
+.bento-cta .arrow {
+    color: #d4af37;
+    font-weight: bold;
+    transition: transform 0.3s ease;
+}
+
+.bento-tile:hover .bento-cta .arrow {
+    transform: translateX(5px);
+}
+
+/* Responsive Grid */
+@media (max-width: 1024px) {
+    .bento-sys-grid {
+        grid-template-columns: repeat(3, 1fr);
+        grid-auto-rows: 220px;
+    }
+
+    .hero {
+        grid-column: span 2;
+        grid-row: span 2;
+    }
+
+    .tall {
+        grid-column: span 1;
+        grid-row: span 2;
+    }
+
+    .wide {
+        grid-column: span 2;
+        grid-row: span 1;
+    }
+
+    .medium,
+    .small {
+        grid-column: span 1;
+        grid-row: span 1;
+    }
+}
+
+@media (max-width: 768px) {
+    .bento-sys-grid {
+        grid-template-columns: repeat(2, 1fr);
+        grid-auto-rows: 240px;
+    }
+
+    .hero {
+        grid-column: span 2;
+        grid-row: span 2;
+    }
+
+    /* Convert others appropriately */
+    .tall,
+    .medium,
+    .small {
+        grid-column: span 1;
+        grid-row: span 1;
+    }
+
+    .wide {
+        grid-column: span 2;
+        grid-row: span 1;
+    }
+}
+
+@media (max-width: 480px) {
+    .bento-sys-grid {
+        grid-template-columns: 1fr;
+        grid-auto-rows: 300px;
+    }
+
+    .hero,
+    .tall,
+    .wide,
+    .medium,
+    .small {
+        grid-column: span 1;
+        grid-row: span 1;
+    }
+}
+
+/* -------------------------------------
+   IMMERSIVE FULLSCREEN MODAL
+   ------------------------------------- */
+
+.sys-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(5, 5, 8, 0.98);
+    /* Extremely dark blurred bg */
+    backdrop-filter: blur(20px);
+    z-index: 99999;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.sys-modal-close {
+    position: absolute;
+    top: 2rem;
+    right: 2.5rem;
+    background: transparent;
+    border: none;
+    color: #475569;
+    font-size: 3rem;
+    line-height: 1;
+    cursor: pointer;
+    z-index: 10;
+    transition: 0.3s;
+}
+
+.sys-modal-close:hover {
+    color: #ef4444;
+    transform: rotate(90deg);
+}
+
+.sys-modal-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 95%;
+    max-width: 1400px;
+    height: 90vh;
+    position: relative;
+    gap: 30px;
+}
+
+.sys-nav-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: transparent;
+    border: none;
+    color: #334155;
+    font-size: 5rem;
+    cursor: pointer;
+    transition: 0.3s;
+    z-index: 5;
+    padding: 20px;
+}
+
+.sys-nav-btn.left {
+    left: -30px;
+}
+
+.sys-nav-btn.right {
+    right: -30px;
+}
+
+.sys-nav-btn:hover {
+    color: #d4af37;
+    transform: translateY(-50%) scale(1.1);
+}
+
+.sys-modal-core {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 1100px;
+    height: 100%;
+    gap: 20px;
+}
+
+.sys-modal-visual {
+    flex-grow: 1;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 12px;
+    overflow: hidden;
+    background: rgba(15, 23, 42, 0.4);
+    box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.5), 0 20px 50px rgba(0, 0, 0, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 10px;
+}
+
+.sys-modal-img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    border-radius: 8px;
+}
+
+.sys-modal-panel {
+    width: 100%;
+    background: rgba(15, 23, 42, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 2rem;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(5px);
+}
+
+.sys-modal-cat {
+    color: #d4af37;
+    font-family: 'Courier New', monospace;
+    font-size: 0.8rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 5px;
+}
+
+.sys-modal-title {
+    margin: 0 0 10px 0;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 2.2rem;
+    color: #fff;
+}
+
+.sys-modal-desc {
+    color: #94a3b8;
+    font-size: 1rem;
+    margin: 0 0 20px 0;
+    line-height: 1.5;
+    max-width: 800px;
+}
+
+.sys-tech-stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.sys-tech-tag {
+    background: rgba(0, 245, 212, 0.1);
+    color: #00f5d4;
+    border: 1px solid rgba(0, 245, 212, 0.3);
+    padding: 6px 14px;
+    border-radius: 4px;
+    font-family: 'Courier New', monospace;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+@media (max-width: 768px) {
+    .sys-modal-core {
+        gap: 10px;
+    }
+
+    .sys-modal-visual {
+        height: 50vh;
+        flex-grow: 0;
+    }
+
+    .sys-modal-panel {
+        padding: 1.5rem;
+    }
+
+    .sys-modal-title {
+        font-size: 1.8rem;
+    }
+
+    .sys-nav-btn {
+        display: none;
+    }
+
+    /* Relies on touch / keyboard */
+}
