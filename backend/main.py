@@ -115,7 +115,10 @@ async def health():
 # ─── SERVE REACT FRONTEND (SPA) ────────────────────────────────────
 from fastapi.responses import FileResponse, JSONResponse
 
-FRONTEND_DIST = os.getenv("FRONTEND_DIST", "../frontend/dist")
+FRONTEND_DIST = os.getenv("FRONTEND_DIST", "dist")
+
+if not os.path.exists(FRONTEND_DIST) and os.path.exists("../frontend/dist"):
+    FRONTEND_DIST = "../frontend/dist"
 
 if os.path.exists(FRONTEND_DIST):
     # Mount Webpack/Vite assets to serve CSS, JS, Images fast
