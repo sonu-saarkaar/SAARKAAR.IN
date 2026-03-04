@@ -1,0 +1,19 @@
+.git
+.github
+node_modules/
+frontend/node_modules/
+backend/venv/
+backend/__pycache__/
+*.pyc
+.env
+.env.*
+dist/
+build/
+frontend/dist/
+frontend/build/
+tmp/
+temp/
+logs/
+*.log
+backend/uploads/
+Reception Girls chracter .fbx
