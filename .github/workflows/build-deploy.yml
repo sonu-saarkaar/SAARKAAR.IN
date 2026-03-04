@@ -6,9 +6,9 @@ on:
   workflow_dispatch:   # Manual trigger from GitHub UI
 
 env:
-  DOCKER_HUB_USERNAME: sonu-saarkaar
-  BACKEND_IMAGE: sonu-saarkaar/saarkaar-backend
-  FRONTEND_IMAGE: sonu-saarkaar/saarkaar-frontend
+  DOCKER_HUB_USERNAME: sonusaarkaar
+  BACKEND_IMAGE: sonusaarkaar/saarkaar-backend
+  FRONTEND_IMAGE: sonusaarkaar/saarkaar-frontend
 
 jobs:
   # ─────────────────────────────────────────────────────────────────
@@ -89,8 +89,8 @@ jobs:
           echo "✅ SAARKAAR.IN Docker Images Built!"
           echo "=================================="
           echo ""
-          echo "Backend:  sonu-saarkaar/saarkaar-backend:latest"
-          echo "Frontend: sonu-saarkaar/saarkaar-frontend:latest"
+          echo "Backend:  sonusaarkaar/saarkaar-backend:latest"
+          echo "Frontend: sonusaarkaar/saarkaar-frontend:latest"
           echo ""
           echo "Now apply to Kuberns:"
           echo "kubectl rollout restart deployment/backend -n saarkaar-prod"
