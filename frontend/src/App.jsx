@@ -2,7 +2,7 @@ import React, { useState, useEffect, Suspense, memo } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
 import { Preload, Html, useProgress } from '@react-three/drei'
 import * as THREE from 'three'
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { HashRouter, Routes, Route } from 'react-router-dom'
 import { usePerformanceStore } from './store/performanceStore'
 import ScrollToTop from './components/ScrollToTop'
 
@@ -213,7 +213,7 @@ function Home3D() {
 
 export default function App() {
   return (
-    <BrowserRouter>
+    <HashRouter>
       <ScrollToTop>
         <Routes>
           <Route path="/" element={<Home3D />} />
@@ -223,6 +223,6 @@ export default function App() {
           <Route path="/admin" element={<AdminApp />} />
         </Routes>
       </ScrollToTop>
-    </BrowserRouter>
+    </HashRouter>
   )
 }
