@@ -97,10 +97,6 @@ async def startup_event():
     except Exception as e:
         logger.warning(f"ML model training skipped: {e}")
 
-@app.get("/")
-async def root():
-    return {"message": "SAARKAAR Premium API Running", "status": "online"}
-
 @app.get("/health")
 async def health():
     db_connected = True
@@ -115,3 +111,40 @@ async def health():
         "uptime_seconds": round(time.time() - APP_START_TIME, 2),
         "checked_at": datetime.now(timezone.utc).isoformat(),
     }
+
+# ─── SERVE REACT FRONTEND (SPA) ────────────────────────────────────
+from fastapi.responses import FileResponse, JSONResponse
+
+FRONTEND_DIST = os.getenv("FRONTEND_DIST", "../frontend/dist")
+
+if os.path.exists(FRONTEND_DIST):
+    # Mount Webpack/Vite assets to serve CSS, JS, Images fast
+    assets_dir = os.path.join(FRONTEND_DIST, "assets")
+    if os.path.exists(assets_dir):
+        app.mount("/assets", StaticFiles(directory=assets_dir), name="assets")
+
+    # Catch-all route for React Router (Single Page Application fallback)
+    @app.get("/{full_path:path}")
+    async def serve_frontend(full_path: str):
+        # Prevent the SPA from swallowing API 404s
+        if full_path.startswith("api/"):
+            return JSONResponse({"detail": "Not Found"}, status_code=404)
+        
+        # Try to serve a specific file if it exists (like favicon.ico, images)
+        requested_file = os.path.join(FRONTEND_DIST, full_path)
+        if os.path.isfile(requested_file):
+            return FileResponse(requested_file)
+            
+        # Everything else goes to React index.html
+        return FileResponse(os.path.join(FRONTEND_DIST, "index.html"))
+else:
+    # Fallback if frontend isn't built alongside backend
+    @app.get("/")
+    async def root():
+        return {
+            "message": "SAARKAAR Premium API Running", 
+            "status": "online",
+            "frontend_status": f"Not found at {FRONTEND_DIST}"
+        }
+
+
