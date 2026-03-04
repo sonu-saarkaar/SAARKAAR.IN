@@ -5,9 +5,15 @@ metadata:
   namespace: saarkaar-prod
   annotations:
     kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/proxy-body-size: "50m"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "120"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "120"
+    nginx.ingress.kubernetes.io/cors-allow-origin: "*"
+    nginx.ingress.kubernetes.io/enable-cors: "true"
 spec:
   rules:
-    - host: your-domain.com
+    # ── Kuberns auto-generated domain ────────────────────────────
+    - host: saarkaarin-main-f7282a2.kuberns.cloud
       http:
         paths:
           - path: /api
@@ -18,6 +24,13 @@ spec:
                 port:
                   number: 8000
           - path: /health
+            pathType: Prefix
+            backend:
+              service:
+                name: backend-service
+                port:
+                  number: 8000
+          - path: /uploads
             pathType: Prefix
             backend:
               service:

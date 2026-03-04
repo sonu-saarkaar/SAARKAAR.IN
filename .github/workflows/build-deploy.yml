@@ -1,0 +1,97 @@
+name: 🚀 Build & Deploy SAARKAAR.IN
+
+on:
+  push:
+    branches: [ main, master ]
+  workflow_dispatch:   # Manual trigger from GitHub UI
+
+env:
+  DOCKER_HUB_USERNAME: sonu-saarkaar
+  BACKEND_IMAGE: sonu-saarkaar/saarkaar-backend
+  FRONTEND_IMAGE: sonu-saarkaar/saarkaar-frontend
+
+jobs:
+  # ─────────────────────────────────────────────────────────────────
+  # JOB 1: Build & Push Backend
+  # ─────────────────────────────────────────────────────────────────
+  build-backend:
+    name: 🐍 Build Backend (FastAPI)
+    runs-on: ubuntu-latest
+    steps:
+      - name: ⬇️ Checkout Code
+        uses: actions/checkout@v4
+
+      - name: 🔑 Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: 🛠️ Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: 🏗️ Build & Push Backend Image
+        uses: docker/build-push-action@v5
+        with:
+          context: ./backend
+          file: ./backend/Dockerfile
+          push: true
+          tags: |
+            ${{ env.BACKEND_IMAGE }}:latest
+            ${{ env.BACKEND_IMAGE }}:${{ github.sha }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+  # ─────────────────────────────────────────────────────────────────
+  # JOB 2: Build & Push Frontend
+  # ─────────────────────────────────────────────────────────────────
+  build-frontend:
+    name: ⚛️ Build Frontend (React/Vite)
+    runs-on: ubuntu-latest
+    steps:
+      - name: ⬇️ Checkout Code
+        uses: actions/checkout@v4
+
+      - name: 🔑 Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: 🛠️ Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: 🏗️ Build & Push Frontend Image
+        uses: docker/build-push-action@v5
+        with:
+          context: ./frontend
+          file: ./frontend/Dockerfile
+          push: true
+          tags: |
+            ${{ env.FRONTEND_IMAGE }}:latest
+            ${{ env.FRONTEND_IMAGE }}:${{ github.sha }}
+          build-args: |
+            VITE_API_URL=/api
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+  # ─────────────────────────────────────────────────────────────────
+  # JOB 3: Summary
+  # ─────────────────────────────────────────────────────────────────
+  deploy-summary:
+    name: 📋 Deployment Summary
+    runs-on: ubuntu-latest
+    needs: [build-backend, build-frontend]
+    steps:
+      - name: ✅ Build Complete
+        run: |
+          echo "=================================="
+          echo "✅ SAARKAAR.IN Docker Images Built!"
+          echo "=================================="
+          echo ""
+          echo "Backend:  sonu-saarkaar/saarkaar-backend:latest"
+          echo "Frontend: sonu-saarkaar/saarkaar-frontend:latest"
+          echo ""
+          echo "Now apply to Kuberns:"
+          echo "kubectl rollout restart deployment/backend -n saarkaar-prod"
+          echo "kubectl rollout restart deployment/frontend -n saarkaar-prod"

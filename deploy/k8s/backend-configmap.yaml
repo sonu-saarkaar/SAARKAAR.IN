@@ -4,5 +4,7 @@ metadata:
   name: backend-config
   namespace: saarkaar-prod
 data:
-  CORS_ORIGINS: "https://your-domain.com"
+  CORS_ORIGINS: "https://saarkaarin-main-f7282a2.kuberns.cloud,http://saarkaarin-main-f7282a2.kuberns.cloud"
   ADMIN_USERNAME: "admin"
+  REDIS_HOST: "redis-service"
+  REDIS_PORT: "6379"

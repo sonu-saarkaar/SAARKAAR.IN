@@ -44,3 +44,8 @@ tmp/
 temp/
 *.tmp
 
+# ⚠️ NEVER commit real Kubernetes secrets!
+deploy/k8s/backend-secret.yaml
+
+# Uploads (user files)
+backend/uploads/

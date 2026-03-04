@@ -45,7 +45,10 @@ app.state.limiter = limiter
 app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
 # CORS — reads from env, falls back to localhost dev defaults
-_raw_cors = os.getenv("CORS_ORIGINS", "http://localhost:5173,http://localhost:3000")
+_raw_cors = os.getenv(
+    "CORS_ORIGINS",
+    "http://localhost:5173,http://localhost:3000"
+)
 ALLOWED_ORIGINS = [
     origin.strip() for origin in _raw_cors.split(",") if origin.strip()
 ]
@@ -53,6 +56,8 @@ ALLOWED_ORIGINS = [
 for _dev in ["http://localhost:5173", "http://127.0.0.1:5173", "http://localhost:3000"]:
     if _dev not in ALLOWED_ORIGINS:
         ALLOWED_ORIGINS.append(_dev)
+
+logger.info(f"CORS Allowed Origins: {ALLOWED_ORIGINS}")
 
 app.add_middleware(
     CORSMiddleware,
@@ -62,10 +67,15 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Serve static uploads (resumes)
-if not os.path.exists("uploads"):
-    os.makedirs("uploads")
-app.mount("/uploads", StaticFiles(directory="uploads"), name="uploads")
+# Serve static uploads — use /tmp/uploads when running as non-root in containers
+_uploads_dir = os.getenv("UPLOADS_DIR", "uploads")
+if not os.path.exists(_uploads_dir):
+    try:
+        os.makedirs(_uploads_dir)
+    except PermissionError:
+        _uploads_dir = "/tmp/uploads"
+        os.makedirs(_uploads_dir, exist_ok=True)
+app.mount("/uploads", StaticFiles(directory=_uploads_dir), name="uploads")
 
 # Include routers
 app.include_router(ai.router, prefix="/api/ai", tags=["ai"])
@@ -82,7 +92,10 @@ app.include_router(admin.router, prefix="/api/admin", tags=["admin"])
 @app.on_event("startup")
 async def startup_event():
     logger.info("Starting ML Service Context...")
-    train_intent_model()
+    try:
+        train_intent_model()
+    except Exception as e:
+        logger.warning(f"ML model training skipped: {e}")
 
 @app.get("/")
 async def root():

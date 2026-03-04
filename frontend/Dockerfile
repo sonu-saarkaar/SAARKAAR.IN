@@ -6,6 +6,8 @@ RUN npm ci
 
 COPY . .
 
+# VITE_API_URL should be /api so it works via Ingress proxy
+# Kuberns routes /api → backend-service:8000
 ARG VITE_API_URL=/api
 ENV VITE_API_URL=${VITE_API_URL}
 

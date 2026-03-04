@@ -4,7 +4,7 @@ metadata:
   name: backend
   namespace: saarkaar-prod
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: backend
@@ -15,21 +15,27 @@ spec:
     spec:
       containers:
         - name: backend
-          image: your-dockerhub-user/saarkaar-backend:latest
+          image: sonu-saarkaar/saarkaar-backend:latest
           imagePullPolicy: Always
           ports:
             - containerPort: 8000
           env:
+            # ── Secrets ─────────────────────────────────────────
             - name: OPENAI_API_KEY
               valueFrom:
                 secretKeyRef:
                   name: backend-secret
                   key: OPENAI_API_KEY
-            - name: MONGO_URL
+            - name: MONGODB_URI
               valueFrom:
                 secretKeyRef:
                   name: backend-secret
-                  key: MONGO_URL
+                  key: MONGODB_URI
+            - name: MONGO_URI
+              valueFrom:
+                secretKeyRef:
+                  name: backend-secret
+                  key: MONGODB_URI
             - name: ADMIN_PASSWORD
               valueFrom:
                 secretKeyRef:
@@ -40,6 +46,7 @@ spec:
                 secretKeyRef:
                   name: backend-secret
                   key: ADMIN_JWT_SECRET
+            # ── ConfigMap ────────────────────────────────────────
             - name: CORS_ORIGINS
               valueFrom:
                 configMapKeyRef:
@@ -50,18 +57,30 @@ spec:
                 configMapKeyRef:
                   name: backend-config
                   key: ADMIN_USERNAME
+            - name: REDIS_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: backend-config
+                  key: REDIS_HOST
+            - name: REDIS_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: backend-config
+                  key: REDIS_PORT
           readinessProbe:
             httpGet:
               path: /health
               port: 8000
-            initialDelaySeconds: 10
+            initialDelaySeconds: 15
             periodSeconds: 10
+            failureThreshold: 5
           livenessProbe:
             httpGet:
               path: /health
               port: 8000
-            initialDelaySeconds: 20
+            initialDelaySeconds: 30
             periodSeconds: 20
+            failureThreshold: 3
           resources:
             requests:
               cpu: "250m"

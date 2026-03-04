@@ -14,8 +14,13 @@ logger = structlog.get_logger("api")
 
 app = FastAPI(title="SAARKAAR AI 2.0 API")
 
-# Setup MongoDB
-MONGO_URL = os.getenv("MONGO_URI", "mongodb://localhost:27017")
+# Setup MongoDB - support both MONGODB_URI and MONGO_URI env var names
+MONGO_URL = (
+    os.getenv("MONGODB_URI") or 
+    os.getenv("MONGO_URI") or 
+    os.getenv("MONGO_URL") or 
+    "mongodb://localhost:27017"
+)
 client = AsyncIOMotorClient(MONGO_URL)
 db = client.saarkaar_db
 
@@ -72,12 +77,10 @@ async def structlog_request_middleware(request: Request, call_next):
 # Temporary endpoint to demonstrate layer execution
 @app.post("/api/v2/chat")
 async def chat_multillayer(request: dict):
-    # Example input: {"message": "what is kora?", "session_id": "123", "character": "Boss"}
     msg = request.get("message", "")
     sid = request.get("session_id", "default")
     char = request.get("character", "Assistant")
     
-    # Explicitly bind tenant and session ID to logs for business analytics
     structlog.contextvars.bind_contextvars(session_id=sid, intent_character=char)
     logger.info("chat_request_started", message_len=len(msg))
     
@@ -90,3 +93,13 @@ async def chat_multillayer(request: dict):
         "reply": reply,
         "session": sid
     }
+
+@app.get("/health")
+async def health_check():
+    """Kubernetes/Kuberns readiness and liveness probe endpoint."""
+    import time
+    return {"status": "healthy", "service": "SAARKAAR AI 2.0", "timestamp": time.time()}
+
+@app.get("/")
+async def root():
+    return {"message": "SAARKAAR AI 2.0 API Running", "status": "online"}

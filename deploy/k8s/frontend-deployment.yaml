@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: frontend
-          image: your-dockerhub-user/saarkaar-frontend:latest
+          image: sonu-saarkaar/saarkaar-frontend:latest
           imagePullPolicy: Always
           ports:
             - containerPort: 80
