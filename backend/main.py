@@ -15,18 +15,22 @@ from app.routes import chat
 from app.routes import interactive
 from app.routes import projects
 from app.routes import resume
+from app.routes import upload
 
 from app.ml_service import train_intent_model
 from app.database import database
 
 from pathlib import Path
+import logging
+
+logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
+logger = logging.getLogger(__name__)
 
 env_path = Path(__file__).parent / ".env"
 load_status = load_dotenv(dotenv_path=env_path)
-print(f"DEBUG: .env file loaded from {env_path}: {load_status}")
+logger.info(f"DEBUG: .env file loaded from {env_path}: {load_status}")
 if not load_status:
-    print("WARNING: .env file not found or empty!")
-
+    logger.warning("WARNING: .env file not found or empty!")
 
 app = FastAPI(
     title="SAARKAAR Virtual Office API",
@@ -40,11 +44,19 @@ limiter = Limiter(key_func=get_remote_address)
 app.state.limiter = limiter
 app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
-# CORS
-cors_origins = os.getenv("CORS_ORIGINS", "http://localhost:5173").split(",")
+# CORS — reads from env, falls back to localhost dev defaults
+_raw_cors = os.getenv("CORS_ORIGINS", "http://localhost:5173,http://localhost:3000")
+ALLOWED_ORIGINS = [
+    origin.strip() for origin in _raw_cors.split(",") if origin.strip()
+]
+# Always allow local dev origins
+for _dev in ["http://localhost:5173", "http://127.0.0.1:5173", "http://localhost:3000"]:
+    if _dev not in ALLOWED_ORIGINS:
+        ALLOWED_ORIGINS.append(_dev)
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=cors_origins,
+    allow_origins=ALLOWED_ORIGINS,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -62,13 +74,14 @@ app.include_router(chat.router, prefix="/api", tags=["chat"])
 app.include_router(projects.router, prefix="/api/projects", tags=["projects"])
 app.include_router(interactive.router, prefix="/api/interaction", tags=["interaction"])
 app.include_router(resume.router, prefix="/api/resume", tags=["resume"])
+app.include_router(upload.router, prefix="/api", tags=["upload"])
 
 from app.routers import admin
 app.include_router(admin.router, prefix="/api/admin", tags=["admin"])
 
 @app.on_event("startup")
 async def startup_event():
-    print("Starting ML Service Context...")
+    logger.info("Starting ML Service Context...")
     train_intent_model()
 
 @app.get("/")

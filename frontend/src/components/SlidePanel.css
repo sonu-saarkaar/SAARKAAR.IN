@@ -140,3 +140,127 @@
     transform: translate(-50%, -50%);
   }
 }
+
+/* --- PORTFOLIO SWITCH CONFIRMATION MODAL --- */
+.sp-confirm-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(10px);
+  z-index: 4000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fadeIn 0.2s ease;
+  pointer-events: auto;
+}
+
+.sp-confirm-modal {
+  background: rgba(12, 12, 20, 0.96);
+  border: 1px solid rgba(238, 187, 68, 0.2);
+  border-radius: 20px;
+  padding: 40px 36px 32px;
+  max-width: 370px;
+  width: 90%;
+  text-align: center;
+  box-shadow:
+    0 24px 60px rgba(0, 0, 0, 0.7),
+    0 0 40px rgba(238, 187, 68, 0.08);
+  animation: spSlideUp 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes spSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(18px) scale(0.97);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.sp-confirm-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: rgba(238, 187, 68, 0.1);
+  border: 1px solid rgba(238, 187, 68, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 20px;
+}
+
+.sp-confirm-icon svg {
+  width: 26px;
+  height: 26px;
+  color: #eebb44;
+}
+
+.sp-confirm-title {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0 0 10px;
+  letter-spacing: -0.02em;
+}
+
+.sp-confirm-msg {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.875rem;
+  color: rgba(255, 255, 255, 0.5);
+  line-height: 1.6;
+  margin: 0 0 28px;
+}
+
+.sp-confirm-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.sp-cancel-btn {
+  flex: 1;
+  padding: 12px 16px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: rgba(255, 255, 255, 0.65);
+  font-family: 'Inter', sans-serif;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.sp-cancel-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.sp-proceed-btn {
+  flex: 1;
+  padding: 12px 16px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #eebb44, #d4940a);
+  border: none;
+  color: #0a0a0a;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.875rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s;
+  box-shadow: 0 4px 16px rgba(238, 187, 68, 0.3);
+}
+
+.sp-proceed-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 22px rgba(238, 187, 68, 0.45);
+}
+
+.sp-proceed-btn:active {
+  transform: scale(0.98);
+}

@@ -16,6 +16,7 @@ import SaarkaarLogo from '../components/SaarkaarLogo'
 import Interactable from '../components/Interactable'
 import { useAnimationStore } from '../store/animationStore'
 import { useExperienceStore } from '../store/experienceStore'
+import { usePerformanceStore } from '../store/performanceStore'
 
 // --- 1. COLLISION BOUNDARIES (Simple AABB) ---
 // [x, z, width, depth]
@@ -43,7 +44,7 @@ let WALLS = [
 const DOOR_COLLIDER = [9.5, 0, 1, 4]; // at x=10, z=0
 
 // --- MATERIALS HOOK ---
-const useMaterials = () => {
+const useMaterials = (settings) => {
   return useMemo(() => ({
     glass: new THREE.MeshPhysicalMaterial({
       color: '#aaccff',
@@ -59,11 +60,11 @@ const useMaterials = () => {
     doorMaterial: new THREE.MeshStandardMaterial({ color: '#181008', roughness: 0.6 }),
     wallMatte: new THREE.MeshStandardMaterial({ color: '#111', roughness: 0.9 }),
     floorReflect: {
-      blur: [300, 100], resolution: 512, mixBlur: 1, mixStrength: 1.5,
+      blur: [300, 100], resolution: settings.highResTextures ? 512 : 256, mixBlur: 1, mixStrength: 1.5,
       roughness: 0.4, depthScale: 1, minDepthThreshold: 0.4, maxDepthThreshold: 1.4,
       color: "#101010", metalness: 0.5, mirror: 0.5
     }
-  }), [])
+  }), [settings.highResTextures])
 }
 
 // --- FURNITURE ---
@@ -80,7 +81,8 @@ const SofaGroup = ({ position }) => (
 
 // --- MAIN SCENE ---
 export default function LobbyScene() {
-  const mat = useMaterials()
+  const { settings } = usePerformanceStore()
+  const mat = useMaterials(settings)
   const visitorSeatPositions = useMemo(() => ([
     [23.5, 0.02, 1],
     [23.5, 0.02, -1],
@@ -188,17 +190,21 @@ export default function LobbyScene() {
     <>
       {/* 1. CINEMATIC LIGHTING */}
       <ambientLight intensity={0.4} color="#ccccff" />
-      <spotLight position={[0, 10, 0]} intensity={1} castShadow />
+      <spotLight position={[0, 10, 0]} intensity={1} castShadow={settings.shadows} />
       <pointLight position={[15, 5, 0]} intensity={2} color="#ffaa00" distance={10} /> {/* Warm Office Light */}
-      <Sparkles count={50} scale={30} size={2} color="#fff" opacity={0.2} />
+      {settings.particlesEnabled && <Sparkles count={30} scale={30} size={2} color="#fff" opacity={0.2} />}
       <Environment preset="city" blur={0.8} visibility={false} />
 
       {/* ARCHITECTURE */}
       <group>
         {/* Floor */}
-        <mesh rotation={[-Math.PI / 2, 0, 0]} position={[5, 0, 0]} receiveShadow>
+        <mesh rotation={[-Math.PI / 2, 0, 0]} position={[5, 0, 0]} receiveShadow={settings.shadows}>
           <planeGeometry args={[50, 42]} />
-          <MeshReflectorMaterial {...mat.floorReflect} />
+          {settings.reflections ? (
+            <MeshReflectorMaterial {...mat.floorReflect} />
+          ) : (
+            <meshStandardMaterial color="#101010" roughness={0.4} metalness={0.5} />
+          )}
         </mesh>
 
         {/* Outer Walls */}
@@ -245,11 +251,15 @@ export default function LobbyScene() {
           {/* 1. Floor: Glossy Dark Marble */}
           <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0.01, 0]}>
             <planeGeometry args={[20, 42]} />
-            <MeshReflectorMaterial
-              blur={[400, 100]} resolution={1024} mixBlur={1} mixStrength={2}
-              roughness={0.1} depthScale={1} minDepthThreshold={0.4} maxDepthThreshold={1.4}
-              color="#050505" metalness={0.8} mirror={0.9}
-            />
+            {settings.reflections ? (
+              <MeshReflectorMaterial
+                blur={settings.highResTextures ? [400, 100] : [200, 50]} resolution={settings.highResTextures ? 1024 : 256} mixBlur={1} mixStrength={2}
+                roughness={0.1} depthScale={1} minDepthThreshold={0.4} maxDepthThreshold={1.4}
+                color="#050505" metalness={0.8} mirror={0.9}
+              />
+            ) : (
+              <meshStandardMaterial color="#050505" roughness={0.1} metalness={0.8} />
+            )}
           </mesh>
 
           {/* Grand Glass Partition (West) */}
@@ -322,8 +332,12 @@ export default function LobbyScene() {
               <meshBasicMaterial color="#000" />
             </mesh>
             {/* Minimal Animated City Lights (Sparkles) */}
-            <Sparkles position={[0, -2, -8]} count={200} scale={[60, 20, 10]} size={6} color="#aaccff" speed={0.2} opacity={0.6} noise={0} />
-            <Sparkles position={[0, -2, -5]} count={150} scale={[60, 20, 5]} size={4} color="#ffd8a8" speed={0.1} opacity={0.5} noise={0} />
+            {settings.particlesEnabled && (
+              <>
+                <Sparkles position={[0, -2, -8]} count={100} scale={[60, 20, 10]} size={6} color="#aaccff" speed={0.2} opacity={0.5} noise={0} />
+                <Sparkles position={[0, -2, -5]} count={80} scale={[60, 20, 5]} size={4} color="#ffd8a8" speed={0.1} opacity={0.4} noise={0} />
+              </>
+            )}
           </group>
 
           {/* 8. Technology Wall (South) */}
@@ -346,7 +360,7 @@ export default function LobbyScene() {
               <mesh position={[-2, 1, 0]}><planeGeometry args={[3, 1.5]} /><meshBasicMaterial color="#112240" toneMapped={false} /></mesh>
               <mesh position={[2, 1, 0]}><planeGeometry args={[3, 1.5]} /><meshBasicMaterial color="#112240" toneMapped={false} /></mesh>
               <mesh position={[0, -1, 0]}><planeGeometry args={[7, 2]} /><meshBasicMaterial color="#112240" toneMapped={false} /></mesh>
-              <Sparkles position={[0, -1, 0]} count={40} scale={[6, 1.5, 0]} size={2} color="#64ffda" speed={1} />
+              {settings.particlesEnabled && <Sparkles position={[0, -1, 0]} count={20} scale={[6, 1.5, 0]} size={2} color="#64ffda" speed={1} />}
             </group>
           </group>
 
@@ -380,9 +394,13 @@ export default function LobbyScene() {
               <meshStandardMaterial color="#211409" roughness={0.4} />
             </mesh>
             {/* Glass top reflection */}
-            <mesh position={[0, 0.765, 0]} receiveShadow>
+            <mesh position={[0, 0.765, 0]} receiveShadow={settings.shadows}>
               <boxGeometry args={[1.9, 0.015, 4.7]} />
-              <MeshReflectorMaterial mirror={0.4} color="#222" roughness={0.1} />
+              {settings.reflections ? (
+                <MeshReflectorMaterial mirror={0.4} color="#222" roughness={0.1} resolution={settings.highResTextures ? 256 : 128} />
+              ) : (
+                <meshStandardMaterial color="#222" roughness={0.1} />
+              )}
             </mesh>
             /* Desk Legs (Solid Panel Style) */
             <mesh position={[-0.9, 0.36, 0]} castShadow><boxGeometry args={[0.1, 0.72, 4.6]} /><meshStandardMaterial color="#110a05" roughness={0.5} /></mesh>
@@ -535,7 +553,7 @@ export default function LobbyScene() {
           <mesh position={[0, 4, -2.0]} receiveShadow><boxGeometry args={[14, 8, 0.5]} /><primitive object={mat.wallMatte} attach="material" /></mesh>
           <SaarkaarLogo position={[0, 4, -1.75]} size={2} style="wall" />
           <ReceptionDesk position={[0, 0, 0]} />
-          {/* Talk trigger is now embedded inside Receptionist.jsx (proximity-based) */}
+          {/* Talk trigger is now embedded inside Assistant.jsx (proximity-based) */}
         </group>
 
         {/* 2. WAITING ZONE */}

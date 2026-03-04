@@ -6,6 +6,12 @@ export default function CinematicIntro({ onComplete }) {
     const [step, setStep] = useState(0)
 
     useEffect(() => {
+        if (sessionStorage.getItem('saarkaar_portfolio_intro_played')) {
+            onComplete();
+            return;
+        }
+        sessionStorage.setItem('saarkaar_portfolio_intro_played', '1');
+
         // Step 1: System Boot Sound
         const bootSound = new Audio("https://assets.mixkit.co/sfx/preview/mixkit-sci-fi-system-boot-2465.mp3")
         bootSound.volume = 0.5
@@ -14,13 +20,18 @@ export default function CinematicIntro({ onComplete }) {
         // Timeline
         const timeouts = [
             setTimeout(() => setStep(1), 1000), // "INITIALIZING..."
-            setTimeout(() => setStep(2), 2500), // "ESTABLISHING LINK..."
-            setTimeout(() => setStep(3), 4000), // "WELCOME, FOUNDER"
-            setTimeout(() => setStep(4), 5500)  // "User must click to enter"
+            setTimeout(() => setStep(2), 2500), // loading bar
+            setTimeout(() => setStep(3), 4000), // "SYSTEMS ONLINE"
+            setTimeout(() => onComplete(), 5800) // auto-enter portfolio
         ]
 
         return () => timeouts.forEach(clearTimeout)
     }, [onComplete])
+
+    // If step is 0 but we already played, we shouldn't render the animation
+    if (sessionStorage.getItem('saarkaar_portfolio_intro_played') && step === 0) {
+        return null;
+    }
 
     return (
         <AnimatePresence>
@@ -64,17 +75,7 @@ export default function CinematicIntro({ onComplete }) {
                         </motion.h2>
                     )}
 
-                    {step >= 4 && (
-                        <motion.button
-                            initial={{ opacity: 0, scale: 0.9 }}
-                            animate={{ opacity: 1, scale: 1 }}
-                            transition={{ duration: 0.5 }}
-                            onClick={onComplete}
-                            className="intro-enter-btn"
-                        >
-                            ENTER PORTFOLIO
-                        </motion.button>
-                    )}
+
                 </motion.div>
             </motion.div>
         </AnimatePresence>

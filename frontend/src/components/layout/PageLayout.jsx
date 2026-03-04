@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom'
+import BrandLogo from '../BrandLogo'
 
 export default function PageLayout({ title, subtitle, children }) {
     const navigate = useNavigate()
@@ -7,7 +8,9 @@ export default function PageLayout({ title, subtitle, children }) {
         <div className="page-layout">
             {/* Minimal Sticky Nav */}
             <div className="temp-nav">
-                <div onClick={() => navigate('/')} className="logo">SAARKAAR.IN</div>
+                <div onClick={() => navigate('/')} className="logo">
+                    <BrandLogo size="sm" />
+                </div>
                 <button onClick={() => navigate('/')} className="back-btn">
                     ← Back to Office
                 </button>

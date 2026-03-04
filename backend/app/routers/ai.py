@@ -20,7 +20,7 @@ _NOT_NAMES = {
     "a", "the", "here", "there", "ok", "okay", "hello", "hi", "yes", "no",
     "not", "just", "very", "also", "sure", "right", "wrong", "fine",
     "good", "bad", "great", "nice", "sir", "ma", "mam", "boss",
-    "aalisha", "alisha", "receptionist", "name", "mera", "change", 
+    "alisha", "alisha", "assistant", "name", "mera", "change", 
     "update", "please", "saarkaar", "sonu", "hey", "are"
 }
 
@@ -88,12 +88,12 @@ async def chat(request: Request, chat_data: AIChatRequest):
         update_intent(session_id, intent)
         
         # Determine voice character based on intent/context (boss generally talks)
-        # Receptionist talks if intent is 'appointment_booking' before entering office 
+        # Assistant talks if intent is 'appointment_booking' before entering office 
         # But we'll default to Boss.
         voice_char = "boss"
         voice_tone = "calm"
         if intent in ["appointment_booking"]:
-            voice_char = "receptionist"
+            voice_char = "assistant"
             voice_tone = "soft"
             
         from app.memory_service import increment_interaction, get_mood, update_mood
@@ -103,6 +103,25 @@ async def chat(request: Request, chat_data: AIChatRequest):
         mood_updates = {}
         
         msg_low = chat_data.message.lower()
+        photo_keywords = [
+            "photo", "pic", "picture", "image", "dp", "profile photo", "profile image",
+            "boss photo", "boss pic", "founder photo", "founder pic", "asif photo", "sonu photo",
+            "photo bhejo", "pic bhejo", "image send", "send photo"
+        ]
+        if any(key in msg_low for key in photo_keywords):
+            return AIChatResponse(
+                response="Yeh hai hamare boss Sonu Saarkaar: /profile/sonu-boss.png",
+                intent="boss_photo",
+                action="show_profile_photo",
+                character="Boss",
+                state="DISCUSSING",
+                animation="boss_confident_discussing",
+                camera_focus="boss_zoom",
+                ui_trigger={"type": "profile_card"},
+                voice_character="boss",
+                voice_tone="calm",
+            )
+
         if any(w in msg_low for w in ["please", "thank you", "thanks"]):
             mood_updates["patience"] = 0.05
             mood_updates["confidence"] = 0.05
@@ -124,11 +143,11 @@ async def chat(request: Request, chat_data: AIChatRequest):
         from app.character_roles import get_character_prompt_context
         
         # Step 2: Route to character
-        current_partner = chat_data.current_partner or "Receptionist"
+        current_partner = chat_data.current_partner or "Assistant"
         active_character, camera_focus = determine_active_character(intent, chat_data.message, current_partner)
         
         # Determine voice config mapping based on dynamic config if we wanted, but fallback for now
-        voice_char = "receptionist" if active_character in ["Receptionist", "HR", "Assistant"] else "boss"
+        voice_char = "assistant" if active_character in ["Assistant", "HR", "Executive_Assistant"] else "boss"
         voice_tone = "calm"
         if active_character == "Security": voice_tone = "stern"
         elif active_character == "HR": voice_tone = "friendly"
@@ -140,20 +159,25 @@ async def chat(request: Request, chat_data: AIChatRequest):
             add_message(session_id, "assistant", text)
 
             created_at = datetime.now(timezone.utc)
-            try:
-                asyncio.create_task(chat_logs_collection.insert_one({
-                    "tenant_id": raw_tenant_id,
-                    "session_id": session_id,
-                    "current_partner": active_character,
-                    "language": "auto",
-                    "intent": custom_intent,
-                    "user_message": chat_data.message,
-                    "assistant_response": text,
-                    "created_at": created_at,
-                    "created_at_ts": created_at.timestamp(),
-                }))
-            except Exception:
-                pass
+            async def safe_db_insert():
+                try:
+                    insert_task = chat_logs_collection.insert_one({
+                        "tenant_id": raw_tenant_id,
+                        "session_id": session_id,
+                        "current_partner": active_character,
+                        "language": "auto",
+                        "intent": custom_intent,
+                        "user_message": chat_data.message,
+                        "assistant_response": text,
+                        "created_at": created_at,
+                        "created_at_ts": created_at.timestamp(),
+                    })
+                    await asyncio.wait_for(insert_task, timeout=1.0)
+                except Exception as e:
+                    print(f"Skipping DB insert (MongoDB offline): {str(e)[:50]}")
+                    pass
+            
+            asyncio.create_task(safe_db_insert())
             
             # Determine Action (Autonomous logic can override or be injected if not explicitly custom)
             final_action = custom_action or auto_action
@@ -226,8 +250,8 @@ async def chat(request: Request, chat_data: AIChatRequest):
             else:
                 return build_response("Sure, what would you like? Tea or Coffee?", intent, action)
 
-        # ── MEETING / APPOINTMENT: always go to Aalisha AI — never use scripted response ──
-        # Aalisha reads conversation history to determine which stage she is at
+        # ── MEETING / APPOINTMENT: always go to Alisha AI — never use scripted response ──
+        # Alisha reads conversation history to determine which stage she is at
         # and responds with only ONE stage at a time (purpose → react+appointment → guide)
         elif intent in ["meeting_request", "appointment_booking"]:
             char_prompt = get_character_prompt_context(active_character)

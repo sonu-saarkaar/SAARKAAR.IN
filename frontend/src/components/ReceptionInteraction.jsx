@@ -15,9 +15,9 @@ export default function ReceptionInteraction() {
   const setConversationPartner = useExperienceStore((state) => state.setConversationPartner)
 
   const {
-    receptionistState,
-    setReceptionistState,
-    startReceptionistInteraction,
+    assistantState,
+    setAssistantState,
+    startAssistantInteraction,
     endInteraction
   } = useAnimationStore()
 
@@ -34,7 +34,7 @@ export default function ReceptionInteraction() {
   const [dragStart, setDragStart] = useState({ x: 0, y: 0 })
   const [chatActive, setChatActive] = useState(false) // Chat session control
   const initialHistory = [
-    { role: 'system', content: 'You are Aalisha, SAARKAAR receptionist. Keep every reply short (max 1-2 lines), clear, and helpful in user language.' }
+    { role: 'system', content: 'You are Alisha, SAARKAAR assistant. Keep every reply short (max 1-2 lines), clear, and helpful in user language.' }
   ]
 
   const silenceTimerRef = useRef(null)
@@ -246,11 +246,11 @@ export default function ReceptionInteraction() {
       recognitionRef.current.lang = langOverride || detectedLanguage || 'hi-IN'
       recognitionRef.current.start()
       setIsListening(true)
-      setReceptionistState('listening')
+      setAssistantState('listening')
     } catch (e) {
       console.log('Mic start error:', e)
     }
-  }, [detectedLanguage, setReceptionistState])
+  }, [detectedLanguage, setAssistantState])
 
 
   const submitMessage = useCallback(async (messageText) => {
@@ -270,8 +270,8 @@ export default function ReceptionInteraction() {
       startInfoPanelTimer()
     }
 
-    startReceptionistInteraction()
-    setReceptionistState('listening')
+    startAssistantInteraction()
+    setAssistantState('listening')
     setResponse('')
 
     const newHistory = [...historyRef.current, { role: 'user', content: normalized }]
@@ -295,7 +295,7 @@ export default function ReceptionInteraction() {
       const data = await res.json()
       const aiResponseText = (data.response || '').trim()
 
-      setReceptionistState('talking')
+      setAssistantState('talking')
       setResponse(aiResponseText)
       setHistory(prev => [...prev, { role: 'assistant', content: aiResponseText }])
 
@@ -308,12 +308,12 @@ export default function ReceptionInteraction() {
       speakResponse(aiResponseText, detectedLanguage)
     } catch (error) {
       console.error('AI Error:', error)
-      setReceptionistState('talking')
+      setAssistantState('talking')
       setResponse(error.message || 'Connection Error. Please try again.')
       setHistory(prev => [...prev, { role: 'assistant', content: 'Connection Error. Please check your network or server status.' }])
       speakResponse('System Error. Please try again.', detectedLanguage)
     }
-  }, [detectedLanguage, setReceptionistState, startReceptionistInteraction])
+  }, [detectedLanguage, setAssistantState, startAssistantInteraction])
 
   // Initialize Speech Recognition
   useEffect(() => {
@@ -394,7 +394,7 @@ export default function ReceptionInteraction() {
 
   // React to 3D interactable click
   useEffect(() => {
-    if (currentConversationPartner === 'receptionist' && !chatActive) {
+    if (currentConversationPartner === 'assistant' && !chatActive) {
       startConversation()
     }
   }, [currentConversationPartner])
@@ -407,13 +407,13 @@ export default function ReceptionInteraction() {
   const startConversation = () => {
     setChatActive(true)
     autoLoopEnabledRef.current = true
-    startReceptionistInteraction()
+    startAssistantInteraction()
 
     // Auto-greet
     setTimeout(() => {
       const greeting = 'Welcome to SAARKAAR Virtual Office. How can I help you today?'
       setResponse(greeting)
-      setReceptionistState('talking')
+      setAssistantState('talking')
       speakResponse(greeting, 'hi-IN')
     }, 300)
   }
@@ -432,7 +432,7 @@ export default function ReceptionInteraction() {
       autoLoopEnabledRef.current = true
       const langToUse = 'hi-IN'
       setDetectedLanguage(langToUse)
-      startReceptionistInteraction()
+      startAssistantInteraction()
       startListening(langToUse)
     }
   }
@@ -448,11 +448,11 @@ export default function ReceptionInteraction() {
 
     utterance.onstart = () => {
       setIsSpeaking(true)
-      setReceptionistState('talking')
+      setAssistantState('talking')
     }
     utterance.onend = () => {
       setIsSpeaking(false)
-      setReceptionistState('idle')
+      setAssistantState('idle')
 
       // Auto-reactivate mic after AI responds
       setTimeout(() => {
@@ -570,7 +570,7 @@ export default function ReceptionInteraction() {
         {chatActive && response && (
           <div className="dialogue-box-compact">
             <div className="avatar-circle-small">
-              <img src="https://ui-avatars.com/api/?name=R&background=d4af37&color=000&size=128" alt="Receptionist" />
+              <img src="https://ui-avatars.com/api/?name=Alisa&background=d4af37&color=000&size=128" alt="Alisa Assistant" />
             </div>
 
             <div className="content-compact">
@@ -585,7 +585,7 @@ export default function ReceptionInteraction() {
                 </div>
               )}
 
-              {receptionistState !== 'talking' && (
+              {assistantState !== 'talking' && (
                 <form onSubmit={handleSubmit} className="input-row">
                   <input
                     type="text"

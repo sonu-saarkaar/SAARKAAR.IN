@@ -1,5 +1,5 @@
 /*
-  Receptionist.jsx
+  Assistant.jsx
   — Proximity-based PUBG interaction system
   — Floating 3D speech bubble near mouth
   — Real lip-sync (morph targets + jaw bone fallback)
@@ -15,9 +15,9 @@ import * as THREE from 'three'
 import { useGLTF, useAnimations } from '@react-three/drei'
 import { SkeletonUtils } from 'three-stdlib'
 
-// World position of the receptionist (must match ReceptionDesk placement)
-// ReceptionDesk is placed at [0,0,-10] in LobbyScene, Receptionist is offset [0,0,-0.65] inside
-const RECEPTIONIST_WORLD_POS = new THREE.Vector3(0, 0, -10.65)
+// World position of the assistant (must match ReceptionDesk placement)
+// ReceptionDesk is placed at [0,0,-10] in LobbyScene, Assistant is offset [0,0,-0.65] inside
+const ASSISTANT_WORLD_POS = new THREE.Vector3(0, 0, -10.65)
 const TALK_RADIUS = 2.8    // Show [E – Talk] button
 const CHAT_CLOSE_RADIUS = 4.5 // Auto-close chat if walks beyond this
 
@@ -144,24 +144,24 @@ function TalkPrompt({ onTalk }) {
 }
 
 // ─────────────────── Main Component ───────────────────
-export default function Receptionist(props) {
+export default function Assistant(props) {
     const group = useRef()
     const { position = [0, 0, 0] } = props
 
     const userPosition = useExperienceStore((state) => state.userPosition)
     const currentConversationPartner = useExperienceStore((state) => state.currentConversationPartner)
     const setConversationPartner = useExperienceStore((state) => state.setConversationPartner)
-    const receptionistState = useAnimationStore((state) => state.receptionistState)
-    const setReceptionistState = useAnimationStore((state) => state.setReceptionistState)
+    const assistantState = useAnimationStore((state) => state.assistantState)
+    const setAssistantState = useAnimationStore((state) => state.setAssistantState)
     const isNearReception = useExperienceStore((state) => state.isNearReception)
     const setNearReception = useExperienceStore((state) => state.setNearReception)
 
     const [isNear, setIsNear] = useState(false)
     const [bubbleText, setBubbleText] = useState('')
     const [showBubble, setShowBubble] = useState(false)
-    const lastReceptionistReply = useExperienceStore((state) => state.lastReceptionistReply)
+    const lastAssistantReply = useExperienceStore((state) => state.lastAssistantReply)
 
-    const isTalking = currentConversationPartner === 'receptionist'
+    const isTalking = currentConversationPartner === 'assistant'
 
     // Load GLB
     const { scene, animations } = useGLTF('/models/character.glb')
@@ -220,9 +220,9 @@ export default function Receptionist(props) {
     // Animation from state
     useEffect(() => {
         let actionName = 'idle'
-        if (receptionistState === 'talking') actionName = 'talk'
-        else if (receptionistState === 'typing') actionName = 'typing'
-        else if (receptionistState === 'sitting') actionName = 'sit'
+        if (assistantState === 'talking') actionName = 'talk'
+        else if (assistantState === 'typing') actionName = 'typing'
+        else if (assistantState === 'sitting') actionName = 'sit'
 
         const actual = resolveActionName(actionName)
         if (!actual || !actions[actual]) return
@@ -237,28 +237,28 @@ export default function Receptionist(props) {
         }
 
         activeActionRef.current = actual
-    }, [receptionistState, actions])
+    }, [assistantState, actions])
 
-    // Show speech bubble when latest receptionist reply comes in
+    // Show speech bubble when latest assistant reply comes in
     useEffect(() => {
         if (!isTalking) return
-        if (lastReceptionistReply) {
-            setBubbleText(lastReceptionistReply)
+        if (lastAssistantReply) {
+            setBubbleText(lastAssistantReply)
             setShowBubble(true)
         }
-    }, [lastReceptionistReply, isTalking])
+    }, [lastAssistantReply, isTalking])
 
     // Welcome bubble on chat open
     useEffect(() => {
-        if (isTalking && !lastReceptionistReply) {
+        if (isTalking && !lastAssistantReply) {
             setBubbleText('Welcome to SAARKAAR Virtual Office! How can I help you? 😊')
             setShowBubble(true)
-            setReceptionistState('talking')
+            setAssistantState('talking')
         }
         if (!isTalking) {
             setShowBubble(false)
         }
-    }, [isTalking, lastReceptionistReply])
+    }, [isTalking, lastAssistantReply])
 
     // Proximity check + auto-close
     useEffect(() => {
@@ -272,8 +272,8 @@ export default function Receptionist(props) {
     }, [isNear, isTalking])
 
     const handleTalk = () => {
-        setConversationPartner('receptionist')
-        setReceptionistState('talking')
+        setConversationPartner('assistant')
+        setAssistantState('talking')
         setNearReception(true)
     }
 
@@ -285,7 +285,7 @@ export default function Receptionist(props) {
 
         userPosVec.current.set(userPosition[0], userPosition[1], userPosition[2])
 
-        // Compute distance to receptionist world pos
+        // Compute distance to assistant world pos
         const groupWorldPos = new THREE.Vector3()
         group.current.getWorldPosition(groupWorldPos)
         const dist = userPosVec.current.distanceTo(groupWorldPos)
@@ -297,7 +297,7 @@ export default function Receptionist(props) {
         // Auto-close chat
         if (isTalking && dist > CHAT_CLOSE_RADIUS) {
             setConversationPartner(null)
-            setReceptionistState('idle')
+            setAssistantState('idle')
             setShowBubble(false)
         }
 
@@ -336,7 +336,7 @@ export default function Receptionist(props) {
             headNode.rotation.x = THREE.MathUtils.lerp(headNode.rotation.x, Math.max(-0.2, Math.min(0.25, targetPitch)), Math.min(1, dt * 5))
             headNode.rotation.y = THREE.MathUtils.lerp(headNode.rotation.y, Math.max(-0.6, Math.min(0.6, targetYaw)), Math.min(1, dt * 5))
 
-            if (receptionistState === 'listening' || isTalking) {
+            if (assistantState === 'listening' || isTalking) {
                 headNode.rotation.z = THREE.MathUtils.lerp(headNode.rotation.z, 0.08, Math.min(1, dt * 3))
             } else {
                 headNode.rotation.z = THREE.MathUtils.lerp(headNode.rotation.z, 0, Math.min(1, dt * 3))
@@ -344,7 +344,7 @@ export default function Receptionist(props) {
         }
 
         // ── Lip-sync ──
-        const speaking = receptionistState === 'talking'
+        const speaking = assistantState === 'talking'
         if (speaking) {
             const wave = (Math.sin(t * 22) + Math.cos(t * 14)) * 0.5
             jawAnimRef.current = THREE.MathUtils.lerp(jawAnimRef.current, 0.05 + Math.abs(wave) * 0.15, Math.min(1, dt * 15))

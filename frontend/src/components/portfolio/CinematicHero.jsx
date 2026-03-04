@@ -60,21 +60,11 @@ export default function CinematicHero() {
                 animate={{ opacity: 1 }}
                 transition={{ duration: 1.5 }}
             >
-                {/* 1. Tagline first */}
-                <motion.div
-                    className="hero-tagline-strip"
-                    initial={{ y: 20, opacity: 0 }}
-                    animate={{ y: 0, opacity: 1 }}
-                    transition={{ delay: 0.2, duration: 1, ease: 'easeOut' }}
-                >
-                    <span className="auth-signal">SYSTEM STATUS: ONLINE</span>
-                </motion.div>
-
                 {/* 2. Main heading */}
                 <motion.h1
                     initial={{ y: 30, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
-                    transition={{ delay: 0.6, duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+                    transition={{ delay: 0.2, duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
                     className="hero-title-main"
                 >
                     DIGITAL IDENTITY <br />
@@ -85,44 +75,18 @@ export default function CinematicHero() {
                 <motion.p
                     initial={{ y: 20, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
-                    transition={{ delay: 1.0, duration: 1, ease: 'easeOut' }}
+                    transition={{ delay: 0.6, duration: 1, ease: 'easeOut' }}
                     className="hero-subtitle-main"
                 >
                     ARCHITECTING VIRTUAL ECOSYSTEMS
                 </motion.p>
-
-                {/* 4. Manifesto Line */}
-                <motion.p
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 1.4, duration: 1.5 }}
-                    className="hero-manifesto"
-                >
-                    Not building websites. Engineering digital ecosystems.
-                </motion.p>
-
-                {/* Authority Strip (Phase 9) */}
-                <motion.div
-                    className="authority-signals-strip"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 1.6, duration: 1.2 }}
-                >
-                    <span>AI Integrations: 15+</span>
-                    <span className="dot-sep">•</span>
-                    <span>Live Systems Deployed: 10+</span>
-                    <span className="dot-sep">•</span>
-                    <span>Hackathon Participant</span>
-                    <span className="dot-sep">•</span>
-                    <span>Full Stack + AI Architect</span>
-                </motion.div>
 
                 {/* 5. CTA Buttons */}
                 <motion.div
                     className="cta-group"
                     initial={{ y: 20, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
-                    transition={{ delay: 1.8, duration: 0.8 }}
+                    transition={{ delay: 1.0, duration: 0.8 }}
                 >
                     <button className="primary-btn cin-btn" onClick={() => document.getElementById('projects').scrollIntoView({ behavior: 'smooth' })}>
                         EXPLORE SYSTEMS

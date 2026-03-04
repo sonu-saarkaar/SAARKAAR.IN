@@ -1,18 +1,11 @@
 from openai import OpenAI, AuthenticationError, APIError, RateLimitError
 import os
 import re
+import random
 from datetime import datetime
+import logging
 
-client = None
-
-def get_openai_client():
-    global client
-    if client is None:
-        api_key = os.getenv("OPENAI_API_KEY")
-        if not api_key:
-            raise ValueError("OPENAI_API_KEY not set in environment variables")
-        client = OpenAI(api_key=api_key)
-    return client
+logger = logging.getLogger(__name__)
 
 # =====================================================================
 #  COMPREHENSIVE SAARKAAR PORTFOLIO CONTEXT
@@ -35,42 +28,82 @@ COMPANY — SAARKAAR:
 - Not just websites — they build complete digital ecosystems.
 - The portfolio itself (saarkaar.in) is a 3D Virtual Office built with React Three Fiber.
 
-LIVE PROJECTS (Deployed Systems):
-1. KORA (zynto.in)
-   - Smart Digital Engagement Platform
-   - Stack: React, Node.js, MongoDB, Vercel
-   - 112,000+ lines, 25 APIs, Lighthouse: 99
-   - Impact: 10k+ daily interactions
+WHAT IS SAARKAAR:
+- SAARKAAR is not a normal portfolio website.
+- It is a 3D Virtual Office Based Interactive Portfolio Platform.
+- Users do not just scroll pages; they enter a digital office and explore projects interactively.
 
-2. DadiSecrets (dadi-secrets-mall.vercel.app)
-   - E-commerce for a small family business (Asif's sister's shop)
-   - Stack: Next.js 14, Stripe, Vercel
-   - Lighthouse: 100, 300% expanded reach
-   - Built entirely solo by Asif Alam
+HOW SAARKAAR WORKS:
+1) User enters 3D lobby.
+2) User interacts with Receptionist AI for short structured summaries.
+3) User explores project zones (Live Ventures, Innovation Lab, Under Development, Founder Room).
+4) User can switch to Founder AI mode for deep technical explanation.
+5) Live projects redirect externally to:
+    - https://zynto.in
+    - https://bookmygadi.lovable.app
+    - https://evenza.space
+6) Under development projects show detailed explanation and Join Us form.
 
-3. Evenza.space
-   - Events & Marketing Pipeline — SOLD to client
-   - Stack: React, Tailwind, Vercel
-   - 40% increase in lead generation
+FACILITIES INSIDE SAARKAAR:
+- 3D virtual office experience
+- AI receptionist
+- Founder AI mode
+- Live project redirection
+- Under development join form
+- Structured project display
+- Corporate interaction flow
+- Expandable startup headquarters model
 
-4. BookMyGadi
-   - Smart Car Booking Platform with live price negotiation
-   - Stack: React, Node.js, MongoDB, AWS EC2
-   - Features: Route logic, Owner dashboard, User booking flow
+TECHNOLOGY STACK (SAARKAAR PLATFORM):
+- Frontend: React 19, Three.js, React Three Fiber, Zustand
+- Backend: Python, FastAPI, AI Chat API, modular architecture
+- Database (planned): MongoDB for project knowledge base and join form storage
+- AI Layer: OpenAI integration with dual personality system (Assistant + Founder)
 
-IN DEVELOPMENT:
-5. KYRON (70% built)
-   - AI Execution Agent — automates government/corporate form filling
-   - Stack: React, Three.js, FastAPI, OpenAI API, MongoDB, Railway
-   - Reduces 40-minute manual process to under 5 minutes
-   - Team: Asif Alam (AI Architect), Rupesh Kumar (Backend), Shubham Kumar (Logic), Naveen Yadav (Strategy)
+CORE PHILOSOPHY:
+- Stable
+- Professional
+- Corporate
+- Human-like
+- Vision-driven
+- Founder-controlled ecosystem
 
-UPCOMING:
-6. BookMyThali
-   - Subscription-based custom thali delivery platform
-   - Stack: Next.js, PostgreSQL, Redis, AWS
-   - Target: Working professionals and students
-   - Beta launch Q3 2026
+FUTURE VISION:
+- AI-powered dynamic startup headquarters
+- Multi-project management hub
+- Investor interaction mode
+- Voice-based immersive conversation
+- SaaS version for other founders
+
+STARTUP PROJECT DEFINITIONS (CANONICAL):
+1. KORA (Live: https://zynto.in)
+    - Type: Gig Market Platform.
+    - Users create customized posts for jobs, volunteer requests, and service requirements.
+    - Users manage profiles, skills, applications, and direct hiring.
+
+2. Dadi's Secret (Live)
+    - Type: Organic Products Platform.
+    - Sells traditional natural products like pickles, ghee, honey, and homemade food products.
+    - Focus: local producer support and modern digital brand identity.
+
+3. BookMyGadi (Live: https://bookmygadi.lovable.app)
+    - Type: Local Vehicle Booking Platform.
+    - Supports full-day and time-duration vehicle reservations.
+
+4. BookMyThali (Under Development)
+    - Type: Regional Tiffin Service Platform.
+    - Supports custom thali selection, subscriptions, and local home cook integration.
+
+5. Annsetu (Under Development)
+    - Type: Service-based Food Redistribution Platform.
+    - Connects leftover food providers with needy people and supports contribution loop.
+
+6. Evenza (Live: https://evenza.space)
+    - Type: Event & Marketing Platform.
+    - Provides event listing, stall promotion, service updates, and AI-based quotation tool.
+
+7. KYRON (Under Development)
+    - AI Digital Execution Agent that auto-fills government and online forms using master database memory.
 
 TECHNICAL SKILLS:
 - Programming: Python (95%), C Language (90%), C++ (75%), Java (60%)
@@ -110,27 +143,56 @@ HIRING / COLLABORATION:
 === END OF KNOWLEDGE BASE ===
 """
 
-AI_SYSTEM_PROMPT = f"""You are the AI consciousness of SAARKAAR — a digital portfolio built by Asif Alam (Sonu), an elite Full Stack Developer and AI Architect.
+AI_SYSTEM_PROMPT = f"""You are the AI assistant of SAARKAAR.
 
-You have been trained on the complete SAARKAAR portfolio knowledge base below. Answer EVERYTHING based on this data.
+You must behave like a smart general AI similar to ChatGPT.
+
+Your responsibilities:
+
+1. If the user asks a general question
+   → Answer normally using general knowledge.
+
+2. If the user asks about SAARKAAR or any project
+   → Use the portfolio knowledge provided in the context below.
 
 {PORTFOLIO_CONTEXT}
 
-CRITICAL LANGUAGE RULE:
-- Detect the language the user is speaking in (Hindi, Hinglish, English, or any other language).
-- ALWAYS respond in the EXACT SAME LANGUAGE the user used.
-- If user writes in Hindi → respond fully in Hindi (Devanagari or Hinglish as appropriate).
-- If user writes in English → respond in English.
-- If user writes in Hinglish → respond in Hinglish.
-- Never switch languages unless the user does first.
+Projects include:
+- KYRON
+- KORA
+- BookMyGadi
+- BookMyThali
+- Dadi’s Secret
+- Annsetu
+- Evenza
+- SAARKAAR
 
-TONE:
-- Confident, precise, insightful. You represent a Top 1% AI Architect.
-- Keep responses concise (2–4 sentences ideally) unless asked for detail.
-- Be conversational and engaging — ask a follow-up if it makes sense.
-- If asked about something not in the knowledge base, say so honestly but pivot to what you DO know.
+3. If the user asks about a new word
+   → Explain the meaning clearly.
 
-You are not a generic assistant. You ONLY represent SAARKAAR and Asif Alam's portfolio.
+4. If the question is technical
+   → Provide a clear explanation.
+
+5. If the question is casual
+   → Respond naturally like a human assistant.
+
+6. Never force answers into portfolio context unless the user explicitly asks about those projects.
+
+7. Always prioritize clarity and helpfulness.
+
+You are an intelligent assistant capable of handling both portfolio knowledge and general conversation.
+
+----------------------------------------
+PHOTO RESPONSE RULE
+----------------------------------------
+- If user asks for founder/boss photo (Sonu, Asif), ALWAYS share this path exactly: /profile/sonu-boss.png
+- Include this exact line in the same reply: "Yeh hai hamare boss Sonu Saarkaar."
+
+----------------------------------------
+MEMORY & LANGUAGE SYSTEM
+----------------------------------------
+- Remember user's name, goal, and past discussion. Ensure conversation continuity.
+- Detect language: Hindi, Hinglish, or English. ALWAYS respond in the EXACT SAME LANGUAGE the user used.
 """
 
 
@@ -142,7 +204,6 @@ async def get_ai_response(user_message: str, session_id: str = None, tenant_id: 
     Get AI response using OpenAI API with multi-tenant context, memory, and history
     """
     try:
-        openai_client = get_openai_client()
 
         if not user_message or not user_message.strip():
             return "Please provide a valid question."
@@ -196,7 +257,7 @@ VISITOR PROFILE (use this to personalize every reply):
 {drink_note}
 """
 
-        # ── Character prompt (Aalisha / Boss / etc.) goes FIRST ──
+        # ── Character prompt (Alisha / Boss / etc.) goes FIRST ──
         # When present, it defines the AI's primary identity.
         # Tenant knowledge and user profile come after as reference data.
         if strategic_context and strategic_context.strip():
@@ -221,38 +282,69 @@ VISITOR PROFILE (use this to personalize every reply):
         if not history_msgs or history_msgs[-1]["content"] != user_message:
             messages.append({"role": "user", "content": user_message})
 
-        models = ["gpt-4o", "gpt-4o-mini", "gpt-3.5-turbo"]
+        # ----------------------------------------------------
+        # AUTO-SWITCH LOGIC: LOCAL LLM -> FAST CLOUD OPEN LLM
+        # ----------------------------------------------------
+        env_api_key = os.getenv("OPENAI_API_KEY", "dummy_key")
+        
+        # Define provider tiers in priority order
+        providers = [
+            # Tier 1: Truly Local LLM (Ollama) - Super private, zero cost
+            {
+                "base_url": "http://localhost:11434/v1",
+                "api_key": "ollama",
+                "models": ["llama3.2"],
+                "timeout": 120.0 # Local models take time to compute context on CPU
+            },
+            # Tier 2: OpenRouter or Groq / Custom Cloud Provider configured in .env
+            {
+                "base_url": None, # Defaults to standard OpenAI client resolution
+                "api_key": env_api_key,
+                "models": ["grok-2-latest"],
+                "timeout": 8.0 # Fail fast if cloud key is broken
+            }
+        ]
+
+        
         last_exception = None
 
-        for model in models:
+        for provider in providers:
             try:
-                response = openai_client.chat.completions.create(
-                    model=model,
-                    messages=messages,
-                    temperature=0.7,
-                    max_tokens=600
-                )
-                reply = response.choices[0].message.content.strip()
-                return reply
-
-            except RateLimitError:
-                last_exception = RateLimitError
-                continue
-            except AuthenticationError:
-                # API key wrong/missing — log it, still serve offline
-                print("[AI ERROR] OpenAI AuthenticationError — check OPENAI_API_KEY env var")
-                break
+                temp_client = OpenAI(
+                    base_url=provider["base_url"],
+                    api_key=provider["api_key"],
+                    timeout=provider["timeout"]
+                ) if provider["base_url"] else OpenAI(api_key=provider["api_key"], timeout=provider["timeout"])
+                
+                for model in provider["models"]:
+                    try:
+                        response = temp_client.chat.completions.create(
+                            model=model,
+                            messages=messages,
+                            temperature=0.7,
+                            max_tokens=600,
+                        )
+                        return response.choices[0].message.content.strip()
+                    
+                    except (RateLimitError, AuthenticationError) as e:
+                        last_exception = e
+                        continue # Try next model or next provider
+                    except Exception as e:
+                        last_exception = e
+                        # E.g. Model not found, connection error -> try next model/provider
+                        continue 
             except Exception as e:
+                # Issue initializing client (e.g. invalid base_url)
                 last_exception = e
                 continue
 
-        # All models failed — use smart offline fallback with user's name
+        # All models and providers failed — use smart offline fallback with user's name
         _profile = get_user_profile(session_id) if session_id else {}
         _name = _profile.get("name", "")
         return get_demo_response(user_message, user_name=_name)
 
     except Exception as e:
-        print(f"[AI ERROR] get_ai_response exception: {e}")
+        logger.error(f"[AI ERROR] get_ai_response exception: {e}")
         _profile = get_user_profile(session_id) if session_id else {}
         _name = _profile.get("name", "")
         return get_demo_response(user_message, user_name=_name)
@@ -276,104 +368,127 @@ def detect_language(message: str) -> str:
 
 def get_demo_response(message: str, user_name: str = "") -> str:
     """
-    Offline fallback in strict Aalisha receptionist style.
-    Uses user_name if available so she never says 'Sir' when she knows the name.
+    Offline fallback - INTELLIGENT MODE.
+    Simulates a smart AI conversation even without OpenAI connection.
+    Features: Variety, Name Usage, Language Matching, Context Awareness.
     """
     msg = message.lower()
     lang = detect_language(message)
-
-    # Address token — Mr. Name if known, else Sir/Ma'am
-    addr = f"Mr. {user_name}" if user_name else "Sir"
-
-    def is_hindi_like() -> bool:
-        return lang in ["hindi", "hinglish"]
+    _addr = f"Mr. {user_name}" if user_name else "Sir"
+    
+    # Randomizers for variety
+    def rand_greet(en_list, hi_list):
+        return random.choice(en_list) if lang == "english" else random.choice(hi_list)
 
     def time_greeting(en: bool = True) -> str:
         hour = datetime.now().hour
-        if hour < 12:
-            return "Good Morning" if en else "सुप्रभात"
-        if hour < 17:
-            return "Good Afternoon" if en else "शुभ अपराह्न"
-        return "Good Evening" if en else "शुभ संध्या"
+        if hour < 12: text = "Good Morning" if en else "सुप्रभात"
+        elif hour < 17: text = "Good Afternoon" if en else "शुभ अपराह्न"
+        else: text = "Good Evening" if en else "शुभ संध्या"
+        return text
 
-    # ---- GREETINGS ----
-    if any(x in msg for x in ["hi", "hello", "hey", "namaste", "hlo", "helo", "sup", "wassup", "howdy", "kaise", "kaisa", "good morning", "good afternoon", "good evening"]):
+    # ---- 1. GREETINGS & CASUAL (High Priority) ----
+    casual_triggers = ["hi", "hello", "hey", "namaste", "hlo", "helo", "sup", "wassup", 
+                       "howdy", "kaise", "kaisa", "good morning", "good afternoon", "good evening",
+                       "kya haal", "sab badhiya", "whats up", "morning", "mornin", "good morining"]
+    
+    if any(x in msg for x in casual_triggers):
         if lang == "english":
-            return f"{time_greeting(en=True)} {addr}. I am Aalisha, your virtual receptionist at Saarkaar Office. How may I assist you today?"
-        return f"{time_greeting(en=False)} {addr}. मैं आलिशा हूँ, Saarkaar Office की virtual receptionist। कैसे मदद करूँ?"
+            opts = [
+                f"{time_greeting(True)} {_addr}. Good to see you. How is your day going?",
+                f"Hello {_addr}! Welcome to Saarkaar Virtual Office. I am Alisha. How may I assist you?",
+                f"Hi there, {_addr}. I am fully operational and ready to help. What's on your mind?",
+                f"{time_greeting(True)}! I hope you are having a productive day. How can I help you navigate SAARKAAR?"
+            ]
+            return random.choice(opts)
+        else:
+            opts = [
+                f"{time_greeting(False)} {_addr}। बताईये, आज मैं आपकी कैसे मदद कर सकती हूँ?",
+                f"नमस्ते {_addr}! Saarkaar Virtual Office में आपका स्वागत है। सब ठीक है?",
+                f"Hello {_addr}! मैं आलिशा हूँ। कहिये, आज हम किस project या idea पर बात करें?",
+                f"{time_greeting(False)}! आशा करती हूँ आपका दिन अच्छा जा रहा है। बताईये, क्या explore करना चाहेंगे?"
+            ]
+            return random.choice(opts)
 
-    # ---- AALISHA'S OWN NAME / WHO ARE YOU ----
-    if any(x in msg for x in ["who are you", "tum kaun", "aap kaun", "kaun hain", "introduce", "intro",
-                               "aapka naam", "tumhara naam", "your name", "naam kya hai", "apna parichay",
-                               "you are", "what is your name", "aap ka naam"]):
+    # ---- 2. WHO ARE YOU ----
+    who_triggers = ["who are you", "tum kaun", "aap kaun", "kaun hain", "introduce", "intro",
+                    "your name", "naam kya", "apna parichay", "you are", "kya naam", "who r u", "who r you", "हू आर यू"]
+    if any(x in msg for x in who_triggers):
         if lang == "english":
-            return f"I am Aalisha — the AI virtual receptionist of Saarkaar Office. I am here to assist you with anything you need, {addr}."
-        return f"मैं आलिशा हूँ — Saarkaar Office की AI virtual receptionist। {addr}, मैं आपकी हर सहायता के लिए यहाँ हूँ।"
+            return f"I am Alisha, the AI Receptionist of Saarkaar. I manage communications, appointments, and guide visitors through our 3D ecosystem. Think of me as your intelligent interface to Mr. Saarkaar's work."
+        return f"मैं आलिशा हूँ — Saarkaar Office की AI Receptionist। मेरा काम है visitors को guide करना और projects की जानकारी देना। आप मुझे अपना personal digital guide समझ सकते हैं।"
 
-    # ---- MEET BOSS / APPOINTMENT FLOW ----
-    if any(x in msg for x in ["meet boss", "meet your boss", "boss se milna", "sir se milna",
-                               "appointment", "book appointment", "milna hai", "meeting chahiye",
-                               "boss se baat", "sir se baat"]):
+    # ---- 3. BOSS / FOUNDER ----
+    boss_triggers = ["meet boss", "boss", "founder", "sonu", "owner", "ceo", "sir", "asif"]
+    if any(x in msg for x in boss_triggers):
+        if "photo" in msg or "pic" in msg or "image" in msg:
+             return f"Here is the founder: /profile/sonu-boss.png — This is Mr. Sonu Saarkaar, {_addr}."
+        
         if lang == "english":
-            return f"May I know the purpose of your visit, {addr}?"
-        return f"{addr}, क्या मैं जान सकती हूँ — आप किस विषय में Sir से मिलना चाहते हैं?"
+            return f"Mr. Sonu Saarkaar is our Founder & CTO. He is an AI Architect specializing in 3D Web & Autonomous Agents. If you have a specific technical proposal, I can arrange a focused session with him."
+        return f"Mr. Sonu Saarkaar हमारे Founder और CTO हैं। वो एक AI Architect हैं जो 3D Web और Autonomous Agents में expert हैं। अगर आपके पास कोई technical proposal है, तो मैं उनके साथ session arrange कर सकती हूँ।"
 
-    # ---- FOUNDER / BOSS NAME ----
-    if any(x in msg for x in [
-        "founder", "sonu", "who built", "kisne banaya", "owner", "malik",
-        "ceo", "boss kaun", "boss kon", "boss ka naam", "boss name",
-        "boss ka name", "boss ko", "who is the boss", "who is your boss",
-        "apna boss", "tumhara boss", "aapka boss", "apke boss",
-        "boss ke baare", "tell me about boss", "boss details",
-        "boss kya karte", "boss ki jankari", "sir ka naam", "sir kaun",
-        "who is sir", "saarkaar ke founder", "company ka owner",
-        "tell me your boss", "boss batao", "boss koun", "boss bolo"
-    ]):
+    # ---- 4. PROJECTS (General) ----
+    proj_triggers = ["project", "portfolio", "work", "kaam", "products", "ventures"]
+    if any(x in msg for x in proj_triggers) and not any(k in msg for k in ["kyron", "kora", "gadi", "thali"]):
         if lang == "english":
-            return f"Our boss is Mr. Sonu Saarkaar, {addr} — the founder and CEO of Saarkaar. He is a visionary in AI systems, immersive 3D web development, and digital product innovation. He founded Saarkaar with the vision of replacing traditional corporate workflows with intelligent, AI-powered digital environments."
-        return f"हमारे boss Mr. Sonu Saarkaar हैं, {addr} — Saarkaar के Founder और CEO। वे AI systems, 3D web development, और digital innovation में expert हैं। उन्होंने Saarkaar की स्थापना intelligent digital environments बनाने के vision के साथ की।"
+            return f"We have several active ventures. 'KORA' is our live service marketplace, 'KYRON' is an AI agent for automation, and 'BookMyGadi' handles logistics. Which one interests you?"
+        return f"हमारे कई active ventures हैं। 'KORA' एक service marketplace है, 'KYRON' automation AI है, और 'BookMyGadi' logistics संभालता है। आप किसके बारे में जानना चाहेंगे?"
 
-    # ---- SERVICES ----
-    if any(x in msg for x in ["service", "services", "what do you offer", "kya services", "offer",
-                               "facility", "kya karte ho", "kya karte hain", "kya milega", "saarkaar kya karta"]):
+    # ---- 5. SPECIFIC PROJECTS ----
+    if "kyron" in msg:
+        return "KYRON is an AI Digital Execution Agent designed to automate government and private form-filling using a secure master database. It eliminates repetitive data entry."
+    if "kora" in msg:
+        return "KORA (zynto.in) is a hyper-local gig marketplace. It connects service seekers with providers in a structured, verified environment."
+    if "bookmygadi" in msg or "gadi" in msg:
+        return "BookMyGadi is a vehicle booking platform that structures the unorganized local travel market, offering time-based and route-based reservations."
+
+    # ---- 6. SERVICES ----
+    serv_triggers = ["service", "offer", "facility", "provide", "kya karte"]
+    if any(x in msg for x in serv_triggers):
         if lang == "english":
-            return f"Saarkaar offers a range of services, {addr}: AI automation systems, virtual corporate environments, backend development, intelligent digital product innovation, and custom AI assistant solutions."
-        return f"{addr}, Saarkaar provide करता है: AI automation systems, virtual corporate environments, backend development, digital product innovation, और custom AI solutions।"
+            return f"We specialize in: 1. Immersive 3D Web Development, 2. AI Agent Engineering, and 3. Scalable Backend Systems. Basically, we build the future of digital interaction."
+        return f"हम specialize करते हैं: 1. Immersive 3D Web Development, 2. AI Agent Engineering, और 3. Scalable Backend Systems में। हम digital interaction का future build करते हैं।"
 
-    # ---- PROJECTS ----
-    if any(x in msg for x in ["project", "projects", "portfolio", "kyron", "kora", "bookmygadi", "kaam kya", "products"]):
+
+    # ---- 7. CONTACT ----
+    cont_triggers = ["contact", "call", "email", "phone", "number", "sampark"]
+    if any(x in msg for x in cont_triggers):
         if lang == "english":
-            return f"Saarkaar's major projects are KYRON, KORA, and BookMyGadi, {addr}. KYRON is an AI automation platform, KORA is an intelligent knowledge system, and BookMyGadi is a vehicle booking and fleet management platform."
-        return f"{addr}, Saarkaar के major projects हैं: KYRON (AI automation platform), KORA (intelligent knowledge system), और BookMyGadi (vehicle booking platform)।"
+            return f"You can connect directly via sonusaarkaar@gmail.com. For urgent matters, call +91 9798299944, {_addr}."
+        return f"आप sonusaarkaar@gmail.com पर contact कर सकते हैं। Urgent बात करनी हो तो +91 9798299944 पर call करें।"
 
-    # ---- COMPANY ----
-    if any(x in msg for x in ["company", "about company", "saarkaar kya hai", "about saarkaar",
-                               "saarkaar kya", "saarkaar kaisa", "firm", "organisation"]):
-        if lang == "english":
-            return f"Saarkaar is a premium digital solutions firm based in Bihar, India, {addr}. We specialize in AI automation, immersive 3D virtual office environments, and scalable enterprise technology."
-        return f"{addr}, Saarkaar Bihar, India की एक premium digital solutions firm है — AI automation, virtual office environments, और enterprise technology में specialized।"
+    # ---- 8. INTELLIGENT UNKNOWN FALLBACK ----
+    # Instead of "let me explain in context", we try to keep the conv going based on length
+    if len(msg.split()) < 3:
+         # Short queries gets a prompt to expand
+         if lang == "english":
+             opts = [
+                 f"I'm listening, {_addr}. Could you elaborate a bit more?",
+                 f"Got it. What else is on your mind, {_addr}?",
+                 f"Hmm, interesting. Go on, {_addr}."
+             ]
+             return random.choice(opts)
+         
+         opts = [
+             f"मैं सुन रही हूँ, {_addr}। थोड़ा और खुलकर बताएं?",
+             f"समझ गई। आप और क्या जानना चाहते हैं, {_addr}?",
+             f"ठीक है, और कुछ बताएँ?"
+         ]
+         return random.choice(opts)
 
-    # ---- CONTACT ----
-    if any(x in msg for x in ["contact", "email", "phone", "call", "reach", "number", "sampark",
-                               "baat karo", "mobile", "number kya", "kaise contact", "phone number"]):
-        if lang == "english":
-            return f"You may reach us at +91 nine seven nine eight two nine nine nine four four or at sonusaarkaar at gmail dot com, {addr}."
-        return f"{addr}, आप हमसे +91 nine seven nine eight two nine nine nine four four या sonusaarkaar@gmail.com पर संपर्क कर सकते हैं।"
-
-    # ---- AALISHA STATUS / WHAT ARE YOU DOING ----
-    if any(x in msg for x in ["what are you doing", "kya kar rahi", "busy", "tum kya", "aap kya kar"]):
-        if lang == "english":
-            return f"I am right here at the reception, ready to assist you, {addr}. What would you like to know?"
-        return f"मैं reception पर हूँ, {addr} — आपकी सहायता के लिए तैयार। बताइए, क्या जानना है?"
-
-    # ---- DEEP / UNKNOWN ----
-    if any(x in msg for x in ["deep", "internal", "architecture details", "confidential", "private", "exact data"]):
-        if lang == "english":
-            return f"That is a detailed matter, {addr}. I recommend discussing this directly with our boss. Would you like me to arrange a meeting?"
-        return f"यह एक detailed matter है, {addr}। इसके लिए आप directly हमारे boss से मिलें। क्या मैं meeting arrange करूँ?"
-
-    # ---- GENERAL FALLBACK (smart) ----
     if lang == "english":
-        return f"I understand, {addr}. Could you be a little more specific so I can assist you better? I can help with our boss, services, projects, appointments, or office information."
-    return f"समझ गई, {addr}। क्या आप थोड़ा और detail में बता सकते हैं? मैं boss, services, projects, appointment — किसी भी विषय में सहायता कर सकती हूँ।"
+        opts = [
+            f"That's an interesting point, {_addr}. Tell me more.",
+            f"I hear you, {_addr}. I am an AI assistant here to help you with whatever you need.",
+            f"Fascinating! How can I assist you further with this, {_addr}?"
+        ]
+        return random.choice(opts)
+    
+    opts = [
+        f"यह बहुत दिलचस्प है, {_addr}। मुझे इसके बारे में थोड़ा और बताएँ।",
+        f"समझ गई, {_addr}। मैं आपकी और कैसे मदद कर सकती हूँ?",
+        f"क्या बात है! मैं समझ रही हूँ, {_addr}।"
+    ]
+    return random.choice(opts)
 

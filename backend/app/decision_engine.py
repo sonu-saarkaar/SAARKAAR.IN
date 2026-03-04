@@ -155,7 +155,15 @@ def get_autonomous_action(session_id: str, current_intent: str, user_message: st
         if not profile.get("preferred_drink"):
             return "offer_drink", {"panel": "drink_menu", "type": "drink"}
             
-    # 7. End meeting
+    # 7. Project Request Form Box
+    if any(word in msg_low for word in ["build", "hire", "develop", "create", "project start", "new project", "request form", "kaam", "website banana", "app banana"]):
+        return "show_request_form", {
+            "type": "request_form",
+            "title": "Start a Project",
+            "subtitle": "Tell us what you need built"
+        }
+
+    # 8. End meeting
     if current_intent == "exit_office":
         return "end_meeting", {"panel": "exit_fade", "type": "exit"}
         

@@ -1,0 +1,138 @@
+version: "3.9"
+
+x-logging: &default-logging
+  driver: "json-file"
+  options:
+    max-size: "50m"
+    max-file: "5"
+
+services:
+  # -------------------------------------------------------------
+  # NGINX (Reverse Proxy & Load Balancing)
+  # -------------------------------------------------------------
+  proxy:
+    image: nginx:1.25.3-alpine
+    container_name: saarkaar-proxy
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      api:
+        condition: service_healthy
+    networks:
+      - front_tier
+    logging: *default-logging
+
+  # -------------------------------------------------------------
+  # FASTAPI BACKEND
+  # -------------------------------------------------------------
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: saarkaar-api
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      - REDIS_HOST=redis
+      - MONGO_URI=mongodb://mongo:27017/saarkaar_db
+      - QDRANT_HOST=qdrant
+    depends_on:
+      redis:
+        condition: service_healthy
+      mongo:
+        condition: service_healthy
+      qdrant:
+        condition: service_healthy
+    networks:
+      - front_tier
+      - back_tier
+    deploy:
+      resources:
+        limits:
+          cpus: "2.0"
+          memory: 2G
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/docs"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    logging: *default-logging
+
+  # -------------------------------------------------------------
+  # REDIS (Memory Cache & Rate Limiting)
+  # -------------------------------------------------------------
+  redis:
+    image: redis:7.2.4-alpine
+    container_name: saarkaar-redis
+    restart: always
+    command: >
+      --maxmemory 1gb
+      --maxmemory-policy allkeys-lru
+      --appendonly yes
+      --appendfsync everysec
+    volumes:
+      - redis_data:/data
+    networks:
+      - back_tier
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    logging: *default-logging
+
+  # -------------------------------------------------------------
+  # MONGODB (Storage & Long-Term Memory)
+  # -------------------------------------------------------------
+  mongo:
+    image: mongo:7.0
+    container_name: saarkaar-mongo
+    restart: always
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=${MONGO_USER:-root}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_PASSWORD:-secret}
+    # Command creates replica set needed for change streams and modern ACID
+    command: ["--replSet", "rs0", "--bind_ip_all", "--journal"]
+    volumes:
+      - mongo_data:/data/db
+      - mongo_config:/data/configdb
+    networks:
+      - back_tier
+    healthcheck:
+      test: echo "try { rs.status() } catch (err) { rs.initiate({_id:'rs0',members:[{_id:0,host:'mongo:27017'}]}) }" | mongosh --port 27017 --quiet
+      interval: 10s
+      timeout: 10s
+      retries: 5
+    logging: *default-logging
+
+  # -------------------------------------------------------------
+  # QDRANT (Vector DB)
+  # -------------------------------------------------------------
+  qdrant:
+    image: qdrant/qdrant:v1.8.0
+    container_name: saarkaar-qdrant
+    restart: always
+    volumes:
+      - qdrant_storage:/qdrant/storage
+    networks:
+      - back_tier
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:6333/readyz"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    logging: *default-logging
+
+volumes:
+  redis_data:
+  mongo_data:
+  mongo_config:
+  qdrant_storage:
+
+networks:
+  front_tier: # Internet facing
+  back_tier:  # Internal only

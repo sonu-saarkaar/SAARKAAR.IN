@@ -1,169 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import './PortfolioContent.css'
-
-// Hardcoded Highly Detailed Portfolio Projects
-const ARCHIVE_DATA = [
-    {
-        id: 'kyron',
-        category: 'IN DEVELOPMENT',
-        name: 'KYRON',
-        tagline: 'Automating Bureaucracy Through Intelligent Execution.',
-        status: '70% BUILT',
-        statusKey: 'BUILD',
-        techStack: ['React', 'Three.js', 'FastAPI', 'OpenAI API', 'MongoDB', 'Railway'],
-        logo: '🤖',
-        story: 'KYRON was built to eliminate repetitive manual form filling. Government and corporate forms are time-consuming and error-prone. The goal is to reduce a 40-minute manual process into under 5 minutes using intelligent AI orchestration.',
-        vision: 'To build a digital execution agent that can read, understand, validate, and submit forms autonomously.',
-        workingModel: 'User Input → Master Profile Validation → AI Field Mapping → Missing Data Detection → Smart Prompting → Auto Fill → Confirmation → Submission',
-        progressData: [
-            { label: 'Core Architecture', value: 100 },
-            { label: 'AI Engine', value: 85 },
-            { label: 'Form Automation', value: 70 },
-            { label: 'Master Profile System', value: 80 },
-            { label: 'UI Optimization', value: 60 },
-            { label: 'Production Deployment', value: 30 }
-        ],
-        miniStats: { lines: '45,210', apis: '12', build: '2.4s' },
-        techMatrix: [
-            { name: 'Frontend', stack: 'React, Tailwind, Framer', desc: 'Immersive interactions' },
-            { name: 'Backend', stack: 'FastAPI (Python)', desc: 'High-speed async logic' },
-            { name: 'AI Layer', stack: 'OpenAI API + LangChain', desc: 'Custom prompt orchestration' },
-            { name: 'Database', stack: 'MongoDB', desc: 'Schemaless data structures' },
-            { name: 'Deployment', stack: 'Railway', desc: 'CI/CD automated pipeline' }
-        ],
-        metrics: { lighthouse: '96', speed: '0.8s', latency: '40ms', env: 'Production Cloud', scalability: 'Auto-scaling enabled' },
-        businessImpact: 'Reduces manual entry time by 85%. Target audience: Govt & Corporate clerks.',
-        challengesFaced: 'Context limit in LLMs during form parsing. Addressed via multi-agent chunking.',
-        roadmap: 'Phase 2: Headless Browser Automation integration for zero-click submissions.',
-        team: [
-            { name: 'Asif Alam', role: 'AI Systems Architect', college: 'Parul University - B.Tech CSE' },
-            { name: 'Rupesh Kumar', role: 'Backend Developer', college: 'Parul University - B.Tech CSE' },
-            { name: 'Shubham Kumar', role: 'Logic & Testing', college: 'Parul University - B.Tech CSE' },
-            { name: 'Naveen Yadav', role: 'Strategy & Coordination', college: '' }
-        ]
-    },
-    {
-        id: 'kora',
-        category: 'LIVE SYSTEMS',
-        name: 'KORA',
-        tagline: 'Smart Digital Engagement Platform.',
-        status: 'LIVE',
-        statusKey: 'LIVE',
-        website: 'Zynto.in',
-        url: 'https://zynto.in',
-        techStack: ['React', 'Node.js', 'MongoDB', 'Vercel', 'Cloud'],
-        logo: '🧠',
-        story: 'KORA is a high-performance Digital Engagement Platform designed to optimize intelligent user tracking and real-time interaction.',
-        progressData: [{ label: 'Platform Readiness', value: 100 }],
-        miniStats: { lines: '112,000+', apis: '25', build: '4.1s' },
-        techMatrix: [
-            { name: 'Frontend', stack: 'React', desc: 'Dynamic dashboarding' },
-            { name: 'Backend', stack: 'Node.js', desc: 'Event-driven architecture' },
-            { name: 'Database', stack: 'MongoDB', desc: 'Data Lake integration' },
-        ],
-        metrics: { lighthouse: '99', speed: '0.4s', latency: '20ms', env: 'Vercel Edge', scalability: 'Global Edge Network' },
-        businessImpact: 'Processing 10k+ daily interactions securely and seamlessly.',
-        challengesFaced: 'Real-time WebSocket connection state management.',
-        roadmap: 'Predictive analytics integration using TensorFlow JS.',
-        team: [
-            { name: 'Asif Alam', role: 'Full Stack Architect', college: '' },
-            { name: 'Rupesh Kumar', role: 'Backend Core', college: '' },
-            { name: 'Shubham Kumar', role: 'Frontend Ops', college: '' }
-        ]
-    },
-    {
-        id: 'dadisecrets',
-        category: 'LIVE SYSTEMS',
-        name: 'DadiSecrets',
-        tagline: 'Empowering small family businesses digitally.',
-        status: 'LIVE',
-        statusKey: 'LIVE',
-        website: 'dadi-secrets-mall.vercel.app',
-        url: 'https://dadi-secrets-mall.vercel.app',
-        techStack: ['Next.js', 'Vercel', 'Stripe'],
-        logo: '🛍️',
-        story: 'Built as a personal initiative for my sister to digitally empower a small family-based product business. Designed and deployed independently. It bridges the gap between traditional setups and modern e-commerce.',
-        solo: 'Built entirely by Asif Alam.',
-        progressData: [{ label: 'E-Commerce Engine', value: 100 }],
-        miniStats: { lines: '24,300', apis: '5 (Stripe, CMS)', build: '1.2s' },
-        techMatrix: [
-            { name: 'Frontend', stack: 'Next.js 14', desc: 'App router & SSR' },
-            { name: 'Payments', stack: 'Stripe', desc: 'Secure checkout' },
-            { name: 'Deployment', stack: 'Vercel', desc: 'Instant preview' },
-        ],
-        metrics: { lighthouse: '100', speed: '0.2s', latency: '15ms', env: 'Vercel', scalability: 'Serverless structure' },
-        businessImpact: 'Digitized local inventory resulting in 300% expanded reach.',
-        challengesFaced: 'Inventory sync across physical and digital storefronts.',
-        roadmap: 'AI-driven product recommendations.'
-    },
-    {
-        id: 'evenza',
-        category: 'LIVE SYSTEMS',
-        name: 'Evenza.space',
-        tagline: 'Events & Marketing Pipeline.',
-        status: 'SOLD',
-        statusKey: 'SOLD',
-        techStack: ['React', 'Tailwind', 'Vercel'],
-        logo: '✨',
-        story: 'Designed and developed independently. Focused on conversion-driven UI and brand positioning.',
-        impact: 'Increased lead generation by 40%. Transitioned from static brochures to an interactive digital experience.',
-        progressData: [{ label: 'Handover Status', value: 100 }],
-        miniStats: { lines: '18,500', apis: 'None', build: '0.8s' },
-        techMatrix: [
-            { name: 'UI', stack: 'React + TailwindCSS', desc: 'High conversion design' },
-            { name: 'Hosting', stack: 'Vercel Edge', desc: 'Low latency loading' }
-        ],
-        metrics: { lighthouse: '98', speed: '0.5s', latency: 'N/A', env: 'Vercel', scalability: 'High' },
-        businessImpact: 'Revenue generated via sale of IP and landing page framework.',
-        challengesFaced: 'Client iteration sync and high-contrast accessibility.',
-        roadmap: 'Project transferred to client.'
-    },
-    {
-        id: 'bookmygadi',
-        category: 'LIVE SYSTEMS',
-        name: 'BookMyGadi',
-        tagline: 'Smart Car Booking Orchestrator.',
-        status: 'LIVE',
-        statusKey: 'LIVE',
-        techStack: ['React', 'Node.js', 'MongoDB', 'AWS EC2'],
-        logo: '🏎️',
-        story: 'A smart car booking platform for seamless vendor-user interactions with live price negotiation and route mapping capabilities.',
-        features: ['Route logic', 'Price negotiation system', 'Owner dashboard', 'User booking flow'],
-        progressData: [{ label: 'Deployment Stability', value: 100 }],
-        miniStats: { lines: '80,000+', apis: '15+', build: '3.5s' },
-        techMatrix: [
-            { name: 'Frontend', stack: 'React', desc: 'Complex role-based routing' },
-            { name: 'Backend', stack: 'Node.js', desc: 'Mapping and pricing engine' }
-        ],
-        metrics: { lighthouse: '92', speed: '1.2s', latency: '55ms', env: 'AWS EC2', scalability: 'Load Balanced' },
-        businessImpact: 'Streamlined local fleet management.',
-        challengesFaced: 'Dynamic pricing recalculation based on demand surges.',
-        roadmap: 'Fleet expansion and automated driver payouts.'
-    },
-    {
-        id: 'bookmythali',
-        category: 'UPCOMING SYSTEMS',
-        name: 'BookMyThali',
-        tagline: 'Custom logic food-tech platform.',
-        status: 'UPCOMING',
-        statusKey: 'UPCOMING',
-        techStack: ['Next.js', 'PostgreSQL', 'Redis', 'AWS'],
-        logo: '🍱',
-        story: 'A revolutionary food-tech platform focusing on highly customized daily meals targeting working professionals and students.',
-        vision: 'To launch a subscription-based custom thali delivery matrix that adapts to user dietary shifts.',
-        progressData: [{ label: 'Core R&D', value: 20 }],
-        miniStats: { lines: '12,000', apis: 'TBD', build: 'Fast' },
-        techMatrix: [
-            { name: 'Stack', stack: 'Next.js + PostgreSQL', desc: 'Relational logic for menus' },
-            { name: 'Cache', stack: 'Redis', desc: 'Fast menu delivery' }
-        ],
-        metrics: { lighthouse: 'TBD', speed: 'TBD', latency: 'TBD', env: 'AWS', scalability: 'Microservices planned' },
-        businessImpact: 'Expected disruption in local subscription-based meal delivery.',
-        challengesFaced: 'Designing dynamic meal switching logic for users.',
-        roadmap: 'Beta launch in Q3 2026.'
-    }
-];
+import { ARCHIVE_DATA } from '../../data/archiveProjects'
 
 const FeedbackPanel = () => {
     const [innovation, setInnovation] = useState(8);
@@ -202,6 +40,7 @@ const ProjectModal = ({ project, onClose }) => {
     }, []);
 
     if (!project) return null;
+    const detailedSections = project.detailedSections || [];
 
     const staggerVariants = {
         hidden: { opacity: 0, y: 20 },
@@ -346,6 +185,33 @@ const ProjectModal = ({ project, onClose }) => {
                                             <p>{project.roadmap}</p>
                                         </div>
                                     )}
+                                </div>
+                            </motion.section>
+                        )}
+
+                        {detailedSections.length > 0 && (
+                            <motion.section custom={6} initial="hidden" animate="visible" variants={staggerVariants} className="cs-block">
+                                <h2 className="cs-block-title">06 // ARCHIVES DETAILS DOSSIER</h2>
+                                <h3 className="cs-block-subtitle">Founder-Level Structured Intelligence Notes</h3>
+                                <div className="cs-dossier-grid">
+                                    {detailedSections.map((section) => (
+                                        <article className="cs-dossier-card" key={section.title}>
+                                            <h4>{section.title}</h4>
+                                            {section.content && <p>{section.content}</p>}
+                                            {section.points && section.points.length > 0 && (
+                                                <ul>
+                                                    {section.points.map((point) => (
+                                                        <li key={point}>{point}</li>
+                                                    ))}
+                                                </ul>
+                                            )}
+                                            {section.ctaLink && section.ctaLabel && (
+                                                <a className="cs-dossier-link" href={section.ctaLink}>
+                                                    {section.ctaLabel}
+                                                </a>
+                                            )}
+                                        </article>
+                                    ))}
                                 </div>
                             </motion.section>
                         )}
@@ -514,12 +380,14 @@ const PortfolioContent = () => {
                     const isActive = activeCategory === cat;
                     const projectsInCat = SORTED_PROJECTS.filter(p => p.category === cat);
                     const firstIdx = SORTED_PROJECTS.findIndex(p => p.category === cat);
+                    const isDisabled = firstIdx < 0;
                     return (
                         <React.Fragment key={cat}>
                             <button
                                 className={`cc-status-pill ${isActive ? 'cc-status-pill--active' : ''}`}
                                 style={{ '--pill-color': cfg.color }}
-                                onClick={() => goTo(firstIdx)}
+                                onClick={() => !isDisabled && goTo(firstIdx)}
+                                disabled={isDisabled}
                             >
                                 <span className="cc-status-dot" style={{ background: cfg.color }}></span>
                                 {cfg.label}

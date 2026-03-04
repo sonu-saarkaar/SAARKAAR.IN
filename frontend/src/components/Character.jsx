@@ -16,6 +16,7 @@ import * as THREE from 'three'
 import { useGLTF, useAnimations, Html } from '@react-three/drei'
 import { SkeletonUtils } from 'three-stdlib'
 import { useExperienceStore } from '../store/experienceStore'
+import { usePerformanceStore } from '../store/performanceStore'
 
 // ─────────────── Constants ───────────────
 const WALK_SPEED = 2.25
@@ -67,18 +68,18 @@ function sanitizeClips(clips) {
 }
 
 // ─────────────── GLB Mesh Enhancement ───────────────
-function enhanceMesh(clone) {
+function enhanceMesh(clone, settings) {
     clone.traverse(child => {
         if (!child.isMesh) return
-        child.castShadow = true
-        child.receiveShadow = true
+        child.castShadow = settings.shadows
+        child.receiveShadow = settings.shadows
         if (child.material) {
             child.material = child.material.clone()
             child.material.roughness = Math.min(child.material.roughness ?? 0.78, 0.78)
             child.material.metalness = Math.min(child.material.metalness ?? 0.08, 0.12)
-            child.material.envMapIntensity = 1.05
+            child.material.envMapIntensity = settings.reflections ? 1.05 : 0.4
             if ('clearcoat' in child.material) {
-                child.material.clearcoat = Math.max(child.material.clearcoat ?? 0, 0.08)
+                child.material.clearcoat = settings.reflections ? Math.max(child.material.clearcoat ?? 0, 0.08) : 0
                 child.material.clearcoatRoughness = Math.min(child.material.clearcoatRoughness ?? 0.7, 0.55)
             }
             child.material.needsUpdate = true
@@ -100,9 +101,10 @@ function RealisticHuman({ charRef, isSitting, conversationPartner, speedRef }) {
 
     const activeAction = useRef(null)
     const locomotion = useRef(null)
+    const { settings } = usePerformanceStore()
 
     // Enhance materials on mount
-    useEffect(() => { enhanceMesh(clone) }, [clone])
+    useEffect(() => { enhanceMesh(clone, settings) }, [clone, settings])
 
     // Pass mesh group ref up to parent for position reads
     useEffect(() => {
@@ -216,6 +218,7 @@ export default function Character({ walls = [] }) {
     const meshRef = useRef()    // passed to RealisticHuman
 
     const { camera, gl } = useThree()
+    const { settings } = usePerformanceStore()
 
     const { setUserPosition, conversationPartner, isSitting, cameraFocus, setCeoDoorOpen } = useExperienceStore()
 
@@ -289,12 +292,21 @@ export default function Character({ walls = [] }) {
                 case 'KeyD': case 'ArrowRight': keys.current.r = true; break
                 case 'ShiftLeft': case 'ShiftRight': keys.current.shift = true; break
                 case 'Tab':
+                case 'Space':
                     e.preventDefault() // prevent browser tab-switch
                     if (isGrounded.current) {
                         yVelRef.current = JUMP_VELOCITY
                         isGrounded.current = false
                     }
                     break
+            }
+        }
+
+        const onJump = () => {
+            if (isSitting) return
+            if (isGrounded.current) {
+                yVelRef.current = JUMP_VELOCITY
+                isGrounded.current = false
             }
         }
         const onKeyUp = (e) => {
@@ -317,6 +329,7 @@ export default function Character({ walls = [] }) {
         window.addEventListener('mousemove', onMouse)
         window.addEventListener('keydown', onKeyDown)
         window.addEventListener('keyup', onKeyUp)
+        window.addEventListener('saarkaar:jump', onJump)
         window.addEventListener('blur', resetKeys)
         document.addEventListener('visibilitychange', resetKeys)
         return () => {
@@ -325,6 +338,7 @@ export default function Character({ walls = [] }) {
             window.removeEventListener('mousemove', onMouse)
             window.removeEventListener('keydown', onKeyDown)
             window.removeEventListener('keyup', onKeyUp)
+            window.removeEventListener('saarkaar:jump', onJump)
             window.removeEventListener('blur', resetKeys)
             document.removeEventListener('visibilitychange', resetKeys)
         }
@@ -559,8 +573,8 @@ export default function Character({ walls = [] }) {
             <directionalLight
                 position={[5, 8, 4]}
                 intensity={0.95}
-                castShadow
-                shadow-mapSize={[2048, 2048]}
+                castShadow={settings.shadows}
+                shadow-mapSize={settings.highResTextures ? [2048, 2048] : [512, 512]}
                 shadow-bias={-0.0002}
             />
             <directionalLight position={[-4, 4, -4]} intensity={0.22} />

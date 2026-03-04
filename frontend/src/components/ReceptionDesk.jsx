@@ -1,31 +1,38 @@
-import React, { useRef } from 'react'
+import React, { useRef, useMemo, useEffect } from 'react'
 import { useFrame } from '@react-three/fiber'
 import { useExperienceStore } from '../store/experienceStore'
 import SaarkaarLogo from './SaarkaarLogo'
-import Receptionist from './Receptionist'
+import Assistant from './Assistant'
 import * as THREE from 'three'
 
 export default function ReceptionDesk({ position = [0, 0, -6] }) {
   const deskRef = useRef()
+  const userPositionRef = useRef([0, 0, 0])
   const setNearReception = useExperienceStore((state) => state.setNearReception)
-  const userPosition = useExperienceStore((state) => state.userPosition)
+
+  useEffect(() => {
+    const unsub = useExperienceStore.subscribe((state) => {
+      userPositionRef.current = state.userPosition
+    })
+    return unsub
+  }, [])
 
   useFrame(() => {
     if (deskRef.current) {
-      const distance = new THREE.Vector3(...userPosition).distanceTo(
+      const distance = new THREE.Vector3(...userPositionRef.current).distanceTo(
         new THREE.Vector3(...position)
       )
       setNearReception(distance < 3)
     }
   })
 
-  const materials = {
+  const materials = useMemo(() => ({
     whiteGloss: new THREE.MeshStandardMaterial({ color: '#f0f0f0', roughness: 0.1, metalness: 0.1 }),
     woodAccent: new THREE.MeshStandardMaterial({ color: '#2a1d15', roughness: 0.6 }),
     blackMatte: new THREE.MeshStandardMaterial({ color: '#111', roughness: 0.8 }),
     glow: new THREE.MeshBasicMaterial({ color: '#00ccff', transparent: true, opacity: 0.5 }),
     paper: new THREE.MeshStandardMaterial({ color: '#fffae6', roughness: 0.9 })
-  }
+  }), [])
 
   return (
     <group position={position}>
@@ -87,10 +94,10 @@ export default function ReceptionDesk({ position = [0, 0, -6] }) {
         <pointLight position={[-0.1, 0.3, 0]} intensity={0.5} distance={2} color="#ffe8b3" />
       </group>
 
-      {/* RECEPTIONIST */}
+      {/* ASSISTANT */}
       <group position={[0, 0, -0.65]}>
         <React.Suspense fallback={null}>
-          <Receptionist />
+          <Assistant />
         </React.Suspense>
       </group>
     </group>

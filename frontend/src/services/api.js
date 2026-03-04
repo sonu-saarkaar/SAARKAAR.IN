@@ -10,23 +10,62 @@ const api = axios.create({
 });
 
 export const fetchProjects = async () => {
-    try {
-        const response = await api.get('/projects/');
-        return response.data;
-    } catch (error) {
-        console.error("Error fetching projects:", error);
-        return [];
-    }
+    const response = await api.get('/projects/');
+    return response.data;
 };
 
 export const fetchProjectById = async (id) => {
-    try {
-        const response = await api.get(`/projects/${id}`);
-        return response.data;
-    } catch (error) {
-        console.error(`Error fetching project ${id}:`, error);
-        return null;
-    }
+    const response = await api.get(`/projects/${id}`);
+    return response.data;
+};
+
+export const getAdminToken = () => localStorage.getItem('saarkaar_admin_token') || '';
+
+const adminHeaders = () => {
+    const token = getAdminToken();
+    return token ? { Authorization: `Bearer ${token}` } : {};
+};
+
+export const adminListProjects = async () => {
+    const res = await api.get('/admin/portfolio', { headers: adminHeaders() });
+    return res.data;
+};
+
+export const adminCreateProject = async (payload) => {
+    const res = await api.post('/projects/', payload, { headers: adminHeaders() });
+    return res.data;
+};
+
+export const adminUpdateProject = async (id, payload) => {
+    const res = await api.put(`/projects/${id}`, payload, { headers: adminHeaders() });
+    return res.data;
+};
+
+export const adminDeleteProject = async (id) => {
+    const res = await api.delete(`/projects/${id}`, { headers: adminHeaders() });
+    return res.data;
+};
+
+export const adminUploadImage = async (file) => {
+    const formData = new FormData();
+    formData.append('file', file);
+    const res = await api.post('/upload', formData, {
+        headers: {
+            ...adminHeaders(),
+            'Content-Type': 'multipart/form-data',
+        },
+    });
+    return res.data;
+};
+
+export const adminGetSystemConfig = async () => {
+    const res = await api.get('/admin/system-config', { headers: adminHeaders() });
+    return res.data;
+};
+
+export const adminUpdateSystemConfig = async (payload) => {
+    const res = await api.put('/admin/system-config', payload, { headers: adminHeaders() });
+    return res.data;
 };
 
 export const submitFeedback = async (data) => {
@@ -52,6 +91,9 @@ const buildFounderFallback = (message) => {
     }
     if (/vision|goal|mission|future/.test(msg)) {
         return "The vision is to solve complexity with immersive, intelligent systems that feel natural to use. SAARKAAR focuses on real-world impact through AI + product architecture.";
+    }
+    if (/photo|pic|picture|image|profile\s*photo|boss\s*photo|founder\s*photo/.test(msg)) {
+        return "Yeh hai hamare boss Sonu Saarkaar: /profile/sonu-boss.png";
     }
 
     return "I’m reconnecting, but I can still help. Ask about SAARKAAR’s projects, tech stack, architecture choices, hiring, or founder vision and I’ll answer directly.";

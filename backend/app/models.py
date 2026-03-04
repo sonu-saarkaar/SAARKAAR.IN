@@ -1,6 +1,7 @@
 from pydantic import BaseModel, EmailStr, Field
 from typing import List, Optional
 from datetime import datetime
+from typing_extensions import Literal
 
 # --- Existing Models ---
 class AIChatRequest(BaseModel):
@@ -55,17 +56,29 @@ class IntentResponse(BaseModel):
 
 # --- Portfolio Models ---
 class ProjectSchema(BaseModel):
+    id: Optional[str] = None
     title: str = Field(..., min_length=1)
-    tagline: str = Field(..., min_length=1)
-    category: str
-    description: str
-    vision: Optional[str] = None
-    status: str
-    tech_stack: List[str]
-    problem_statement: str
-    solution: str
-    features: List[str]
-    gallery: List[str] = []
+    description: str = Field(..., min_length=1)
+    longStory: str = ""
+    vision: str = ""
+    techStack: List[str] = Field(default_factory=list)
+    status: Literal["live", "sold", "upcoming", "private"] = "upcoming"
+    teamMembers: List[str] = Field(default_factory=list)
+    images: List[str] = Field(default_factory=list)
+    liveUrl: Optional[str] = None
+    appUrl: Optional[str] = None
+    progressPercentage: int = Field(default=0, ge=0, le=100)
+    createdAt: Optional[datetime] = None
+    updatedAt: Optional[datetime] = None
+
+    # Backward-compatible optional fields for existing frontend screens
+    tagline: Optional[str] = None
+    category: Optional[str] = None
+    tech_stack: Optional[List[str]] = None
+    problem_statement: Optional[str] = None
+    solution: Optional[str] = None
+    features: Optional[List[str]] = None
+    gallery: Optional[List[str]] = None
     live_link: Optional[str] = None
     client_info: Optional[str] = None
     timeline: Optional[str] = None
@@ -94,13 +107,26 @@ class ProjectSchema(BaseModel):
         }
 
 class CreateProject(ProjectSchema):
-    pass
+    id: Optional[str] = None
+    createdAt: Optional[datetime] = None
+    updatedAt: Optional[datetime] = None
 
 class UpdateProject(BaseModel):
     title: Optional[str]
-    tagline: Optional[str]
     description: Optional[str]
-    status: Optional[str]
+    longStory: Optional[str]
+    vision: Optional[str]
+    techStack: Optional[List[str]]
+    status: Optional[Literal["live", "sold", "upcoming", "private"]]
+    teamMembers: Optional[List[str]]
+    images: Optional[List[str]]
+    liveUrl: Optional[str]
+    appUrl: Optional[str]
+    progressPercentage: Optional[int] = Field(default=None, ge=0, le=100)
+
+    # Backward-compatible optional fields
+    tagline: Optional[str]
+    category: Optional[str]
     tech_stack: Optional[List[str]]
     problem_statement: Optional[str]
     solution: Optional[str]
@@ -147,9 +173,12 @@ class AppointmentSchema(BaseModel):
 class ResumeRequestSchema(BaseModel):
     name: str
     email: EmailStr
+    phone: Optional[str] = None
+    contact_number: Optional[str] = None
     organization: Optional[str] = None
-    resume_type: str
-    reason: str
+    documentType: Optional[str] = None
+    resume_type: str = "Technical Resume (Engineering)"
+    reason: str = ""
     status: str = "pending" # pending, approved, rejected
     token: Optional[str] = None
     expires_at: Optional[datetime] = None

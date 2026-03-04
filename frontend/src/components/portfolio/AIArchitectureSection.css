@@ -1,5 +1,5 @@
 /* ============================================================
-   AI ARCHITECTURE SECTION — RESPONSIVE CINEMATIC DESIGN
+   AI ARCHITECTURE + CHATGPT-STYLE WORKSPACE
    ============================================================ */
 
 .aia-section {
@@ -12,7 +12,6 @@
     border-top: 1px solid rgba(212, 175, 55, 0.08);
 }
 
-/* Subtle ambient grid */
 .aia-section::before {
     content: '';
     position: absolute;
@@ -24,12 +23,10 @@
     pointer-events: none;
 }
 
-/* ============================================================
-   HEADER
-   ============================================================ */
+/* Header */
 .aia-header {
     text-align: center;
-    margin-bottom: 5rem;
+    margin-bottom: 4.2rem;
     position: relative;
     z-index: 2;
 }
@@ -46,7 +43,7 @@
 
 .aia-title {
     font-family: 'Rajdhani', sans-serif;
-    font-size: 3.5rem;
+    font-size: 3.4rem;
     font-weight: 700;
     letter-spacing: 3px;
     color: #fff;
@@ -61,16 +58,14 @@
     background-clip: text;
 }
 
-/* ============================================================
-   ARCHITECTURE DIAGRAM NODES
-   ============================================================ */
+/* Architecture Nodes */
 .aia-arch-diagram {
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 0;
     flex-wrap: wrap;
-    margin-bottom: 5rem;
+    margin-bottom: 3.4rem;
     position: relative;
     z-index: 2;
 }
@@ -79,10 +74,10 @@
     background: rgba(15, 15, 15, 0.8);
     border: 1px solid rgba(0, 245, 212, 0.2);
     border-radius: 12px;
-    padding: 2rem 2rem;
+    padding: 1.6rem;
     text-align: center;
     width: 200px;
-    transition: all 0.3s ease;
+    transition: all 0.28s ease;
     backdrop-filter: blur(12px);
 }
 
@@ -96,24 +91,12 @@
 
 .aia-arch-node:hover {
     transform: translateY(-4px);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
-}
-
-.aia-node-teal:hover {
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5), 0 0 20px rgba(0, 245, 212, 0.1);
-}
-
-.aia-node-gold:hover {
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5), 0 0 20px rgba(212, 175, 55, 0.1);
-}
-
-.aia-node-red:hover {
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5), 0 0 20px rgba(255, 0, 85, 0.1);
+    box-shadow: 0 18px 32px rgba(0, 0, 0, 0.48);
 }
 
 .aia-node-icon {
-    font-size: 2rem;
-    margin-bottom: 1rem;
+    font-size: 1.9rem;
+    margin-bottom: 0.7rem;
 }
 
 .aia-arch-node h4 {
@@ -122,7 +105,7 @@
     letter-spacing: 2px;
     text-transform: uppercase;
     color: #00f5d4;
-    margin: 0 0 0.6rem;
+    margin: 0 0 0.55rem;
 }
 
 .aia-node-gold h4 {
@@ -135,12 +118,12 @@
 
 .aia-node-pill {
     display: inline-block;
-    border: 1px solid rgba(0, 245, 212, 0.4);
+    border: 1px solid rgba(0, 245, 212, 0.35);
     color: #00f5d4;
-    font-size: 0.72rem;
-    padding: 4px 12px;
+    font-size: 0.7rem;
+    padding: 4px 11px;
     border-radius: 20px;
-    margin-bottom: 0.6rem;
+    margin-bottom: 0.55rem;
     font-family: 'Courier New', monospace;
 }
 
@@ -155,7 +138,7 @@
 }
 
 .aia-arch-node p {
-    color: #666;
+    color: #707070;
     font-size: 0.78rem;
     margin: 0;
 }
@@ -165,33 +148,37 @@
     color: #333;
     padding: 0 1rem;
     user-select: none;
-    flex-shrink: 0;
 }
 
-/* ============================================================
-   CHAT WRAPPER
-   ============================================================ */
-.aia-chat-wrapper {
-    max-width: 860px;
+/* Chat Workspace 70/30 */
+.aia-chat-workspace {
+    max-width: 1220px;
     margin: 0 auto;
-    background: rgba(10, 10, 10, 0.85);
-    border: 1px solid rgba(255, 255, 255, 0.07);
-    border-radius: 16px;
-    overflow: hidden;
-    backdrop-filter: blur(20px);
-    box-shadow: 0 40px 80px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(212, 175, 55, 0.05);
+    display: grid;
+    grid-template-columns: 7fr 3fr;
+    gap: 14px;
     position: relative;
     z-index: 2;
 }
 
-/* ============================================================
-   CHAT HEADER
-   ============================================================ */
+.aia-main-pane,
+.aia-side-pane {
+    background: rgba(9, 9, 10, 0.9);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    backdrop-filter: blur(18px);
+    overflow: hidden;
+}
+
+.aia-main-pane {
+    box-shadow: 0 30px 70px rgba(0, 0, 0, 0.55);
+}
+
 .aia-chat-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 1.2rem 1.8rem;
+    padding: 1rem 1.1rem;
     background: rgba(20, 20, 20, 0.95);
     border-bottom: 1px solid rgba(255, 255, 255, 0.06);
 }
@@ -199,7 +186,7 @@
 .aia-chat-header-left {
     display: flex;
     align-items: center;
-    gap: 1rem;
+    gap: 0.8rem;
 }
 
 .aia-status-dot {
@@ -207,61 +194,106 @@
     height: 10px;
     border-radius: 50%;
     background: #00f5d4;
+    box-shadow: 0 0 12px rgba(0, 245, 212, 0.7);
+    animation: aiaPulse 2s infinite;
     flex-shrink: 0;
-    box-shadow: 0 0 10px rgba(0, 245, 212, 0.6);
-    animation: pulseDot 2s infinite;
 }
 
-@keyframes pulseDot {
+@keyframes aiaPulse {
 
     0%,
     100% {
-        box-shadow: 0 0 6px rgba(0, 245, 212, 0.5);
+        box-shadow: 0 0 8px rgba(0, 245, 212, 0.4);
     }
 
     50% {
-        box-shadow: 0 0 16px rgba(0, 245, 212, 0.9);
+        box-shadow: 0 0 20px rgba(0, 245, 212, 0.95);
     }
 }
 
 .aia-chat-header h3 {
+    margin: 0 0 2px;
     font-family: 'Rajdhani', sans-serif;
-    font-size: 1.1rem;
-    color: #fff;
-    margin: 0 0 3px;
-    text-transform: uppercase;
     letter-spacing: 1px;
+    font-size: 1.05rem;
 }
 
 .aia-chat-header p {
-    font-size: 0.72rem;
-    color: #555;
     margin: 0;
+    color: #666;
+    font-size: 0.72rem;
     font-family: 'Courier New', monospace;
 }
 
-.aia-header-badge {
-    font-size: 0.65rem;
-    background: rgba(0, 245, 212, 0.1);
-    color: #00f5d4;
-    border: 1px solid rgba(0, 245, 212, 0.3);
-    padding: 4px 12px;
-    border-radius: 20px;
-    letter-spacing: 1px;
-    font-family: 'Courier New', monospace;
-    animation: pulseDot 2s infinite;
-}
-
-/* ============================================================
-   MESSAGES WINDOW
-   ============================================================ */
-.aia-messages {
-    height: 380px;
-    overflow-y: auto;
-    padding: 1.5rem;
+.aia-status-box {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: 4px;
+    padding: 8px 14px;
+    background: rgba(0, 245, 212, 0.04);
+    border: 1px solid rgba(0, 245, 212, 0.15);
+    border-radius: 10px;
+    min-width: 150px;
+    backdrop-filter: blur(8px);
+}
+
+.aia-status-line {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+}
+
+.aia-status-label {
+    font-size: 0.6rem;
+    color: rgba(255, 255, 255, 0.4);
+    font-family: 'Rajdhani', sans-serif;
+    letter-spacing: 1.5px;
+    font-weight: 600;
+}
+
+.aia-status-value {
+    font-size: 0.65rem;
+    color: #00f5d4;
+    font-family: 'Courier New', monospace;
+    font-weight: 700;
+    text-shadow: 0 0 8px rgba(0, 245, 212, 0.3);
+}
+
+.aia-mode-bar {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    padding: 0.8rem 1rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    background: rgba(16, 16, 16, 0.8);
+}
+
+.aia-mode-chip {
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    background: rgba(255, 255, 255, 0.03);
+    color: #bbb;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    padding: 6px 11px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+.aia-mode-chip:hover,
+.aia-mode-chip.active {
+    border-color: rgba(212, 175, 55, 0.5);
+    color: #f0d189;
+    background: rgba(212, 175, 55, 0.1);
+}
+
+.aia-messages {
+    height: 430px;
+    overflow-y: auto;
+    padding: 1.1rem 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.95rem;
     scrollbar-width: thin;
     scrollbar-color: rgba(255, 255, 255, 0.08) transparent;
 }
@@ -271,18 +303,15 @@
 }
 
 .aia-messages::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.15);
     border-radius: 2px;
 }
 
-/* ============================================================
-   MESSAGE BUBBLES
-   ============================================================ */
 .aia-msg {
     display: flex;
     align-items: flex-start;
     gap: 0.75rem;
-    max-width: 88%;
+    max-width: 90%;
 }
 
 .aia-msg-ai {
@@ -308,7 +337,6 @@
     font-family: 'Rajdhani', sans-serif;
     font-weight: 700;
     flex-shrink: 0;
-    letter-spacing: 0.5px;
 }
 
 .aia-user-avatar {
@@ -320,7 +348,7 @@
 .aia-msg-bubble {
     background: rgba(25, 25, 25, 0.9);
     border: 1px solid rgba(255, 255, 255, 0.06);
-    padding: 0.8rem 1.1rem;
+    padding: 0.78rem 1.02rem;
     border-radius: 12px;
     font-size: 0.9rem;
     color: #ddd;
@@ -332,13 +360,11 @@
 .aia-msg-ai .aia-msg-bubble {
     border-color: rgba(0, 245, 212, 0.1);
     background: rgba(0, 245, 212, 0.04);
-    color: #ccc;
 }
 
 .aia-msg-user .aia-msg-bubble {
     background: rgba(212, 175, 55, 0.08);
     border-color: rgba(212, 175, 55, 0.15);
-    color: #e8e8e8;
 }
 
 .aia-msg-error .aia-msg-bubble {
@@ -347,9 +373,6 @@
     color: #ff8888;
 }
 
-/* ============================================================
-   TYPING INDICATOR
-   ============================================================ */
 .aia-typing-indicator {
     background: rgba(0, 245, 212, 0.04);
     border: 1px solid rgba(0, 245, 212, 0.1);
@@ -391,14 +414,11 @@
     }
 }
 
-/* ============================================================
-   SUGGESTION CHIPS
-   ============================================================ */
 .aia-suggestions {
     display: flex;
     flex-wrap: wrap;
     gap: 6px;
-    padding: 0.8rem 1.5rem;
+    padding: 0.75rem 1rem;
     border-top: 1px solid rgba(255, 255, 255, 0.04);
     background: rgba(5, 5, 5, 0.5);
 }
@@ -412,7 +432,6 @@
     border-radius: 20px;
     cursor: pointer;
     transition: all 0.25s ease;
-    font-family: 'Inter', sans-serif;
     white-space: nowrap;
 }
 
@@ -427,153 +446,322 @@
     cursor: not-allowed;
 }
 
-/* ============================================================
-   INPUT BAR
-   ============================================================ */
-.aia-input-bar {
-    display: flex;
-    gap: 0;
-    border-top: 1px solid rgba(255, 255, 255, 0.06);
-    background: rgba(8, 8, 8, 0.9);
+.aia-inline-form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    padding: 0.8rem 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    background: rgba(6, 6, 6, 0.72);
 }
 
-.aia-input {
-    flex: 1;
-    background: transparent;
-    border: none;
-    color: #fff;
-    padding: 1.1rem 1.5rem;
-    font-size: 0.9rem;
-    font-family: 'Inter', sans-serif;
+.aia-inline-form input,
+.aia-inline-form textarea {
+    width: 100%;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    background: rgba(255, 255, 255, 0.03);
+    color: #f2f2f2;
+    border-radius: 8px;
+    padding: 9px 10px;
+    font-size: 0.78rem;
     outline: none;
 }
 
-.aia-input::placeholder {
-    color: #444;
+.aia-inline-form textarea {
+    grid-column: 1 / -1;
+    min-height: 72px;
+    resize: vertical;
 }
 
-.aia-send-btn {
-    flex-shrink: 0;
-    padding: 0 1.8rem;
-    background: #d4af37;
-    border: none;
-    color: #000;
-    font-family: 'Rajdhani', sans-serif;
-    font-size: 0.85rem;
-    font-weight: 800;
-    letter-spacing: 1px;
+.aia-inline-form button {
+    grid-column: 1 / -1;
+    border: 1px solid rgba(212, 175, 55, 0.45);
+    background: rgba(212, 175, 55, 0.12);
+    color: #f0d189;
+    border-radius: 8px;
+    padding: 9px 12px;
+    font-size: 0.8rem;
     cursor: pointer;
-    transition: all 0.3s ease;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-width: 90px;
 }
 
-.aia-send-btn:hover:not(:disabled) {
-    background: #f3d473;
-    box-shadow: 0 0 20px rgba(212, 175, 55, 0.4);
-}
-
-.aia-send-btn:disabled {
-    opacity: 0.5;
+.aia-inline-form button:disabled {
+    opacity: 0.55;
     cursor: not-allowed;
 }
 
-/* Spinner */
-.aia-btn-spinner {
-    width: 16px;
-    height: 16px;
-    border: 2px solid rgba(0, 0, 0, 0.3);
-    border-top-color: #000;
-    border-radius: 50%;
-    animation: btnSpin 0.6s linear infinite;
-    display: inline-block;
+/* AI Command Console (Input) */
+.aia-input-console {
+    padding: 1.2rem 1.2rem 1.6rem;
+    background: rgba(10, 10, 12, 0.95);
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
 }
 
-@keyframes btnSpin {
+.aia-input-wrapper {
+    display: flex;
+    align-items: flex-end;
+    /* Align to bottom for growing textarea */
+    gap: 12px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 14px;
+    padding: 8px 12px;
+    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.aia-input-wrapper:focus-within {
+    border-color: rgba(212, 175, 55, 0.3);
+    background: rgba(212, 175, 55, 0.03);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3), 0 0 15px rgba(212, 175, 55, 0.1);
+}
+
+.listening-glow {
+    border-color: rgba(0, 245, 212, 0.5) !important;
+    box-shadow: 0 0 20px rgba(0, 245, 212, 0.15) !important;
+}
+
+.aia-mic-btn-compact {
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    padding: 6px;
+    cursor: pointer;
+    opacity: 0.6;
+    transition: 0.2s;
+    filter: grayscale(1);
+    flex-shrink: 0;
+}
+
+.aia-mic-btn-compact:hover {
+    opacity: 1;
+    filter: grayscale(0);
+    transform: scale(1.1);
+}
+
+.aia-mic-btn-compact.active {
+    opacity: 1;
+    filter: grayscale(0);
+    animation: micPulse 1.8s infinite;
+}
+
+@keyframes micPulse {
+    0% {
+        transform: scale(1);
+        opacity: 0.6;
+    }
+
+    50% {
+        transform: scale(1.15);
+        opacity: 1;
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 0.6;
+    }
+}
+
+.aia-textarea-input {
+    flex: 1;
+    background: none;
+    border: none;
+    color: #f7f7f7;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.92rem;
+    line-height: 1.5;
+    padding: 8px 0;
+    resize: none;
+    outline: none;
+    max-height: 200px;
+    scrollbar-width: none;
+}
+
+.aia-textarea-input::placeholder {
+    color: #4a4a4a;
+    font-size: 0.88rem;
+}
+
+.aia-action-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    background: #d4af37;
+    color: #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    cursor: pointer;
+    transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    flex-shrink: 0;
+    margin-bottom: 2px;
+}
+
+.aia-action-btn:hover:not(:disabled) {
+    background: #f1cf7b;
+    transform: scale(1.05);
+}
+
+.aia-action-btn:disabled {
+    background: #2a2a2a;
+    color: #555;
+    cursor: not-allowed;
+}
+
+.aia-send-icon {
+    font-size: 1rem;
+    margin-top: -2px;
+}
+
+.aia-btn-loader {
+    width: 18px;
+    height: 18px;
+    border: 2px solid rgba(0, 0, 0, 0.2);
+    border-top-color: #000;
+    border-radius: 50%;
+    animation: btnLoadingSpin 0.7s linear infinite;
+}
+
+@keyframes btnLoadingSpin {
     to {
         transform: rotate(360deg);
     }
 }
 
-/* ============================================================
-   CHAT FOOTER
-   ============================================================ */
-.aia-chat-footer {
-    text-align: center;
-    padding: 0.7rem;
-    font-size: 0.65rem;
-    color: #333;
-    letter-spacing: 1px;
+.aia-live-transcript {
+    padding: 0 1.2rem 1rem;
+    color: #00f5d4;
+    font-size: 0.75rem;
     font-family: 'Courier New', monospace;
-    background: rgba(5, 5, 5, 0.6);
-    border-top: 1px solid rgba(255, 255, 255, 0.03);
+    opacity: 0.8;
 }
 
-/* ============================================================
-   RESPONSIVE
-   ============================================================ */
-@media (max-width: 900px) {
-    .aia-arch-diagram {
-        gap: 0;
-        row-gap: 1rem;
-    }
-
-    .aia-arch-node {
-        width: 160px;
-        padding: 1.5rem 1rem;
-    }
-
-    .aia-arch-arrow {
-        padding: 0 0.5rem;
-        font-size: 1.2rem;
-    }
+/* Right Panel */
+.aia-side-pane {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px;
 }
 
-@media (max-width: 650px) {
-    .aia-arch-diagram {
-        flex-direction: column;
-        align-items: center;
-    }
+.aia-profile-card,
+.aia-session-card {
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.02);
+    padding: 12px;
+}
 
-    .aia-arch-arrow {
-        transform: rotate(90deg);
-        padding: 0.3rem 0;
-    }
+.aia-brand-inline {
+    margin-bottom: 8px;
+}
 
-    .aia-arch-node {
-        width: 100%;
-        max-width: 280px;
-        padding: 1.2rem;
-    }
+.aia-profile-card h4,
+.aia-session-card h4 {
+    margin: 0 0 8px;
+    font-size: 0.9rem;
+    color: #f7f7f7;
+}
 
-    .aia-title {
-        font-size: 2.2rem;
+.aia-profile-card p {
+    margin: 0 0 8px;
+    font-size: 0.8rem;
+    color: #a7a7a7;
+}
+
+.aia-interest-wrap {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+.aia-interest-chip {
+    border: 1px solid rgba(0, 245, 212, 0.28);
+    color: #90f4e6;
+    font-size: 0.68rem;
+    border-radius: 999px;
+    padding: 4px 8px;
+    background: rgba(0, 245, 212, 0.08);
+}
+
+.aia-session-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+}
+
+.aia-session-head button {
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.05);
+    color: #ddd;
+    border-radius: 8px;
+    padding: 5px 8px;
+    font-size: 0.72rem;
+    cursor: pointer;
+}
+
+.aia-session-list {
+    max-height: 520px;
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.aia-session-item {
+    width: 100%;
+    text-align: left;
+    border: 1px solid rgba(255, 255, 255, 0.09);
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 8px;
+    padding: 8px;
+    color: #d5d5d5;
+    cursor: pointer;
+}
+
+.aia-session-item.active {
+    border-color: rgba(212, 175, 55, 0.5);
+    background: rgba(212, 175, 55, 0.1);
+}
+
+.aia-session-title {
+    display: block;
+    font-size: 0.78rem;
+    margin-bottom: 2px;
+}
+
+.aia-session-meta {
+    font-size: 0.65rem;
+    color: #8f8f8f;
+}
+
+/* Responsive */
+@media (max-width: 1080px) {
+    .aia-chat-workspace {
+        grid-template-columns: 1fr;
     }
 
     .aia-messages {
-        height: 300px;
+        height: 340px;
+    }
+
+    .aia-side-pane {
+        order: -1;
+    }
+}
+
+@media (max-width: 680px) {
+    .aia-title {
+        font-size: 2.3rem;
+    }
+
+    .aia-inline-form {
+        grid-template-columns: 1fr;
     }
 
     .aia-chat-header {
-        padding: 1rem;
-        flex-wrap: wrap;
-        gap: 0.5rem;
-    }
-
-    .aia-send-btn {
-        padding: 0 1rem;
-        min-width: 70px;
-        font-size: 0.78rem;
-    }
-
-    .aia-input {
-        padding: 0.9rem 1rem;
-        font-size: 0.85rem;
-    }
-
-    .aia-suggestions {
-        padding: 0.6rem 1rem;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
     }
 }

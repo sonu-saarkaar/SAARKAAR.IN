@@ -5,15 +5,20 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "build:character:fused": "blender --background --python tools/blender/fuse_casual_outfit.py -- --input public/models/character.glb --output public/models/character.glb --max-faces 80000 --jacket 1"
   },
   "dependencies": {
     "@react-three/drei": "^9.88.0",
     "@react-three/fiber": "^8.15.19",
     "@react-three/rapier": "^2.2.0",
     "axios": "^1.13.5",
+    "chart.js": "^4.5.1",
+    "detect-gpu": "^5.0.70",
     "framer-motion": "^12.34.0",
+    "lucide-react": "^0.576.0",
     "react": "18.2.0",
+    "react-chartjs-2": "^5.3.1",
     "react-dom": "18.2.0",
     "react-router-dom": "^7.13.0",
     "three": "^0.159.0",

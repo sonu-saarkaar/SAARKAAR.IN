@@ -1,17 +1,17 @@
-import { useMemo } from 'react'
+import { useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useExperienceStore } from '../store/experienceStore'
 import { useAnimationStore } from '../store/animationStore'
 import OfficeInteraction from './OfficeInteraction'
 import MeetingInterface from './MeetingInterface'
 import SlidePanel from './SlidePanel'
+import BrandLogo from './BrandLogo'
 import './UI.css'
 
 export default function UI() {
   const navigate = useNavigate()
   const isNearReception = useExperienceStore((state) => state.isNearReception)
   const isNearOffice = useExperienceStore((state) => state.isNearOffice)
-  const isInOffice = useExperienceStore((state) => state.isInOffice)
   const isMeetingActive = useExperienceStore((state) => state.isMeetingActive)
   const setShowSlidePanel = useExperienceStore((state) => state.setShowSlidePanel)
   const setConversationPartner = useExperienceStore((state) => state.setConversationPartner)
@@ -19,26 +19,45 @@ export default function UI() {
   const setInOffice = useExperienceStore((state) => state.setInOffice)
   const setInCEOOffice = useExperienceStore((state) => state.setInCEOOffice)
   const setCameraFocus = useExperienceStore((state) => state.setCameraFocus)
-  const setReceptionistState = useAnimationStore((state) => state.setReceptionistState)
+  const setAssistantState = useAnimationStore((state) => state.setAssistantState)
 
   const canInteract = useMemo(() => isNearReception || isNearOffice, [isNearReception, isNearOffice])
 
-  // --- MOVEMENT LOGIC (Virtual Joystick Simulation) ---
+  const [showExitConfirm, setShowExitConfirm] = useState(false)
+
+  // --- MOVEMENT LOGIC ---
   const simulateKey = (code, type) => {
     const event = new KeyboardEvent(type, { code: code, bubbles: true })
     window.dispatchEvent(event)
   }
   const handleMoveStart = (code) => simulateKey(code, 'keydown')
   const handleMoveEnd = (code) => simulateKey(code, 'keyup')
+  const triggerJump = () => {
+    window.dispatchEvent(new CustomEvent('saarkaar:jump'))
+  }
+  const handleJumpStart = (e) => {
+    e?.preventDefault?.()
+    triggerJump()
+    handleMoveStart('Tab')
+  }
+  const handleJumpEnd = (e) => {
+    e?.preventDefault?.()
+    handleMoveEnd('Tab')
+  }
 
+  // --- INTERACTION ---
   const handleInteract = () => {
     if (isNearReception) {
-      setConversationPartner('receptionist')
-      setReceptionistState('talking')
+      setConversationPartner('assistant')
+      setAssistantState('talking')
     }
   }
 
-  const handleExit = () => {
+  // --- PORTFOLIO EXIT (with confirmation) ---
+  const handleExitRequest = () => setShowExitConfirm(true)
+  const handleExitCancel = () => setShowExitConfirm(false)
+  const handleExitConfirm = () => {
+    setShowExitConfirm(false)
     setConversationPartner(null)
     setSitting(false)
     setInCEOOffice(false)
@@ -53,10 +72,9 @@ export default function UI() {
 
       {/* --- HUD HEADER --- */}
       <div className="hud-header">
-        {!isInOffice && <div className="game-logo">SAARKAAR<span className="version">DEV</span></div>}
-
+        <BrandLogo size="sm" className="hud-brand-logo" showWordmark={false} />
         <button
-          className="hud-btn menu-btn top-control"
+          className="hud-btn hud-menu-btn top-control"
           title="Open Menu"
           onClick={() => setShowSlidePanel(true)}
         >
@@ -103,9 +121,21 @@ export default function UI() {
         </div>
       </div>
 
-
       {/* --- RIGHT CONTROL: ACTIONS --- */}
       <div className="action-zone">
+        <button
+          className="action-btn jump-btn"
+          title="Jump (Tab)"
+          onMouseDown={handleJumpStart}
+          onMouseUp={handleJumpEnd}
+          onMouseLeave={handleJumpEnd}
+          onTouchStart={handleJumpStart}
+          onTouchEnd={handleJumpEnd}
+          onTouchCancel={handleJumpEnd}
+        >
+          <span className="jump-key">TAB</span>
+          <span className="jump-label">JUMP</span>
+        </button>
 
         {/* INTERACT (Context Aware) */}
         {canInteract && (
@@ -115,29 +145,34 @@ export default function UI() {
             </svg>
           </button>
         )}
-
-        {/* EXIT */}
-        <button
-          className="action-btn exit-btn"
-          title="Exit"
-          onClick={handleExit}
-        >
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M14 4h4a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-4" />
-            <path d="M10 16l-4-4 4-4" />
-            <path d="M6 12h10" />
-          </svg>
-          <span className="action-label">EXIT</span>
-        </button>
       </div>
 
       {/* --- OVERLAYS --- */}
-      {/* Existing Interaction components still rendered but now we have HUD buttons for them if needed */}
       <OfficeInteraction />
-      {isMeetingActive && <MeetingInterface />}
-
-      {/* Using the new SlidePanel trigger above, so just rendering the panel itself */}
+      {isMeetingActive && <MeetingInterface onExitRequest={handleExitRequest} />}
       <SlidePanel />
+
+      {/* --- PORTFOLIO SWITCH CONFIRMATION MODAL --- */}
+      {showExitConfirm && (
+        <div className="exit-confirm-overlay" onClick={handleExitCancel}>
+          <div className="exit-confirm-modal" onClick={(e) => e.stopPropagation()}>
+            <div className="exit-confirm-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <circle cx="12" cy="12" r="10" />
+                <path d="M12 8v4M12 16h.01" />
+              </svg>
+            </div>
+            <h3 className="exit-confirm-title">Switch to Portfolio?</h3>
+            <p className="exit-confirm-msg">
+              You are about to leave the Virtual Office and go to the Portfolio page.
+            </p>
+            <div className="exit-confirm-actions">
+              <button className="exit-cancel-btn" onClick={handleExitCancel}>Stay in Office</button>
+              <button className="exit-proceed-btn" onClick={handleExitConfirm}>Go to Portfolio</button>
+            </div>
+          </div>
+        </div>
+      )}
 
     </div>
   )

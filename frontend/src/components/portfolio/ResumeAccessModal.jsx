@@ -1,19 +1,36 @@
 import React, { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import axios from 'axios'
+import api from '../../services/api'
 import './ResumeAccessModal.css'
 
-export default function ResumeAccessModal({ isOpen, onClose }) {
-    const [step, setStep] = useState('entry') // entry, form, check_status, animating, success, pending
+export default function ResumeAccessModal({ isOpen, onClose, initialFormData = null }) {
+    const [step, setStep] = useState('form') // form, check_status, animating, success, pending
 
     // Forms
     const [formData, setFormData] = useState({
         name: '',
         email: '',
+        contact_number: '',
         organization: '',
         resume_type: 'Technical Resume',
         reason: ''
     })
+
+    // Auto-fill effect
+    useEffect(() => {
+        if (isOpen) {
+            const savedName = localStorage.getItem('user_name') || ''
+            const savedEmail = localStorage.getItem('user_email') || ''
+            setFormData(prev => ({
+                ...prev,
+                name: initialFormData?.name || prev.name || savedName,
+                email: initialFormData?.email || prev.email || savedEmail,
+                resume_type: initialFormData?.resume_type || prev.resume_type,
+                reason: initialFormData?.reason || prev.reason,
+            }))
+            setCheckEmail(initialFormData?.email || '')
+        }
+    }, [isOpen, initialFormData])
 
     const [checkEmail, setCheckEmail] = useState('')
     const [isLoading, setIsLoading] = useState(false)
@@ -27,12 +44,9 @@ export default function ResumeAccessModal({ isOpen, onClose }) {
 
     if (!isOpen) return null
 
-    const ENV_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:8000'
-    const API_URL = ENV_URL.endsWith('/api') ? ENV_URL : `${ENV_URL}/api`
-
     const fetchHistory = async (email) => {
         try {
-            const res = await axios.get(`${API_URL}/resume/history/${encodeURIComponent(email)}`)
+            const res = await api.get(`/resume/history/${encodeURIComponent(email)}`)
             if (res.data && res.data.length > 0) {
                 setHistoryData(res.data)
             }
@@ -49,11 +63,12 @@ export default function ResumeAccessModal({ isOpen, onClose }) {
             const payload = {
                 name: formData.name,
                 email: formData.email,
+                contact_number: formData.contact_number,
                 organization: formData.organization,
                 resume_type: formData.resume_type,
                 reason: formData.reason
             }
-            const res = await axios.post(`${API_URL}/resume/request`, payload)
+            const res = await api.post('/resume/request', payload)
             if (res.data.status === 'pending') {
                 setStep('pending')
                 fetchHistory(formData.email)
@@ -65,14 +80,14 @@ export default function ResumeAccessModal({ isOpen, onClose }) {
             }
         } catch (err) {
             console.error(err)
-            setErrorMsg('System disconnected. Try again.')
+            setErrorMsg(err?.response?.data?.detail || err?.response?.data?.message || 'System disconnected. Try again.')
         }
         setIsLoading(false)
     }
 
     const handleCheckStatusMock = async (email) => {
         try {
-            const res = await axios.get(`${API_URL}/resume/status/${encodeURIComponent(email)}`)
+            const res = await api.get(`/resume/status/${encodeURIComponent(email)}`)
             if (res.data.status === 'pending') {
                 setStep('pending')
             } else if (res.data.status === 'approved') {
@@ -85,7 +100,7 @@ export default function ResumeAccessModal({ isOpen, onClose }) {
             }
             fetchHistory(email)
         } catch (err) {
-            setErrorMsg('Connection error.')
+            setErrorMsg(err?.response?.data?.detail || 'Connection error.')
         }
     }
 
@@ -94,7 +109,7 @@ export default function ResumeAccessModal({ isOpen, onClose }) {
         setIsLoading(true)
         setErrorMsg('')
         try {
-            const res = await axios.get(`${API_URL}/resume/status/${encodeURIComponent(checkEmail)}`)
+            const res = await api.get(`/resume/status/${encodeURIComponent(checkEmail)}`)
             fetchHistory(checkEmail)
             if (res.data.status === 'pending') {
                 setStep('pending')
@@ -110,7 +125,7 @@ export default function ResumeAccessModal({ isOpen, onClose }) {
             if (err.response && err.response.status === 404) {
                 setErrorMsg('No protocol found for this identity.')
             } else {
-                setErrorMsg('Connection error.')
+                setErrorMsg(err?.response?.data?.detail || 'Connection error.')
             }
         }
         setIsLoading(false)
@@ -137,7 +152,7 @@ export default function ResumeAccessModal({ isOpen, onClose }) {
             setStep('downloading') // Show mini animation
             setTimeout(async () => {
                 try {
-                    const res = await axios.get(`${API_URL}/resume/download/${successData.token}`)
+                    const res = await api.get(`/resume/download/${successData.token}`)
                     // Simulate download
                     const link = document.createElement('a')
                     link.href = res.data.url
@@ -148,12 +163,12 @@ export default function ResumeAccessModal({ isOpen, onClose }) {
                     setStep('success')
                     fetchHistory(checkEmail) // Refresh download counts
                 } catch (e) {
-                    alert("Token expired or corrupted.")
+                    alert(e?.response?.data?.detail || "Token expired or corrupted.")
                     setStep('success')
                 }
             }, 1500)
         } catch (e) {
-            alert("Error initiating secure download.")
+            alert(e?.response?.data?.detail || "Error initiating secure download.")
         }
     }
 
@@ -188,7 +203,7 @@ export default function ResumeAccessModal({ isOpen, onClose }) {
                 animate={{ opacity: 1, scale: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0.98, y: 20 }}
             >
-                <button className="rm-close-master" onClick={onClose}>×</button>
+                <button className="rm-close-master" onClick={() => { setStep('form'); onClose() }}>×</button>
 
                 <div className="rm-split-layout">
 
@@ -286,42 +301,79 @@ export default function ResumeAccessModal({ isOpen, onClose }) {
                                 {/* FORM */}
                                 {step === 'form' && (
                                     <motion.form key="form" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0 }} onSubmit={handleRequestAccess}>
-                                        <div className="rm-compact-form">
-                                            <div className="rm-field">
-                                                <label>Target Asset</label>
-                                                <select className="rm-select" value={formData.resume_type} onChange={e => setFormData({ ...formData, resume_type: e.target.value })}>
-                                                    <option>Basic Resume (General Job)</option>
-                                                    <option>Technical Resume</option>
-                                                    <option>AI Systems Resume</option>
-                                                    <option>Government Tech Resume</option>
-                                                </select>
+                                        <div className="rm-premium-form">
+                                            {/* Header Label */}
+                                            <div className="rm-form-sec-title">
+                                                <span className="sec-icon">👤</span> IDENTITY & ACCESS
                                             </div>
+
                                             <div className="rm-grid-2">
                                                 <div className="rm-field">
-                                                    <label>Identity (Full Name)</label>
-                                                    <input required placeholder="John Doe" value={formData.name} onChange={e => setFormData({ ...formData, name: e.target.value })} />
+                                                    <label>Full Name</label>
+                                                    <div className="rm-input-wrapper">
+                                                        <span className="input-icon">📛</span>
+                                                        <input required placeholder="Your Legal Name" value={formData.name} onChange={e => setFormData({ ...formData, name: e.target.value })} />
+                                                    </div>
                                                 </div>
                                                 <div className="rm-field">
-                                                    <label>Comms Link (Email)</label>
-                                                    <input required type="email" placeholder="john@org.com" value={formData.email} onChange={e => setFormData({ ...formData, email: e.target.value })} />
+                                                    <label>Email Address</label>
+                                                    <div className="rm-input-wrapper">
+                                                        <span className="input-icon">📧</span>
+                                                        <input required type="email" placeholder="official@email.com" value={formData.email} onChange={e => setFormData({ ...formData, email: e.target.value })} />
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <div className="rm-field">
-                                                <label>Organization (Optional)</label>
-                                                <input placeholder="Corp / Entity" value={formData.organization} onChange={e => setFormData({ ...formData, organization: e.target.value })} />
+
+                                            <div className="rm-grid-2">
+                                                <div className="rm-field">
+                                                    <label>Contact Number</label>
+                                                    <div className="rm-input-wrapper">
+                                                        <span className="input-icon">☎️</span>
+                                                        <input required type="tel" placeholder="+91 XXXX-XXXX" value={formData.contact_number} onChange={e => setFormData({ ...formData, contact_number: e.target.value })} />
+                                                    </div>
+                                                </div>
+                                                <div className="rm-field">
+                                                    <label>Organization / Industry</label>
+                                                    <div className="rm-input-wrapper">
+                                                        <span className="input-icon">🏢</span>
+                                                        <input placeholder="Company or Entity" value={formData.organization} onChange={e => setFormData({ ...formData, organization: e.target.value })} />
+                                                    </div>
+                                                </div>
                                             </div>
+
+                                            <div className="rm-form-sec-title mt-4">
+                                                <span className="sec-icon">📜</span> CLEARANCE DETAILS
+                                            </div>
+
                                             <div className="rm-field">
-                                                <label>Objective / Reason</label>
-                                                <textarea required rows="2" placeholder="State your purpose..." value={formData.reason} onChange={e => setFormData({ ...formData, reason: e.target.value })} />
+                                                <label>Target Document Type</label>
+                                                <div className="rm-input-wrapper">
+                                                    <span className="input-icon">📄</span>
+                                                    <select className="rm-select" value={formData.resume_type} onChange={e => setFormData({ ...formData, resume_type: e.target.value })}>
+                                                        <option>Technical Resume (Engineering)</option>
+                                                        <option>Executive Profile (Management)</option>
+                                                        <option>Full Academic CV</option>
+                                                        <option>Creative Portfolio Resume</option>
+                                                        <option>One-Page Hybrid Resume</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div className="rm-field">
+                                                <label>Objective / Reason for Access</label>
+                                                <div className="rm-input-wrapper">
+                                                    <span className="input-icon">❓</span>
+                                                    <textarea required rows="2" placeholder="Tell us why you need this clearance... (e.g. Recruitment, Collaboration)" value={formData.reason} onChange={e => setFormData({ ...formData, reason: e.target.value })} />
+                                                </div>
                                             </div>
                                         </div>
 
                                         {errorMsg && <div className="rm-error">{errorMsg}</div>}
 
                                         <div className="rm-form-footer">
-                                            <button type="button" className="rm-sys-btn-text" onClick={() => setStep('entry')}>{'< ABORT'}</button>
+                                            <button type="button" className="rm-sys-btn-text" onClick={() => setStep('check_status')}>{'👁 Check Status'}</button>
                                             <button type="submit" className="rm-sys-btn rm-btn-gold" disabled={isLoading}>
-                                                {isLoading ? 'TRANSMITTING...' : 'INITIALIZE PROTOCOL'}
+                                                {isLoading ? 'INITIATING...' : 'REQUEST PROTOCOL'}
                                             </button>
                                         </div>
                                     </motion.form>
@@ -339,7 +391,7 @@ export default function ResumeAccessModal({ isOpen, onClose }) {
                                         {renderHistory()}
 
                                         <div className="rm-form-footer mt-4">
-                                            <button type="button" className="rm-sys-btn-text" onClick={() => setStep('entry')}>{'< BACK'}</button>
+                                            <button type="button" className="rm-sys-btn-text" onClick={() => setStep('form')}>{'< BACK'}</button>
                                             <button type="submit" className="rm-sys-btn rm-btn-blue" disabled={isLoading}>
                                                 {isLoading ? 'SCANNING...' : 'AUTHENTICATE'}
                                             </button>
@@ -354,7 +406,7 @@ export default function ResumeAccessModal({ isOpen, onClose }) {
                                         <h3 className="rm-state-title gold-text">AWAITING AUTHORIZATION</h3>
                                         <p className="rm-state-desc">Your request has been logged. Admin clearance is required to proceed. Check back later.</p>
                                         {renderHistory()}
-                                        <button className="rm-sys-btn-text mt-4" onClick={() => setStep('entry')}>{'< RETURN MAIN'}</button>
+                                        <button className="rm-sys-btn-text mt-4" onClick={() => setStep('form')}>{'< BACK TO FORM'}</button>
                                     </motion.div>
                                 )}
 

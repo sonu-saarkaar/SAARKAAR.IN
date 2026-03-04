@@ -3,12 +3,12 @@
   ─────────────────────────────────────────────────────────────
   Layout:
     ┌─────────────── upper-right ──────────────────┐
-    │  💁 Receptionist Reply  ● Speaking     [×]   │
+    │  💁 Assistant Reply  ● Speaking     [×]   │
     │  Welcome to SAARKAAR...                       │
     └──────────────────────────────────────────────┘
 
                     ┌── center top of input ──┐
-                    │  ● Receptionist Speak   │   ← status pill
+                    │  ● Assistant Speak   │   ← status pill
                     └─────────────────────────┘
 
     ┌────────────── bottom center ─────────────────┐
@@ -18,7 +18,7 @@
   Auto-flow (call feeling):
     open → welcome → speak → auto-listen → user speaks →
     auto-send on silence → "Creating Answer" → reply →
-    "Receptionist Speak" → TTS → auto-listen again → …
+    "Assistant Speak" → TTS → auto-listen again → …
 */
 
 import { useState, useRef, useEffect, useCallback } from 'react'
@@ -52,6 +52,61 @@ function TypeWriter({ text, speed = 24, onDone }) {
   return <span>{shown}</span>
 }
 
+function RequestFormWidget({ title, subtitle, onSubmitSuccess, onCancel }) {
+  const [formData, setFormData] = useState({ name: '', email: '', requirement: '' })
+  const [submitted, setSubmitted] = useState(false)
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    setSubmitted(true)
+    setTimeout(() => {
+      onSubmitSuccess(formData)
+    }, 1500)
+  }
+
+  if (submitted) {
+    return (
+      <div className="cui-form-card" style={{ textAlign: 'center', padding: '20px', background: 'rgba(255, 255, 255, 0.04)', borderRadius: '12px', border: '1px solid rgba(74, 222, 128, 0.25)' }}>
+        <h4 className="cui-widget-title" style={{ color: '#4ade80' }}>Success</h4>
+        <p className="cui-widget-subtitle" style={{ color: 'rgba(255,255,255,0.7)' }}>Your request has been sent to our desk.</p>
+      </div>
+    )
+  }
+
+  return (
+    <div className="cui-form-card" style={{ background: 'rgba(255, 255, 255, 0.04)', borderRadius: '12px', padding: '16px', border: '1px solid rgba(0, 198, 255, 0.25)' }}>
+      <div className="cui-project-header" style={{ marginBottom: '12px' }}>
+        <h4 className="cui-widget-title" style={{ color: '#00c6ff', fontSize: '1.05rem', margin: '0 0 4px 0' }}>{title || "Project Request"}</h4>
+        <h5 className="cui-widget-subtitle" style={{ color: '#d4af37', fontSize: '0.85rem', margin: '0 0 8px 0' }}>{subtitle || "Tell us what you need built"}</h5>
+      </div>
+      <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+        <input
+          style={{ background: 'rgba(0,0,0,0.3)', border: '1px solid rgba(255,255,255,0.1)', padding: '8px 10px', color: '#fff', outline: 'none', borderRadius: '6px', fontSize: '0.85rem' }}
+          placeholder="Name"
+          required
+          value={formData.name} onChange={e => setFormData({ ...formData, name: e.target.value })}
+        />
+        <input
+          style={{ background: 'rgba(0,0,0,0.3)', border: '1px solid rgba(255,255,255,0.1)', padding: '8px 10px', color: '#fff', outline: 'none', borderRadius: '6px', fontSize: '0.85rem' }}
+          placeholder="Email"
+          type="email" required
+          value={formData.email} onChange={e => setFormData({ ...formData, email: e.target.value })}
+        />
+        <textarea
+          style={{ background: 'rgba(0,0,0,0.3)', border: '1px solid rgba(255,255,255,0.1)', padding: '8px 10px', color: '#fff', outline: 'none', borderRadius: '6px', fontSize: '0.85rem', minHeight: '60px', resize: 'vertical' }}
+          placeholder="What are we building?"
+          required
+          value={formData.requirement} onChange={e => setFormData({ ...formData, requirement: e.target.value })}
+        />
+        <div style={{ display: 'flex', gap: '8px', marginTop: '5px' }}>
+          <button type="submit" className="cui-btn-action" style={{ background: 'rgba(0, 198, 255, 0.15)', color: '#00c6ff', borderColor: 'rgba(0, 198, 255, 0.4)' }}>Submit</button>
+          <button type="button" className="cui-btn-action" onClick={onCancel} style={{ background: 'rgba(255,255,255,0.05)', color: 'rgba(255,255,255,0.6)', borderColor: 'rgba(255,255,255,0.1)' }}>Cancel</button>
+        </div>
+      </form>
+    </div>
+  )
+}
+
 // ─────────────────────────────────────────────────
 export default function ConversationUI() {
   const navigate = useNavigate()
@@ -61,9 +116,9 @@ export default function ConversationUI() {
   // ⚠️ userPosition intentionally NOT subscribed via React state
   // to prevent 10fps re-renders → white flicker. Instead use a ref.
   const userPositionRef = useRef([0, 0, 0])
-  const setReceptionistState = useAnimationStore(s => s.setReceptionistState)
+  const setAssistantState = useAnimationStore(s => s.setAssistantState)
   const setBossState = useAnimationStore(s => s.setBossState)
-  const receptionistState = useAnimationStore(s => s.receptionistState)
+  const assistantState = useAnimationStore(s => s.assistantState)
 
   const isOpen = Boolean(partner)
 
@@ -107,6 +162,16 @@ export default function ConversationUI() {
   // ── Helpers to update status ──
   const setStatus = (label, cls) => { setStatusLabel(label); setStatusClass(cls) }
 
+  const normalizePartner = (value) => {
+    const key = String(value || '').toLowerCase().trim()
+    if (!key) return 'assistant'
+    if (key === 'boss') return 'boss'
+    if (key.includes('assistant') || key.includes('receptionist') || key.includes('alisa') || key.includes('alisha')) {
+      return 'assistant'
+    }
+    return key
+  }
+
   // ── Voice Input ──
   const { isListening, transcript, startListening, stopListening } = useVoiceInput(
     useCallback((finalText) => {
@@ -119,8 +184,8 @@ export default function ConversationUI() {
       // speech started → cancel any playing TTS
       synth?.cancel()
       setIsSpeaking(false)
-      setReceptionistState('idle')
-      setBossState?.('idle')
+      setAssistantState('idle')
+      if (typeof setBossState === 'function') setBossState('idle')
     }, [])
   )
 
@@ -135,7 +200,7 @@ export default function ConversationUI() {
 
   // ─ Auto-close when player walks away ─
   useEffect(() => {
-    if (!isOpen || partner !== 'receptionist') return
+    if (!isOpen || partner !== 'assistant') return
     // Poll position via interval — NO React subscription (prevents re-renders)
     const iv = setInterval(() => {
       const pos = userPositionRef.current
@@ -170,16 +235,16 @@ export default function ConversationUI() {
     if (partner === 'boss') {
       greet = `${timeGreet} Please have a seat. How can I help you today?`
     } else {
-      greet = `${timeGreet} Welcome to Saarkaar Virtual Office. I am Aalisha, your virtual receptionist. How may I assist you today?`
+      greet = `${timeGreet} Welcome to Saarkaar Virtual Office. I am Alisa, your virtual assistant. How may I assist you today?`
     }
     setReplyText(greet)
-    setStatus(partner === 'boss' ? 'Boss Speaking' : 'Receptionist Speaking', 'speaking')
-    if (partner === 'receptionist') setReceptionistState('talking')
-    else setBossState?.('talking')
-    speakTTS(greet, partner || 'receptionist', () => {
+    setStatus(partner === 'boss' ? 'Boss Speaking' : 'Assistant Speaking', 'speaking')
+    if (partner === 'assistant') setAssistantState('talking')
+    else if (typeof setBossState === 'function') setBossState('talking')
+    speakTTS(greet, partner || 'assistant', () => {
       setStatus('Waiting for you…', 'ready')
-      if (partner === 'receptionist') setReceptionistState('idle')
-      else setBossState?.('idle')
+      if (partner === 'assistant') setAssistantState('idle')
+      else if (typeof setBossState === 'function') setBossState('idle')
       scheduleAutoListen()
     })
   }, [isOpen])
@@ -209,7 +274,7 @@ export default function ConversationUI() {
     setAutoListening(false)
   }
 
-  // Continuous call mode — after Aalisha speaks, wait naturally for user's next input
+  // Continuous call mode — after Alisha speaks, wait naturally for user's next input
   // Guard with autoListenRef so only ONE auto-listen fires at a time
   const scheduleAutoListen = () => {
     if (autoListenRef.current) return   // already scheduled / running
@@ -225,7 +290,7 @@ export default function ConversationUI() {
   }
 
   // ─── Premium TTS Voice Engine ───────────────────────────────
-  // Aalisha: calm · soft · confident · corporate female
+  // Alisha: calm · soft · confident · corporate female
   // Context-aware pitch/rate + sentence-by-sentence natural pauses
   const speakTTS = (text, pName, onDone) => {
     if (!synth || !text) { onDone?.(); return }
@@ -235,7 +300,7 @@ export default function ConversationUI() {
     const voices = voicesRef.current.length ? voicesRef.current : synth.getVoices()
 
     // ── Boss voice (unchanged, deep & calm) ──
-    if (pName !== 'receptionist') {
+    if (pName !== 'assistant') {
       const ut = new SpeechSynthesisUtterance(text)
       const bossVoice =
         voices.find(v => v.name === 'Google UK English Male') ||
@@ -250,8 +315,27 @@ export default function ConversationUI() {
       return
     }
 
-    // ── Aalisha — best available female voice (priority order) ──
+    // ── Alisha — best available female voice (priority order) ──
+    const isHindiOrHinglish = /[\u0900-\u097F]/.test(text) || /\b(hai|hain|kya|kaisa|main|hum|tum|aap|ji|bolo|batao|suno|dekho|karo|nahi|haan)\b/i.test(text)
+    
+    // Phonetic replacement for Hinglish words so English voice pronounces correctly (if Hindi voice unavailable)
+    let speakableText = text
+    if (!/[\u0900-\u097F]/.test(text)) { // only if NOT Devanagari script
+       speakableText = speakableText
+         .replace(/saarkaar/gi, 'Sarkaar')
+         .replace(/\bkya\b/gi, 'kya') 
+         .replace(/\bhai\b/gi, 'hay')
+         .replace(/\bhain\b/gi, 'hain')
+         .replace(/\bmain\b/gi, 'meh')
+         .replace(/\bkaise\b/gi, 'kai-say')
+         .replace(/\bji\b/gi, 'jee')
+         .replace(/\bnah(i|in)\b/gi, 'nahin')
+         .replace(/\bhaan\b/gi, 'haan')
+         .replace(/\bshukriya\b/gi, 'shuk-ree-ya')
+    }
+
     const femaleVoice =
+      (isHindiOrHinglish && voices.find(v => v.lang.startsWith('hi'))) ||
       voices.find(v => v.name === 'Google UK English Female') ||
       voices.find(v => v.name === 'Microsoft Aria Online (Natural) - English (United States)') ||
       voices.find(v => v.name === 'Samantha') ||
@@ -294,7 +378,7 @@ export default function ConversationUI() {
 
     if (cleanSentences.length <= 1) {
       // Single sentence — speak directly
-      const ut = new SpeechSynthesisUtterance(text)
+      const ut = new SpeechSynthesisUtterance(speakableText)
       if (femaleVoice) ut.voice = femaleVoice
       ut.pitch = pitch; ut.rate = rate; ut.volume = 1.0
       ut.onstart = () => setIsSpeaking(true)
@@ -314,8 +398,19 @@ export default function ConversationUI() {
         onDone?.()
         return
       }
-      const sentence = cleanSentences[idx++]
+      let sentence = cleanSentences[idx++]
       if (!sentence) { speakNext(); return }
+      
+      // Apply phonetics again per sentence if needed (simpler: use speakableText logic here too)
+      if (!/[\u0900-\u097F]/.test(sentence)) { 
+         sentence = sentence
+           .replace(/saarkaar/gi, 'Sarkaar')
+           .replace(/\bkya\b/gi, 'kya') 
+           .replace(/\bhai\b/gi, 'hay')
+           .replace(/\bhain\b/gi, 'hain')
+           .replace(/\bmain\b/gi, 'meh')
+           .replace(/\bkaise\b/gi, 'kai-say')
+      }
 
       const ut = new SpeechSynthesisUtterance(sentence)
       if (femaleVoice) ut.voice = femaleVoice
@@ -348,8 +443,9 @@ export default function ConversationUI() {
     setIsThinking(true)
     setReplyText('')
     setUiTrigger(null)
-    const cur = partner || 'receptionist'
-    cur === 'receptionist' ? setReceptionistState('listening') : setBossState('listening')
+    const cur = normalizePartner(partner)
+    if (cur === 'assistant') setAssistantState('listening')
+    else if (typeof setBossState === 'function') setBossState('listening')
 
     try {
       setStatus('Searching Answer', 'thinking')
@@ -365,17 +461,18 @@ export default function ConversationUI() {
       })
       const data = await res.json()
       const reply = data.response || 'How can I assist you further?'
-      const active = (data.active_character || cur).toLowerCase()
+      const active = normalizePartner(data.active_character || cur)
 
       setIsThinking(false)
       setReplyText(reply)
       setUiTrigger(data.ui_trigger || null)
-      setStatus(active === 'boss' ? 'Boss Speaking' : 'Receptionist Speaking', 'speaking')
-      active === 'receptionist' ? setReceptionistState('talking') : setBossState('talking')
+      setStatus(active === 'boss' ? 'Boss Speaking' : 'Assistant Speaking', 'speaking')
+      if (active === 'assistant') setAssistantState('talking')
+      else if (typeof setBossState === 'function') setBossState('talking')
 
       speakTTS(reply, active, () => {
         setStatus('Ready', 'ready')
-        setReceptionistState('idle')
+        setAssistantState('idle')
         sendLockRef.current = false
         scheduleAutoListen()   // auto-listen again after reply
       })
@@ -384,7 +481,7 @@ export default function ConversationUI() {
       const fb = 'Apologies, please try again.'
       setIsThinking(false)
       setReplyText(fb)
-      setStatus('Receptionist Speaking', 'speaking')
+      setStatus('Assistant Speaking', 'speaking')
       speakTTS(fb, cur, () => {
         setStatus('Ready', 'ready')
         sendLockRef.current = false
@@ -397,8 +494,8 @@ export default function ConversationUI() {
     if (isListening) stopListening()
     resetAll()
     setPartner(null)
-    setReceptionistState('idle')
-    setBossState?.('idle')
+    setAssistantState('idle')
+    if (typeof setBossState === 'function') setBossState('idle')
   }
 
   const handleMicClick = () => {
@@ -406,8 +503,8 @@ export default function ConversationUI() {
     if (isSpeaking) {
       synth?.cancel()
       setIsSpeaking(false)
-      setReceptionistState('idle')
-      setBossState?.('idle')
+      setAssistantState('idle')
+      if (typeof setBossState === 'function') setBossState('idle')
       setInputVal('')
       startListening()
       setStatus('Listening…', 'listening')
@@ -441,12 +538,14 @@ export default function ConversationUI() {
       : isThinking ? 'Please wait…'
         : 'Type or press 🎤 to speak…'
 
+  const shouldShowBossPhoto = /\/profile\/sonu-boss\.png/i.test(replyText || '')
+
   if (!isOpen) return null
 
   return (
     <>
       {/* ══════════════════════════════════════════════════
-          1. REPLY BOX — upper right, connected to receptionist
+          1. REPLY BOX — upper right, connected to assistant
           ══════════════════════════════════════════════════ */}
       <div className="cui-reply-box">
         {/* Header: badge left, close right */}
@@ -454,7 +553,7 @@ export default function ConversationUI() {
           <div className="cui-badge">
             <span className={`cui-led ${statusClass}`} />
             <span className="cui-badge-label">
-              {partner === 'boss' ? '👔 Boss Reply' : '💁 Receptionist Reply'}
+              {partner === 'boss' ? '👔 Boss Reply' : '💁 Assistant Reply'}
             </span>
           </div>
           <button className="cui-xhr-btn" onClick={handleClose} aria-label="Close">
@@ -474,6 +573,16 @@ export default function ConversationUI() {
               key={replyText}
               text={replyText}
               speed={22}
+            />
+          )}
+          {!isThinking && shouldShowBossPhoto && (
+            <img
+              src="/profile/sonu-boss.png"
+              alt="Boss Sonu Saarkaar"
+              className="cui-inline-boss-photo"
+              onError={(e) => {
+                e.currentTarget.src = '/face_texture.png'
+              }}
             />
           )}
 
@@ -500,7 +609,14 @@ export default function ConversationUI() {
             {uiTrigger.type === 'profile_card' && (
               <div className="cui-profile-card">
                 <div className="cui-profile-header">
-                  <img src="https://ui-avatars.com/api/?name=Sonu+Saarkaar&background=d4af37&color=000&size=128" alt="Boss" className="cui-profile-img" />
+                  <img
+                    src="/profile/sonu-boss.png"
+                    alt="Boss Sonu Saarkaar"
+                    className="cui-profile-img"
+                    onError={(e) => {
+                      e.currentTarget.src = '/face_texture.png'
+                    }}
+                  />
                   <div>
                     <h4 className="cui-widget-title">{uiTrigger.name}</h4>
                     <p className="cui-widget-subtitle">{uiTrigger.role}</p>
@@ -601,6 +717,19 @@ export default function ConversationUI() {
                   Explore Full Portfolio
                 </button>
               </div>
+            )}
+
+            {uiTrigger.type === 'request_form' && (
+              <RequestFormWidget
+                title={uiTrigger.title}
+                subtitle={uiTrigger.subtitle}
+                onCancel={() => setUiTrigger(null)}
+                onSubmitSuccess={(data) => {
+                  setUiTrigger(null)
+                  // Feed it back to the AI silently as an intent trigger
+                  triggerSend(`[System: User submitted form: Name=${data.name}, Need=${data.requirement}]`)
+                }}
+              />
             )}
           </div>
         </div>

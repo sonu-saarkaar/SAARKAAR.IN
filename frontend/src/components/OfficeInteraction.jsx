@@ -15,7 +15,7 @@ export default function OfficeInteraction() {
   const {
     bossState,
     setBossState,
-    startReceptionistInteraction, // reusing for generic 'startInteraction' if needed
+    startAssistantInteraction, // reusing for generic 'startInteraction' if needed
     setInteraction,
     isInteracting,
     interactionTarget

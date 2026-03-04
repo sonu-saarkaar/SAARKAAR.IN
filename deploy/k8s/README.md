@@ -44,6 +44,7 @@ kubectl get pods -n saarkaar-prod
 kubectl get svc -n saarkaar-prod
 kubectl get ingress -n saarkaar-prod
 kubectl logs deploy/backend -n saarkaar-prod
+kubectl logs deploy/frontend -n saarkaar-prod
 ```
 
 ## 5) Production Notes
@@ -53,3 +54,5 @@ kubectl logs deploy/backend -n saarkaar-prod
 - Use managed MongoDB for persistence.
 - Keep admin credentials only in Kubernetes Secret.
 - Set CORS_ORIGINS in ConfigMap to your production domain.
+- API routing is handled at ingress (`/api` and `/health` to backend).
+- Frontend nginx is static-only (no internal proxy dependency), which avoids many 502 startup issues.

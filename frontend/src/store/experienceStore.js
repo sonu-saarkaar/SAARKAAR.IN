@@ -25,7 +25,7 @@ export const useExperienceStore = create((set) => ({
   // Conversation state
   conversationHistory: [],
   isListening: false,
-  lastReceptionistReply: '',
+  lastAssistantReply: '',
 
   // Experience completion
   hasMetFounder: false,
@@ -85,7 +85,7 @@ export const useExperienceStore = create((set) => ({
   addConversation: (message) => set((state) => ({
     conversationHistory: [...state.conversationHistory, message]
   })),
-  setLastReceptionistReply: (reply) => set({ lastReceptionistReply: reply }),
+  setLastAssistantReply: (reply) => set({ lastAssistantReply: reply }),
   setListening: (listening) => set({ isListening: listening }),
   setHasMetFounder: (met) => set({ hasMetFounder: met }),
   setHasExitedOffice: (exited) => set({ hasExitedOffice: exited }),
@@ -95,7 +95,7 @@ export const useExperienceStore = create((set) => ({
   heldItemName: null,
   appointmentStatus: 'none', // 'none', 'requested', 'approved', 'rejected'
   inCEOOffice: false,
-  currentConversationPartner: null, // 'receptionist', 'boss', null
+  currentConversationPartner: null, // 'assistant', 'boss', null
   showInteractionUI: false,
   cameraFocus: 'lobby',
 

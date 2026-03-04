@@ -5,9 +5,9 @@ export const useAnimationStore = create((set) => ({
   currentAnimation: 'idle',
   setAnimation: (animation) => set({ currentAnimation: animation }),
 
-  // Receptionist State
-  receptionistState: 'phone', // phone, idle, listening, talking
-  setReceptionistState: (state) => set({ receptionistState: state }),
+  // Assistant State
+  assistantState: 'idle', // idle, listening, talking
+  setAssistantState: (state) => set({ assistantState: state }),
 
   // Boss State
   bossState: 'typing', // typing, looking_up, talking, listening
@@ -17,37 +17,33 @@ export const useAnimationStore = create((set) => ({
   hrState: 'checking_tablet',
   setHrState: (state) => set({ hrState: state }),
 
-  // Assistant State
-  assistantState: 'arranging_files',
-  setAssistantState: (state) => set({ assistantState: state }),
-
   // Security State
   securityState: 'standing_guard',
   setSecurityState: (state) => set({ securityState: state }),
 
   // Interactions
   isInteracting: false,
-  interactionTarget: null, // 'receptionist', 'boss'
+  interactionTarget: null, // 'assistant', 'boss'
   setInteraction: (isInteracting, target = null) => set({ isInteracting, interactionTarget: target }),
 
   // Actions
-  startReceptionistInteraction: () => set({
-    receptionistState: 'idle',
+  startAssistantInteraction: () => set({
+    assistantState: 'idle',
     isInteracting: true,
-    interactionTarget: 'receptionist'
+    interactionTarget: 'assistant'
   }),
 
   endInteraction: () => set({
     isInteracting: false,
     interactionTarget: null,
-    receptionistState: 'idle', // Return to professional idle, not phone immediately
+    assistantState: 'idle', // Return to professional idle, not phone immediately
     bossState: 'typing'
   }),
 
   // AI Response Simulation
   startTalking: () => {
     set((state) => {
-      if (state.interactionTarget === 'receptionist') return { receptionistState: 'talking' }
+      if (state.interactionTarget === 'assistant') return { assistantState: 'talking' }
       if (state.interactionTarget === 'boss') return { bossState: 'talking' }
       return {}
     })
@@ -55,7 +51,7 @@ export const useAnimationStore = create((set) => ({
 
   stopTalking: () => {
     set((state) => {
-      if (state.interactionTarget === 'receptionist') return { receptionistState: 'listening' }
+      if (state.interactionTarget === 'assistant') return { assistantState: 'listening' }
       if (state.interactionTarget === 'boss') return { bossState: 'listening' }
       return {}
     })

@@ -12,7 +12,7 @@ const PROFILE_PRESETS = {
     followers: '678',
     following: '312',
     posts: '19',
-    avatarUrl: '/face_texture.png',
+    avatarUrl: '/profile/sonu-boss.png?v=2',
     highlights: ['+ Add New', 'Meeeh', 'bhanjaa', 'Frnds_Zone', 'love', '₹Show_off', 'Selfii', 'Reels'],
     postImages: [
       'https://picsum.photos/seed/saarkaar-01/900/900',
@@ -34,7 +34,7 @@ const PROFILE_PRESETS = {
     followers: '420',
     following: '120',
     posts: '143',
-    avatarUrl: '/face_texture.png',
+    avatarUrl: '/profile/sonu-boss.png?v=2',
     highlights: ['+ Add New', 'Pinned', 'Media', 'Announcements', 'Threads', 'BuildLogs'],
     postImages: [
       'https://picsum.photos/seed/x-01/900/900',
@@ -53,7 +53,7 @@ const PROFILE_PRESETS = {
     followers: '301',
     following: '210',
     posts: '86',
-    avatarUrl: '/face_texture.png',
+    avatarUrl: '/profile/sonu-boss.png?v=2',
     highlights: ['+ Add New', 'Ideas', 'Replies', 'Visuals', 'Notes', 'Launches'],
     postImages: [
       'https://picsum.photos/seed/threads-01/900/900',
@@ -72,7 +72,7 @@ const PROFILE_PRESETS = {
     followers: '500+',
     following: '250+',
     posts: '24',
-    avatarUrl: '/face_texture.png',
+    avatarUrl: '/profile/sonu-boss.png?v=2',
     highlights: ['+ Add New', 'Work', 'Projects', 'Reels', 'Events', 'Gallery'],
     postImages: [
       'https://picsum.photos/seed/default-01/900/900',

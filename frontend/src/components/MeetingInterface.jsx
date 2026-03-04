@@ -1,10 +1,11 @@
 import { useState, useRef, useEffect, useCallback } from 'react'
 import { useExperienceStore } from '../store/experienceStore'
+import { useTTS } from '../hooks/useTTS'
 import './MeetingInterface.css'
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000'
 
-export default function MeetingInterface() {
+export default function MeetingInterface({ onExitRequest }) {
   const [inputText, setInputText] = useState('')
   const [isListening, setIsListening] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
@@ -16,13 +17,16 @@ export default function MeetingInterface() {
   const setInOffice = useExperienceStore((state) => state.setInOffice)
   const setSitting = useExperienceStore((state) => state.setSitting)
   const recognitionRef = useRef(null)
+  const [isMuted, setIsMuted] = useState(false)
+  const { speak, stop } = useTTS()
 
   const handleSendMessage = useCallback(async (message = null) => {
     const messageToSend = message || inputText.trim()
     if (!messageToSend) return
 
-    // Add user message to history
+    // Add user message to history — stop any ongoing speech
     addConversation({ role: 'user', text: messageToSend })
+    stop()
     setInputText('')
     setIsLoading(true)
 
@@ -42,9 +46,14 @@ export default function MeetingInterface() {
       const data = await response.json()
       addConversation({ role: 'founder', text: data.response })
 
+      // Speak the AI response (unless muted)
+      if (!isMuted && data.response) {
+        speak(data.response)
+      }
+
       // Check if meeting should end
-      if (data.response.toLowerCase().includes('exit') || 
-          data.response.toLowerCase().includes('you may exit')) {
+      if (data.response.toLowerCase().includes('exit') ||
+        data.response.toLowerCase().includes('you may exit')) {
         setTimeout(() => {
           handleEndMeeting()
         }, 3000)
@@ -105,10 +114,10 @@ export default function MeetingInterface() {
     setSitting(false)
     setInOffice(false)
     setHasExitedOffice(true)
-    
+
     // Return to lobby
     useExperienceStore.getState().setUserPosition([0, 0, 0])
-    
+
     // Show slide panel after returning to lobby
     setTimeout(() => {
       setShowSlidePanel(true)
@@ -127,9 +136,19 @@ export default function MeetingInterface() {
       <div className="meeting-container">
         <div className="meeting-header">
           <h3>Meeting with Founder</h3>
-          <button className="exit-button" onClick={handleEndMeeting}>
-            Exit
-          </button>
+          <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+            {/* TTS Mute/Unmute Button */}
+            <button
+              className="mute-tts-btn"
+              onClick={() => { setIsMuted(m => !m); if (!isMuted) stop() }}
+              title={isMuted ? 'Unmute voice' : 'Mute voice'}
+            >
+              {isMuted ? '🔇' : '🔊'}
+            </button>
+            <button className="exit-button" onClick={onExitRequest || handleEndMeeting}>
+              Exit
+            </button>
+          </div>
         </div>
 
         <div className="conversation-display">
@@ -138,7 +157,7 @@ export default function MeetingInterface() {
               <p>Welcome. How can I help you today?</p>
             </div>
           )}
-          
+
           {conversationHistory.map((msg, index) => (
             <div
               key={index}
@@ -147,7 +166,7 @@ export default function MeetingInterface() {
               <p>{msg.text}</p>
             </div>
           ))}
-          
+
           {isLoading && (
             <div className="message founder-message">
               <p>Thinking...</p>

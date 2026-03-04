@@ -43,6 +43,23 @@
   background: rgba(255, 255, 255, 0.3);
 }
 
+.mute-tts-btn {
+  background: rgba(255, 255, 255, 0.12);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 6px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 16px;
+  line-height: 1;
+  transition: all 0.2s;
+}
+
+.mute-tts-btn:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+
 .conversation-display {
   max-height: 300px;
   overflow-y: auto;
@@ -160,9 +177,12 @@
 }
 
 @keyframes pulse {
-  0%, 100% {
+
+  0%,
+  100% {
     opacity: 1;
   }
+
   50% {
     opacity: 0.7;
   }

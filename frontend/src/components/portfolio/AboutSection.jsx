@@ -1,11 +1,8 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { motion } from 'framer-motion'
 import './CinematicHero.css' // Reusing styles
-import ResumeAccessModal from './ResumeAccessModal'
 
 export default function AboutSection() {
-    const [isResumeModalOpen, setResumeModalOpen] = useState(false)
-
     const stats = [
         { label: 'Projects Built', value: '25+' },
         { label: 'Systems Deployed', value: '10+' },
@@ -49,21 +46,6 @@ export default function AboutSection() {
                             <span key={tech} className="tech-pill">{tech}</span>
                         ))}
                     </div>
-
-                    <div style={{ marginTop: '2.5rem' }}>
-                        <button
-                            className="primary-btn"
-                            style={{
-                                padding: '12px 24px',
-                                border: '1px solid #D4AF37',
-                                background: 'transparent',
-                                color: '#D4AF37'
-                            }}
-                            onClick={() => setResumeModalOpen(true)}
-                        >
-                            <span style={{ marginRight: '8px' }}>📑</span> SECURE RESUME ACCESS
-                        </button>
-                    </div>
                 </motion.div>
 
                 <motion.div
@@ -81,10 +63,6 @@ export default function AboutSection() {
                 </motion.div>
             </div>
 
-            <ResumeAccessModal
-                isOpen={isResumeModalOpen}
-                onClose={() => setResumeModalOpen(false)}
-            />
         </section>
     )
 }

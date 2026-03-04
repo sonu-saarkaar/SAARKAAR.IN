@@ -6,6 +6,9 @@ from typing import Dict, Any
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.linear_model import LogisticRegression
 from sklearn.pipeline import make_pipeline
+import logging
+
+logger = logging.getLogger(__name__)
 
 # Global model state
 ML_MODEL = None
@@ -19,14 +22,14 @@ def train_intent_model():
     try:
         data_path = os.path.join(os.path.dirname(__file__), 'training_data.json')
         if not os.path.exists(data_path):
-            print(f"ML Service: Training data not found at {data_path}. Skipping training.")
+            logger.warning(f"ML Service: Training data not found at {data_path}. Skipping training.")
             return False
             
         with open(data_path, 'r', encoding='utf-8') as f:
             data = json.load(f)
             
         if not data:
-            print("ML Service: Training data is empty. Skipping training.")
+            logger.warning("ML Service: Training data is empty. Skipping training.")
             return False
             
         texts = [item['text'] for item in data]
@@ -38,18 +41,18 @@ def train_intent_model():
             LogisticRegression(max_iter=1000, solver='lbfgs')
         )
         
-        print("ML Service: Training model...")
+        logger.info("ML Service: Training model...")
         pipeline.fit(texts, labels)
         
         ML_MODEL = pipeline
         IS_TRAINED = True
         
         elapsed = time.time() - start_time
-        print(f"ML Service: Model trained successfully in {elapsed:.3f}s on {len(data)} samples.")
+        logger.info(f"ML Service: Model trained successfully in {elapsed:.3f}s on {len(data)} samples.")
         return True
         
     except Exception as e:
-        print(f"ML Service: Error training model: {e}")
+        logger.error(f"ML Service: Error training model: {e}")
         return False
 
 def predict_intent(text: str) -> dict:
@@ -77,7 +80,7 @@ def predict_intent(text: str) -> dict:
             "confidence": float(confidence)
         }
     except Exception as e:
-        print(f"ML Service: Prediction error: {e}")
+        logger.error(f"ML Service: Prediction error: {e}")
         return {"intent": "unknown", "confidence": 0.0}
 
 def get_action_for_intent(intent: str, text: str) -> Dict[str, Any]:

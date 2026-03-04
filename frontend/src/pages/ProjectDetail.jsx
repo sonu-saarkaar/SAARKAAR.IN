@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { fetchProjectById, submitFeedback, joinTeam } from '../services/api'
+import { ARCHIVE_DATA_BY_ID, buildProjectDetailFromArchive } from '../data/archiveProjects'
 import './ProjectDetail.css'
 
 export default function ProjectDetail() {
@@ -23,11 +24,26 @@ export default function ProjectDetail() {
     useEffect(() => {
         const loadProject = async () => {
             setLoading(true)
-            const data = await fetchProjectById(id)
-            if (data) {
-                setProject(data)
+            const archiveFallback = buildProjectDetailFromArchive(ARCHIVE_DATA_BY_ID[id])
+            try {
+                const data = await fetchProjectById(id)
+                if (data) {
+                    setProject({
+                        ...archiveFallback,
+                        ...data,
+                        tech_stack: data.tech_stack || archiveFallback?.tech_stack || [],
+                        features: data.features || archiveFallback?.features || [],
+                        archive_sections: data.archive_sections || archiveFallback?.archive_sections || []
+                    })
+                } else {
+                    setProject(archiveFallback || null)
+                }
+            } catch (error) {
+                console.error('Failed to load project detail:', error)
+                setProject(archiveFallback || null)
+            } finally {
+                setLoading(false)
             }
-            setLoading(false)
         }
         loadProject()
     }, [id])
@@ -147,6 +163,38 @@ export default function ProjectDetail() {
                         ))}
                     </ul>
                 </section>
+
+                {(project.archive_sections || []).length > 0 && (
+                    <section className="detail-section">
+                        <h3>Archives – Deployed Intelligence (Structured Details)</h3>
+                        <div className="content-card">
+                            {(project.archive_sections || []).map((section) => (
+                                <div key={section.title} style={{ marginBottom: '1.2rem' }}>
+                                    <h4 style={{ marginBottom: '0.4rem', color: '#eebb44' }}>{section.title}</h4>
+                                    {section.content && <p style={{ marginBottom: section.points?.length ? '0.5rem' : '0' }}>{section.content}</p>}
+                                    {section.points?.length > 0 && (
+                                        <ul className="features-list" style={{ marginBottom: 0 }}>
+                                            {section.points.map((point) => (
+                                                <li key={point} className="feature-item">
+                                                    <span className="check-icon">✓</span> {point}
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    )}
+                                    {section.ctaLink && section.ctaLabel && (
+                                        <a
+                                            href={section.ctaLink}
+                                            className="hero-live-btn"
+                                            style={{ display: 'inline-block', marginTop: '0.65rem', padding: '8px 14px', fontSize: '0.86rem' }}
+                                        >
+                                            {section.ctaLabel} ↗
+                                        </a>
+                                    )}
+                                </div>
+                            ))}
+                        </div>
+                    </section>
+                )}
 
                 {/* Gallery */}
                 <section className="detail-section">

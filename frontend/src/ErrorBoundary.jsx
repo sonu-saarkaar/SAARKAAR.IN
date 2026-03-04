@@ -3,7 +3,24 @@ import React from 'react'
 class ErrorBoundary extends React.Component {
   constructor(props) {
     super(props)
-    this.state = { hasError: false, error: null }
+    this.state = { hasError: false, error: null, recoveryKey: 0 }
+  }
+
+  isWebGLError = (error) => {
+    const errorText = error?.toString?.() || ''
+    return /webgl|context/i.test(errorText)
+  }
+
+  openSafeMode = () => {
+    try {
+      localStorage.setItem('saarkaar_safe_mode', '1')
+    } catch {}
+
+    this.setState((prev) => ({
+      hasError: false,
+      error: null,
+      recoveryKey: prev.recoveryKey + 1
+    }))
   }
 
   static getDerivedStateFromError(error) {
@@ -12,10 +29,17 @@ class ErrorBoundary extends React.Component {
 
   componentDidCatch(error, errorInfo) {
     console.error('Error caught by boundary:', error, errorInfo)
+
+    if (this.isWebGLError(error)) {
+      this.openSafeMode()
+    }
   }
 
   render() {
     if (this.state.hasError) {
+      const errorText = this.state.error?.toString?.() || ''
+      const isWebGLError = /webgl|context/i.test(errorText)
+
       return (
         <div style={{ 
           width: '100vw', 
@@ -30,8 +54,13 @@ class ErrorBoundary extends React.Component {
         }}>
           <h1>Something went wrong</h1>
           <p style={{ marginTop: '20px', color: '#ff6b6b' }}>
-            {this.state.error?.toString()}
+            {errorText}
           </p>
+          {isWebGLError && (
+            <p style={{ marginTop: '8px', color: 'rgba(255,255,255,0.75)', maxWidth: '680px', textAlign: 'center' }}>
+              Your browser/GPU could not create a WebGL context. You can continue in Safe Mode.
+            </p>
+          )}
           <button 
             onClick={() => window.location.reload()}
             style={{
@@ -46,11 +75,30 @@ class ErrorBoundary extends React.Component {
           >
             Reload Page
           </button>
+          {isWebGLError && (
+            <button
+              onClick={() => {
+                this.openSafeMode()
+              }}
+              style={{
+                marginTop: '10px',
+                padding: '10px 20px',
+                backgroundColor: '#eebb44',
+                color: '#101010',
+                border: 'none',
+                borderRadius: '5px',
+                cursor: 'pointer',
+                fontWeight: 700
+              }}
+            >
+              Open Safe Mode
+            </button>
+          )}
         </div>
       )
     }
 
-    return this.props.children
+    return <React.Fragment key={this.state.recoveryKey}>{this.props.children}</React.Fragment>
   }
 }
 

@@ -21,7 +21,8 @@ export function useVoiceInput(onSpeechEnd, onSpeechStart) {
 
             recognition.continuous = false; // Auto detect silence
             recognition.interimResults = true;
-            recognition.lang = 'en-US';
+            // hi-IN captures Hindi, Hinglish, and English mixed speech correctly
+            recognition.lang = 'hi-IN';
 
             recognition.onstart = () => {
                 setIsListening(true);

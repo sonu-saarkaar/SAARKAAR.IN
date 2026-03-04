@@ -1,3 +1,5 @@
+const BOSS_PROFILE_IMAGE = '/profile/sonu-boss.png?v=2'
+
 export const SOCIAL_PROFILES = [
   {
     id: 'github',
@@ -6,6 +8,7 @@ export const SOCIAL_PROFILES = [
     headline: 'Code, repositories, and open-source work.',
     profileUrl: 'https://github.com/sonu_saarkaar',
     handle: '@sonu_saarkaar',
+    avatarUrl: BOSS_PROFILE_IMAGE,
     theme: {
       gradient: 'linear-gradient(135deg, #0d1117 0%, #161b22 50%, #30363d 100%)',
       accent: '#2ea043',
@@ -29,6 +32,7 @@ export const SOCIAL_PROFILES = [
     headline: 'Short-form thoughts, updates, and announcements.',
     profileUrl: 'https://x.com/sonu_saarkaar',
     handle: '@sonu_saarkaar',
+    avatarUrl: BOSS_PROFILE_IMAGE,
     theme: {
       gradient: 'linear-gradient(135deg, #000000 0%, #111111 50%, #1d1d1d 100%)',
       accent: '#1d9bf0',
@@ -52,6 +56,7 @@ export const SOCIAL_PROFILES = [
     headline: 'Community conversations and creator discussions.',
     profileUrl: 'https://www.threads.net/@sonu_saarkaar',
     handle: '@sonu_saarkaar',
+    avatarUrl: BOSS_PROFILE_IMAGE,
     theme: {
       gradient: 'linear-gradient(135deg, #101010 0%, #1a1a1a 50%, #272727 100%)',
       accent: '#ffffff',
@@ -75,6 +80,7 @@ export const SOCIAL_PROFILES = [
     headline: 'Visual highlights, reels, and creative snapshots.',
     profileUrl: 'https://instagram.com/sonu_saarkaar',
     handle: '@sonu_saarkaar',
+    avatarUrl: BOSS_PROFILE_IMAGE,
     theme: {
       gradient: 'linear-gradient(135deg, #833ab4 0%, #fd1d1d 52%, #fcb045 100%)',
       accent: '#ffd166',
@@ -98,6 +104,7 @@ export const SOCIAL_PROFILES = [
     headline: 'Network presence, profile highlights, and updates.',
     profileUrl: 'https://facebook.com/sonu_saarkaar',
     handle: '@sonu_saarkaar',
+    avatarUrl: BOSS_PROFILE_IMAGE,
     theme: {
       gradient: 'linear-gradient(135deg, #1877f2 0%, #0f58b8 60%, #0b3d80 100%)',
       accent: '#dce8ff',
@@ -121,6 +128,7 @@ export const SOCIAL_PROFILES = [
     headline: 'Direct conversation channel for collaboration.',
     profileUrl: 'https://wa.me/919798299944',
     handle: '+91 9798299944',
+    avatarUrl: BOSS_PROFILE_IMAGE,
     theme: {
       gradient: 'linear-gradient(135deg, #075e54 0%, #128c7e 52%, #25d366 100%)',
       accent: '#dcffe8',
@@ -144,6 +152,7 @@ export const SOCIAL_PROFILES = [
     headline: 'Problem-solving profile and coding practice footprint.',
     profileUrl: 'https://leetcode.com/sonu_saarkaar',
     handle: 'leetcode.com/sonu_saarkaar',
+    avatarUrl: BOSS_PROFILE_IMAGE,
     theme: {
       gradient: 'linear-gradient(135deg, #1a1a1a 0%, #222831 52%, #f89f1b 100%)',
       accent: '#ffd29d',
@@ -167,6 +176,7 @@ export const SOCIAL_PROFILES = [
     headline: 'Official SAARKAAR web presence and portfolio gateway.',
     profileUrl: 'https://saarkaar.in',
     handle: 'saarkaar.in',
+    avatarUrl: BOSS_PROFILE_IMAGE,
     theme: {
       gradient: 'linear-gradient(135deg, #070b15 0%, #0d1d3b 55%, #193d74 100%)',
       accent: '#8fd3ff',
@@ -190,6 +200,7 @@ export const SOCIAL_PROFILES = [
     headline: 'Professional email communication channel.',
     profileUrl: 'mailto:sonusaarkaar@gmail.com',
     handle: 'sonusaarkaar@gmail.com',
+    avatarUrl: BOSS_PROFILE_IMAGE,
     theme: {
       gradient: 'linear-gradient(135deg, #ea4335 0%, #fbbc05 35%, #34a853 70%, #4285f4 100%)',
       accent: '#fff3df',
@@ -213,6 +224,7 @@ export const SOCIAL_PROFILES = [
     headline: 'Primary business contact for direct calls.',
     profileUrl: 'tel:+919798299944',
     handle: '+91 9798299944',
+    avatarUrl: BOSS_PROFILE_IMAGE,
     theme: {
       gradient: 'linear-gradient(135deg, #0f172a 0%, #1e293b 52%, #334155 100%)',
       accent: '#cbd5e1',
